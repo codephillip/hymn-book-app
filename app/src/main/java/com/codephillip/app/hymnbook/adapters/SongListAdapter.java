@@ -1,7 +1,6 @@
 package com.codephillip.app.hymnbook.adapters;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,13 +10,13 @@ import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-/**
- * Created by codephillip on 20/03/17.
- */
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
-    Cursor dataCursor;
+    private static final String TAG = SongListAdapter.class.getSimpleName();
+    JSONArray dataCursor;
     private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -38,7 +37,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         }
     }
 
-    public SongListAdapter(Context mContext, Cursor cursor) {
+    public SongListAdapter(Context mContext, JSONArray cursor) {
         dataCursor = cursor;
         context = mContext;
     }
@@ -53,11 +52,12 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return new ViewHolder(cardview);
     }
 
-    public Cursor swapCursor(Cursor cursor) {
+    public JSONArray swapCursor(JSONArray cursor) {
+        Log.d(TAG, "swapCursor: ");
         if (dataCursor == cursor) {
             return null;
         }
-        Cursor oldCursor = dataCursor;
+        JSONArray oldCursor = dataCursor;
         this.dataCursor = cursor;
         if (cursor != null) {
             this.notifyDataSetChanged();
@@ -67,34 +67,18 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.d("Metric#", "onBindViewHolder: "+position);
-//        try{
-//            dataCursor.moveToPosition(position);
-//            MetrictableCursor metric = new MetrictableCursor(dataCursor);
-//            holder.waterVolumeView.setText(String.valueOf(metric.getWaterVolume()));
-//            holder.dateView.setText(metric.getDate());
-//            holder.timeView.setText(metric.getTime());
-//
-//            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-//            int color1 = generator.getRandomColor();
-//            TextDrawable drawable = TextDrawable.builder()
-//                    .beginConfig()
-//                    .width(140)  // width in px
-//                    .height(140) // height in px
-//                    .endConfig()
-//                    .buildRound(metric.getIsirrigating().toString().substring(0,1), color1);
-//            holder.imageView.setImageDrawable(drawable);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-
-        holder.titleView.setText("Be like You" + position);
-        holder.numberView.setText("34" + position);
+        try {
+            JSONObject jsonObject = dataCursor.getJSONObject(position);
+            holder.titleView.setText("Be like You" + jsonObject.getString("title"));
+            holder.numberView.setText("34" + position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int getItemCount() {
         // any number other than zero will cause a bug
-        return (dataCursor == null) ? 10 : dataCursor.getCount();
+        return (dataCursor == null) ? 0 : dataCursor.length();
     }
 }

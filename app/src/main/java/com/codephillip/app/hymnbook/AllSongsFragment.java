@@ -8,11 +8,19 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -23,6 +31,7 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private static final String TAG = AllSongsFragment.class.getSimpleName();
     SongListAdapter adapter;
     RecyclerView recyclerView;
+    JSONArray jsonArray;
 
 
     public AllSongsFragment() {
@@ -37,6 +46,8 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SongListAdapter(getContext(), null);
         recyclerView.setAdapter(adapter);
+
+
         return rootView;
     }
 
@@ -48,13 +59,28 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.d(TAG, "onCreate#: ");
+        try {
+            InputStream inputStream = getResources().openRawResource(R.raw.data);
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+            JSONObject jsonObject = new JSONObject(new String(b));
+            jsonArray = jsonObject.getJSONArray("data");
+            Log.d(TAG, String.valueOf(jsonArray));
+            Log.d(TAG, String.valueOf(jsonArray.getJSONObject(0)));
+        } catch (JSONException e) {
+            Log.e(TAG, e.toString());
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+        }
+        adapter.swapCursor(jsonArray);
         return null;
-//        return new CursorLoader(getContext(), MetrictableColumns.CONTENT_URI, null, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
+        Log.d(TAG, "onLoadFinished: ");
+        adapter.swapCursor(jsonArray);
     }
 
     @Override
