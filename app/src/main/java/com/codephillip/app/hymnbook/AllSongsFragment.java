@@ -1,11 +1,7 @@
 package com.codephillip.app.hymnbook;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,16 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
-import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
-
-import java.util.ArrayList;
 
 /**
  * Created by codephillip on 31/03/17.
  */
 
-public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class AllSongsFragment extends Fragment {
 
     private static final String TAG = AllSongsFragment.class.getSimpleName();
     SongListAdapter adapter;
@@ -45,37 +38,12 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new SongListAdapter(getContext(), null);
+        adapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
         recyclerView.setAdapter(adapter);
         return rootView;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        HymnDatabase.getInstance();
-        getLoaderManager().initLoader(2, null, this);
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "onCreate#: ");
-        ArrayList<Hymn> hymns = HymnDatabase.hymns.getHymnArrayList();
-        adapter.swapCursor(hymns);
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d(TAG, "onLoadFinished: ");
-        adapter.swapCursor(null);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
-
+    //todo work on search
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.d(TAG, "onCreateOptionsMenu: ");

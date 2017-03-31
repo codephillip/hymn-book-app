@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = MainActivity.class.getSimpleName();
     //    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
     String[] screenNames = {"title1", "title2", "title3"};
+    boolean toggleGrid = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +95,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         Log.d(TAG, "onCreateOptionsMenu: ");
-//        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -107,11 +110,15 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, switchView());
+            fragmentTransaction.commit();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -121,10 +128,10 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_camera) {
+            fragment = switchView();
+        } else if (id == R.id.nav_gallery) {
             fragment = new SongFragment();
             getSupportActionBar().setTitle(screenNames[0]);
-        } else if (id == R.id.nav_gallery) {
-
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -144,5 +151,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private Fragment switchView() {
+        Fragment fragment = null;
+        fragment = toggleGrid ? new AllSongsGridFragment() : new AllSongsFragment();
+        getSupportActionBar().setTitle(screenNames[0]);
+        toggleGrid = !toggleGrid;
+        return fragment;
     }
 }
