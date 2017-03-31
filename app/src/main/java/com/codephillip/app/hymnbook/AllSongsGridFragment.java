@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.SongGridAdapter;
+import com.codephillip.app.hymnbook.models.Hymn;
+import com.codephillip.app.hymnbook.models.HymnDatabase;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -29,11 +31,16 @@ public class AllSongsGridFragment extends Fragment implements SongGridAdapter.It
 
         View rootView = inflater.inflate(R.layout.fragment_all_songs_grid, container, false);
         // data to populate the RecyclerView with
-        String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"};
+//        String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"};
 
+        String[] data = new String[HymnDatabase.hymns.getHymnArrayList().size()];
+        int counter = 0;
+        for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
+            data[counter++] = String.valueOf(hymn.getNumber());
+        }
         // set up the RecyclerView
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rvNumbers);
-        int numberOfColumns = 6;
+        int numberOfColumns = 5;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         adapter = new SongGridAdapter(getContext(), data);
         adapter.setClickListener(this);
