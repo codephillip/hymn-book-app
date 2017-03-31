@@ -2,6 +2,7 @@ package com.codephillip.app.hymnbook;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,19 @@ import com.codephillip.app.hymnbook.models.HymnDatabase;
 public class SongFragment extends Fragment {
 
     private static final String TAG = SongFragment.class.getSimpleName();
+    private static final String SONG_NUMBER = "song_number";
     private TextView titleView;
     private TextView contentView;
 
     public SongFragment() {
+    }
+
+    public static SongFragment newInstance(int position) {
+        SongFragment fragment = new SongFragment();
+        Bundle args = new Bundle();
+        args.putInt(SONG_NUMBER, position);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -30,8 +40,14 @@ public class SongFragment extends Fragment {
         contentView = (TextView) rootView.findViewById(R.id.content);
 
         HymnDatabase.getInstance();
-        titleView.setText(HymnDatabase.hymns.getHymnArrayList().get(0).getTitle());
-        contentView.setText(HymnDatabase.hymns.getHymnArrayList().get(0).getContent());
+        int position = getArguments().getInt(SONG_NUMBER);
+        Log.d(TAG, "onCreateView: position#" + position);
+        try {
+            titleView.setText(HymnDatabase.hymns.getHymnArrayList().get(position).getTitle());
+            contentView.setText(HymnDatabase.hymns.getHymnArrayList().get(position).getContent());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return rootView;
     }
 

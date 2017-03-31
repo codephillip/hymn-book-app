@@ -1,6 +1,7 @@
 package com.codephillip.app.hymnbook.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.R;
+import com.codephillip.app.hymnbook.SongActivity;
+import com.codephillip.app.hymnbook.Utils;
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 
@@ -18,7 +21,7 @@ import java.util.ArrayList;
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
     private static final String TAG = SongListAdapter.class.getSimpleName();
     ArrayList<Hymn> dataCursor;
-    private Context context;
+    private static Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
@@ -33,6 +36,10 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     Log.d(TAG, "onClick: " + numberView.getText());
+                    Utils.getInstance();
+                    //subtract 1 because the ArrayList starts from zero
+                    Utils.position = Integer.parseInt(String.valueOf(numberView.getText()));
+                    context.startActivity(new Intent(context, SongActivity.class));
                 }
             });
         }
