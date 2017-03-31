@@ -14,13 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
+import com.codephillip.app.hymnbook.models.Hymn;
+import com.codephillip.app.hymnbook.models.HymnDatabase;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -31,7 +28,6 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
     private static final String TAG = AllSongsFragment.class.getSimpleName();
     SongListAdapter adapter;
     RecyclerView recyclerView;
-    JSONArray jsonArray;
 
 
     public AllSongsFragment() {
@@ -46,41 +42,28 @@ public class AllSongsFragment extends Fragment implements LoaderManager.LoaderCa
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new SongListAdapter(getContext(), null);
         recyclerView.setAdapter(adapter);
-
-
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        HymnDatabase.getInstance();
         getLoaderManager().initLoader(2, null, this);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "onCreate#: ");
-        try {
-            InputStream inputStream = getResources().openRawResource(R.raw.data);
-            byte[] b = new byte[inputStream.available()];
-            inputStream.read(b);
-            JSONObject jsonObject = new JSONObject(new String(b));
-            jsonArray = jsonObject.getJSONArray("data");
-            Log.d(TAG, String.valueOf(jsonArray));
-            Log.d(TAG, String.valueOf(jsonArray.getJSONObject(0)));
-        } catch (JSONException e) {
-            Log.e(TAG, e.toString());
-        } catch (IOException e){
-            Log.e(TAG, e.toString());
-        }
-        adapter.swapCursor(jsonArray);
+        ArrayList<Hymn> hymns = HymnDatabase.hymns.getHymnArrayList();
+        adapter.swapCursor(hymns);
         return null;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         Log.d(TAG, "onLoadFinished: ");
-        adapter.swapCursor(jsonArray);
+        adapter.swapCursor(null);
     }
 
     @Override

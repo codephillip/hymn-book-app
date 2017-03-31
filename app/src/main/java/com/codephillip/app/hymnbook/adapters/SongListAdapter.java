@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.R;
+import com.codephillip.app.hymnbook.models.Hymn;
+import com.codephillip.app.hymnbook.models.HymnDatabase;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
     private static final String TAG = SongListAdapter.class.getSimpleName();
-    JSONArray dataCursor;
+    ArrayList<Hymn> dataCursor;
     private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,9 +38,10 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         }
     }
 
-    public SongListAdapter(Context mContext, JSONArray cursor) {
+    public SongListAdapter(Context mContext, ArrayList<Hymn> cursor) {
         dataCursor = cursor;
         context = mContext;
+        HymnDatabase.getInstance();
     }
 
     public SongListAdapter() {
@@ -52,12 +54,12 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return new ViewHolder(cardview);
     }
 
-    public JSONArray swapCursor(JSONArray cursor) {
+    public ArrayList<Hymn> swapCursor(ArrayList<Hymn> cursor) {
         Log.d(TAG, "swapCursor: ");
         if (dataCursor == cursor) {
             return null;
         }
-        JSONArray oldCursor = dataCursor;
+        ArrayList<Hymn> oldCursor = dataCursor;
         this.dataCursor = cursor;
         if (cursor != null) {
             this.notifyDataSetChanged();
@@ -68,9 +70,8 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         try {
-            JSONObject jsonObject = dataCursor.getJSONObject(position);
-            holder.titleView.setText("Be like You" + jsonObject.getString("title"));
-            holder.numberView.setText("34" + position);
+            holder.titleView.setText(dataCursor.get(position).getTitle());
+            holder.numberView.setText(String.valueOf(dataCursor.get(position).getNumber()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,6 +80,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     @Override
     public int getItemCount() {
         // any number other than zero will cause a bug
-        return (dataCursor == null) ? 0 : dataCursor.length();
+        return (dataCursor == null) ? 0 : dataCursor.size();
     }
 }

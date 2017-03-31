@@ -12,10 +12,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codephillip.app.hymnbook.models.Hymn;
+import com.codephillip.app.hymnbook.models.HymnDatabase;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-//    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
+    private static final String TAG = MainActivity.class.getSimpleName();
+    //    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
     String[] screenNames = {"title1", "title2", "title3"};
 
     @Override
@@ -24,6 +36,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        HymnDatabase.getInstance();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -34,11 +48,41 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Log.d(TAG, "onCreate: connectToStorage");
+        connectToStorage();
+
         Fragment fragment = new AllSongsFragment();
         getSupportActionBar().setTitle(screenNames[0]);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,fragment);
         fragmentTransaction.commit();
+    }
+
+    private void connectToStorage() {
+        Log.d(TAG, "onCreate: connectToStorage started");
+        try {
+            InputStream inputStream = getResources().openRawResource(R.raw.data);
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+            JSONObject jsonObject = new JSONObject(new String(b));
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            Log.d(TAG, String.valueOf(jsonArray));
+            Log.d(TAG, String.valueOf(jsonArray.getJSONObject(0)));
+
+            ArrayList<Hymn> hymnList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject innerObject = jsonArray.getJSONObject(i);
+                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), "worship"));
+//                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getString("category")));
+            }
+            HymnDatabase.hymns.setHymnArrayList(hymnList);
+            Log.d(TAG, "connectToStorage: store");
+            Log.d(TAG, String.valueOf(HymnDatabase.hymns.getHymnArrayList()));
+        } catch (JSONException e) {
+            Log.e(TAG, e.toString());
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+        }
     }
 
     @Override
