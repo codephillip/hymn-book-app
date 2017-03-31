@@ -67,6 +67,22 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return oldCursor;
     }
 
+    public void filter(String text) {
+        Log.d(TAG, "filter: " + text);
+        dataCursor.clear();
+        if(text.isEmpty()){
+            dataCursor = HymnDatabase.hymns.getHymnArrayList();
+        } else{
+            text = text.toLowerCase();
+            for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
+                if(hymn.getTitle().toLowerCase().contains(text) || hymn.getContent().toLowerCase().contains(text) || hymn.getNumber() == Integer.parseInt(text)) {
+                    dataCursor.add(hymn);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 

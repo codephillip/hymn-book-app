@@ -66,18 +66,13 @@ public class MainActivity extends AppCompatActivity
             inputStream.read(b);
             JSONObject jsonObject = new JSONObject(new String(b));
             JSONArray jsonArray = jsonObject.getJSONArray("data");
-            Log.d(TAG, String.valueOf(jsonArray));
-            Log.d(TAG, String.valueOf(jsonArray.getJSONObject(0)));
 
             ArrayList<Hymn> hymnList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject innerObject = jsonArray.getJSONObject(i);
                 hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name")));
-//                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getString("category")));
             }
             HymnDatabase.hymns.setHymnArrayList(hymnList);
-            Log.d(TAG, "connectToStorage: store");
-            Log.d(TAG, String.valueOf(HymnDatabase.hymns.getHymnArrayList()));
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
         } catch (IOException e){
@@ -98,7 +93,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        Log.d(TAG, "onCreateOptionsMenu: ");
+//        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
