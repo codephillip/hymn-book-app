@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
             ArrayList<Hymn> hymnList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject innerObject = jsonArray.getJSONObject(i);
-                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), "worship"));
+                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name")));
 //                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getString("category")));
             }
             HymnDatabase.hymns.setHymnArrayList(hymnList);

@@ -1,28 +1,34 @@
 {
   "data": [
     {
-      "id": 2,
+      "id": 1,
       "title": "ABASOMI MUJJE TUSOME MMWE",
-      "content": "1. ABASOMI MUJJE TUSOME MMWE\r\n\r\nChorus: Abasomi mujje tusome mmwe\r\n               Bannamukisa mujje tumusinze\r\n               Tugulumizze Omukama twebaze x 2\r\n\r\n1. Tufukamire mu maaso g’Omukama ono,\r\nTuyimbire Omukama owaffe;\r\nTumukubire emizira leero, \r\nKubanga yasinga.\r\n\r\n2. Katuyimbire mu maaso g’Omukama ono,\r\nTujagulize mu Mukama owaffe;\r\nYe mukulu eyakola byonna,\r\nAli awo ng’alamula.\r\n\r\n3. Tufukamire mu maaso g’Omukama ono,\r\nTuyimbire Omukama owaffe,\r\nMu kuyiga ekuliwo leero,\r\nKubanga y’atuyise. \r\n\r\n4. Ffe katumusabe Omusumba w’obuliga bwe ono,\r\nAtegereze ebyaffe abaana\r\nAtukuume mu kisibo kye ffenna,\r\nNg’ataasa ng’alunda.\r\n\r\n5. Mmwe muwulire eddoboozi ly’Omukama ono,\r\nMmwe muggule emitima egyamwe\r\nMu mugondere Mukama yekka,\r\nYe nnannyini ddembe.",
-      "number": 1
+      "content": "Chorus: Abasomi mujje tusome mmwe\r\n               Bannamukisa mujje tumusinze\r\n               Tugulumizze Omukama twebaze x 2\r\n\r\n1. Tufukamire mu maaso g’Omukama ono,\r\nTuyimbire Omukama owaffe;\r\nTumukubire emizira leero, \r\nKubanga yasinga.\r\n\r\n2. Katuyimbire mu maaso g’Omukama ono,\r\nTujagulize mu Mukama owaffe;\r\nYe mukulu eyakola byonna,\r\nAli awo ng’alamula.\r\n\r\n3. Tufukamire mu maaso g’Omukama ono,\r\nTuyimbire Omukama owaffe,\r\nMu kuyiga ekuliwo leero,\r\nKubanga y’atuyise. \r\n\r\n4. Ffe katumusabe Omusumba w’obuliga bwe ono,\r\nAtegereze ebyaffe abaana\r\nAtukuume mu kisibo kye ffenna,\r\nNg’ataasa ng’alunda.\r\n\r\n5. Mmwe muwulire eddoboozi ly’Omukama ono,\r\nMmwe muggule emitima egyamwe\r\nMu mugondere Mukama yekka,\r\nYe nnannyini ddembe.",
+      "number": 1,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
+    },
+    {
+      "id": 2,
+      "title": "ALLELUIA – ALLELUIA",
+      "content": "Chorus: //Alleluia - Alleluia\r\n               Alleluia - Alleluia\r\n                        Alleluia – Alleluia//\r\n\r\n1. Kigambo kya Ruhanga,\r\n         Tukiraranje\r\n\tOmu bushondashonda bw’ensi\r\n\r\n2. Enyangani za Ruhanga\r\n\t\tTweheyo\r\n\t\tTumukugizege ebiro byonna.\r\n\r\n3. Katugize  nya kutuganza\r\n\t    Tumusiime\r\n\tNe tuzina Alleluia.",
+      "number": 2,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
     },
     {
       "id": 3,
-      "title": "ALLELUIA – ALLELUIA",
-      "content": "Chorus: //Alleluia - Alleluia\r\n               Alleluia - Alleluia\r\n                        Alleluia – Alleluia//\r\n\r\n1. Kigambo kya Ruhanga,\r\n         Tukiraranje\r\n\tOmu bushondashonda bw’ensi\r\n\r\n2. Enyangani za Ruhanga\r\n\t\tTweheyo\r\n\t\tTumukugizege ebiro byonna.\r\n\r\n3. Katugize  nya kutuganza\r\n\t    Tumusiime\r\n\tNe tuzina Alleluia.",
-      "number": 2
-    },
-    {
-      "id": 4,
       "title": "ALLELUIA",
-      "content": "Chorus: Alleluia, Alleluia, Alleluia, Alleluia.\r\n\r\n1. Mutendereze Omukama wano mu nnyumba ye,\r\nMumutendereze olw’ekitiibwa kye.\r\nMutendereze Omukama wano mu nnyumba ye,\r\nMumutendereze oyo nnyini bulamu\r\n\r\n2. Mutendereze Omukama olw’ekitiibwa kye,\r\nMumutendereze olw’obulungi bwe.\r\n    Mutendereze Omukama olw’ekitiibwa kye,\r\n\t\tMumutendereze olw’obukulu bwe.\r\n\r\n3. Mutendereze Omukama mmwe abatonde be,\r\nMumutendereze Omutonzi wa byonna.\r\n    Mutendereze Omukama Katonda atalemwa,\r\n\t\tMumutendereze olw’obukulu bwe\r\n\r\n4. Mutendereze Omukama  mu nnyimba ezinyuma\r\nMumutendereze asaana kwagalwa..\r\n    Mutendereze Omukama mu ddoboozi erya wamu,\r\n\t\tMumutendereze nga muli wamu.",
-      "number": 3
-    },
-    {
-      "id": 5,
-      "title": "EMBUGA ZO NNUNGI",
-      "content": "Ekidd: //Embuga zo nnungi Mukama wange,\r\n                 Embuga zo nnungi Mukama wange,\r\n\t\t             Aa! Ntwala eyo gyemba mpumulira nga nkutenda//  \r\n\r\n1. Twesiimye nnyo abaana b’engoma ffe abaana bo olwa Batismu,\r\nTweyanziza Mukama waffe, ffe b’oyise olw’okutwagala.\r\n\r\n2. Luno lwe lunaku olw’Omukama, tumutende ffe mu nnyumba ye;\r\nWamma tumutende Mukama waffe mu Yeruzalemu wakati.\r\n\r\n3. Ka nngende ku Altari y’Omukama, Kawamigero oyo eyatutonda,\r\nMujje tumutende Katonda Kitaffe tumwebaze.",
-      "number": 4
+      "content": "Chorus: Alleluia, Alleluia, Alleluia, Alleluia.\r\n\r\n1. Mutendereze Omukama wano mu nnyumba ye,\r\nMumutendereze olw’ekitiibwa kye.\r\nMutendereze Omukama wano mu nnyumba ye,\r\nMumutendereze oyo nnyini bulamu\r\n\r\n2. Mutendereze Omukama olw’ekitiibwa kye,\r\nMumutendereze olw’obulungi bwe.\r\n    Mutendereze Omukama olw’ekitiibwa kye,\r\n\t\tMumutendereze olw’obukulu bwe.\r\n\r\n3. Mutendereze Omukama mmwe abatonde be,\r\nMumutendereze Omutonzi wa byonna.\r\n    Mutendereze Omukama Katonda atalemwa,\r\n\t\tMumutendereze olw’obukulu bwe",
+      "number": 3,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
     }
   ]
 }

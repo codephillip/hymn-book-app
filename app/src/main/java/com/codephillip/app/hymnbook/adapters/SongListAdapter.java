@@ -69,6 +69,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         try {
             holder.titleView.setText(dataCursor.get(position).getTitle());
             holder.numberView.setText(String.valueOf(dataCursor.get(position).getNumber()));
