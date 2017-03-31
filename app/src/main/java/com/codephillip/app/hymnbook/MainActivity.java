@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_camera) {
-            fragment = new AllSongsFragment();
+            fragment = new SongFragment();
             getSupportActionBar().setTitle(screenNames[0]);
         } else if (id == R.id.nav_gallery) {
 
