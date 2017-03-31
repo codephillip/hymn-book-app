@@ -44,8 +44,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         HymnDatabase.getInstance();
     }
 
-    public SongListAdapter() {
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

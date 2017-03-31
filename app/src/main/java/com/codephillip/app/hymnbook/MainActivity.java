@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onCreate: connectToStorage");
         connectToStorage();
 
-        Fragment fragment = new AllSongsFragment();
+        Fragment fragment = new AllSongsGridFragment();
         getSupportActionBar().setTitle(screenNames[0]);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,fragment);
