@@ -1,6 +1,9 @@
 package com.codephillip.app.hymnbook;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -23,13 +26,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
     String[] screenNames = {"title1", "title2", "title3"};
-    boolean toggleGrid = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         HymnDatabase.getInstance();
+        Log.d(TAG, "onCreate: " + hasChangedView(this));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,7 +56,8 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onCreate: connectToStorage");
         connectToStorage();
 
-        Fragment fragment = new AllSongsGridFragment();
+        //populate the first default fragment
+        Fragment fragment = hasChangedView(this) ? new AllSongsFragment() : new AllSongsGridFragment();
         getSupportActionBar().setTitle(screenNames[0]);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,fragment);
@@ -109,9 +114,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.change_view) {
+            Log.d(TAG, "onOptionsItemSelected: changing view#");
+            switchView();
+            Fragment fragment = hasChangedView(this) ? new AllSongsFragment() : new AllSongsGridFragment();
+            getSupportActionBar().setTitle(screenNames[0]);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.frame, switchView());
+            fragmentTransaction.replace(R.id.frame, fragment);
             fragmentTransaction.commit();
             return true;
         }
@@ -128,7 +137,8 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.nav_camera) {
-            fragment = switchView();
+            fragment = hasChangedView(this) ? new AllSongsFragment() : new AllSongsGridFragment();
+            getSupportActionBar().setTitle(screenNames[0]);
         } else if (id == R.id.nav_gallery) {
             fragment = new SongFragment();
             getSupportActionBar().setTitle(screenNames[0]);
@@ -153,11 +163,20 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private Fragment switchView() {
-        Fragment fragment = null;
-        fragment = toggleGrid ? new AllSongsGridFragment() : new AllSongsFragment();
-        getSupportActionBar().setTitle(screenNames[0]);
-        toggleGrid = !toggleGrid;
-        return fragment;
+    private void switchView() {
+        Log.d(TAG, "switchView: " + hasChangedView(this));
+        saveChangedView(this, !hasChangedView(this));
+    }
+
+    private void saveChangedView(Context context, boolean hasChangedView) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Utils.CHANGE_VIEW, hasChangedView);
+        editor.apply();
+    }
+
+    private boolean hasChangedView(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(Utils.CHANGE_VIEW, false);
     }
 }

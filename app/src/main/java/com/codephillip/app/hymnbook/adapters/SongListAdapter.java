@@ -39,6 +39,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                     Utils.getInstance();
                     //subtract 1 because the ArrayList starts from zero
                     Utils.position = Integer.parseInt(String.valueOf(numberView.getText()));
+                    Utils.isSongActivityActive = false;
                     context.startActivity(new Intent(context, SongActivity.class));
                 }
             });

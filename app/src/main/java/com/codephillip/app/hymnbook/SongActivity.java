@@ -66,6 +66,12 @@ public class SongActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Log.d(TAG, "getItem: " + Utils.position + "#" + position);
             try {
+                if (!Utils.isSongActivityActive) {
+                    Log.d(TAG, "getItem: " + Utils.isSongActivityActive);
+                    mViewPager.setCurrentItem(Utils.position - 1);
+                    Utils.isSongActivityActive = true;
+                    return SongFragment.newInstance(Utils.position - 1);
+                }
                 return SongFragment.newInstance(position);
             } catch (Exception e) {
                 e.printStackTrace();

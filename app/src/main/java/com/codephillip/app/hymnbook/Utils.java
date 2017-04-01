@@ -7,6 +7,7 @@ package com.codephillip.app.hymnbook;
 public class Utils {
     private static final Utils ourInstance = new Utils();
     public static boolean isSongActivityActive;
+    public static final String CHANGE_VIEW = "change_view";
 
     public static Utils getInstance() {
         return ourInstance;

@@ -29,6 +29,56 @@
         "id": 1,
         "name": "EZA MAYINGIRA"
       }
+    },
+    {
+      "id": 4,
+      "title": "EMBUGA ZO NNUNGI",
+      "content": "Ekidd: //Embuga zo nnungi Mukama wange,\r\n                 Embuga zo nnungi Mukama wange,\r\n\t\t             Aa! Ntwala eyo gyemba mpumulira nga nkutenda//  \r\n\r\n1. Twesiimye nnyo abaana b’engoma ffe abaana bo olwa Batismu,\r\nTweyanziza Mukama waffe, ffe b’oyise olw’okutwagala.\r\n\r\n2. Luno lwe lunaku olw’Omukama, tumutende ffe mu nnyumba ye;\r\nWamma tumutende Mukama waffe mu Yeruzalemu wakati.\r\n\r\n3. Ka nngende ku Altari y’Omukama, Kawamigero oyo eyatutonda,\r\nMujje tumutende Katonda Kitaffe tumwebaze.",
+      "number": 4,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
+    },
+    {
+      "id": 5,
+      "title": "HA! NNAMULONDO YO NNUNGI.",
+      "content": "Chorus: Ha! Nnamulondo yo nnungi\r\n\tAyi Mukama, nnomwaliiro kwetudde gutengenya.\r\n        Nnegomba okubeera awo,\r\n        Awali ggwe, nga nsinza\r\n        Bwentyo nga ntenda obuyinza bwo.\r\n\r\n1. Tuzze wuwo olwa leero – Tusinze wamu ffe b’olunda ab’enda emu\r\nMu kiggwa kyo Mukama owaffe – Taata tukkirize\r\nTutuuke awo ku mwaliiro.\r\n\r\n2. Ggwe owaffe –Ffe abasobya ne tukunyiiza buli lukya ate ne luziba.\r\nTwekembe ensobi tuzikyawe\r\nTuyubule Taata otuzze buto mu kukiriza.\r\n\r\n3. Twebaza nnyo byotuwadde – enneema z’otuwa.\r\nTuzisiimye ak’ensusso – Ka tubikyawe ebibi byaffe ebyo\r\nTaata tusonyiwe, ffe tubikyawe leero ne bulijjo.\r\n\r\n4. Nga tussa kimu – Ffe abaana bo leero\r\nGano amawulire agasanyusa – ag’ekigambo kyo ekitubuulirira.\r\nTusiibe nago mawulire malungi olw’okwagala n’okukutenda\r\nGgwe Nnamugereka.",
+      "number": 5,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
+    },
+    {
+      "id": 6,
+      "title": "JANGU JANGU YEZU KABAKA",
+      "content": "Ekidd: Jangu Jangu Yezu Kabaka,\r\n                  Omulokozi wa bantu.\r\n                  Jangu okutuwonya,\r\n                  Jangu, Jangu, Jangu.\r\n\r\n1. Edda lyonna tusuubira,             2. Yezu Kabaka laba bwe twafiirwa\r\nEra nga tulindirira,                        E Ggulu nga ligaliddwa \r\nYamba Ssebo tusaasire.                Ffenna n’etuvumirirwa\r\nTofa ku bibi byaffe,                      Abaana be watonda                     \r\nYima ku bunaku bwaffe,              Sitaani bonna abatwala              \r\nTujje mu nvuba zaffe.                   Jangu obataase mangu                  \r\nJangu, Jangu, Jangu.                     Jangu, Jangu, Jangu.\r\n\r\n3. Vva mu ggulu ojje ewaffe,      4. Tunuulira mu nsi zonna\r\nAyi Ggwe Katonda waffe            Ffenna tuli mu maziga,\r\n    Otuggye mu bibi byaffe.             Tukusaba otusaasire..   \r\nWewaawo tusanidde,                   Ggwe ow’ekisa Kitaffe, \r\n\tOmuliro ogw’emirembe;             Tukusaba ojje mangu,               \r\n\tNaye era tuddiremu                     Okutubeera Yezu Kabaka,\r\n         Jangu, Jangu, Jangu                     Jangu, Jangu, Jangu.\r\n\r\n     5. Bw’okiriza jangu ewaffe,          6. Laba ennaku zitujjudde \r\n\t\tNg’otuwonyeza n’olumbe,            Mu mubiri ne mu mwoyo,  \r\n         Tuli kutenda n’essanyu.                 Jangu mangu zikkakkane.   \r\n         Ggwe Kabaka ow’amaanyi,          Tukwesiga Ggwe wekka                    \r\n         Kulembera tuwangule,                   Kitaffe totwabulira,\r\n         Omulabe Sitaani,                           Ayi Mukama waffe,\r\n\tJangu, Jangu, Jangu.                      Jangu, Jangu, Jangu.",
+      "number": 6,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
+    },
+    {
+      "id": 7,
+      "title": "JANGU YANGUWA OKUJUNA",
+      "content": "Chorus: Jangu yanguwa okujuna\r\n               Jangu otuddize eddembe Yezu Kabaka,\r\n               Tukwesiga gwe musaasizi. x 2\r\n\r\n1. Mutegekere amakubo Omukama,\r\nMwe munyirize emitima gyammwe,\r\nMmwe mugolole amayisa agammwe,\r\nLwemuliraba Omukama ng’ajja.\r\n\r\n2. Omulanzi ye Yoana alanze\r\nMmwe mulungamye amakubo gammwe,\r\nLye ddoboozi lyoyo alanga,\r\nNti mutegeke emitima gyammwe.\r\n\r\n3. Katunyirize amakubo agaffe,\r\nTubugirize Omukama nga azze.\r\nKatugolole amakubo agaffe,\r\nTusanyukire Omukama ng’azze.",
+      "number": 7,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
+    },
+    {
+      "id": 8,
+      "title": "LEERO TUNAAKUTENDA",
+      "content": "1(a) Leero tunaakutenda                 Yee Ddunda\r\n                 Katonda                                  Oli wa kitiibwa tunaakutenda\r\n\t        Ye Ggwe Katonda mwene     Yee Ddunda\r\n                 Katonda                                  Oli wa kitiibwa tunaakutenda\r\n\r\n\t (b) Tukwagala nnyo Mukama waffe      Yee Ddunda\r\n                 Katonda                                   Oli wa kitiibwa tunaakutenda\r\n                 Tukwesiga nnyo Mukama waffe     Yee Ddunda \r\n\t        Katonda                                   Oli wa kitiibwa tunaakutenda\r\n\r\n\t (c) Tunaalitenda                             Erinya lyo\r\n                Buli olukedde                           Erinya lyo\r\n                Mukama ow’obuyinza byonna obisinga  -  Olw’ekitiibwa kyo    \r\n                              Ddunda buli lunaku tunaakutenda, tunaakutenda.\r\n\r\n\t2(a) Amawanga gonna ganakutenda        Yee Ddunda\r\n                 Katonda                                   Oli wa kitiibwa tunaakutenda\r\n\t        Amazadde gonna ganakuyimba       Yee Ddunda\r\n                 Katonda                                  Oli wa kitiibwa tunaakutenda\r\n\r\n\t (b) Tukwekola nnyo Mukama waffe      Yee Ddunda\r\n                 Katonda                                   Oli wa kitiibwa tunaakutenda\r\n\t       Tukwesiga nnyo Mukama waffe      Yee Ddunda\r\n                Katonda                                    Oli wa kitiibwa tunaakutenda\r\n\r\n\t(c) Tunaalitenda                             Erinya lyo\r\n               Buli olukedde                           Erinya lyo\r\n\t      Mukama ow’obuyinza byonna obisinga  -  Olw’ekitiibwa kyo    \r\n                               Ddunda buli lunaku tunaakutenda, tunaakutenda\r\n\r\n       3(a) Mujje ffe b’anunudde                Yee Ddunda\r\n               Katonda                                     Oli wa kitiibwa tunaakutenda\r\n\t      Mujje abalondemu be               Yee Ddunda\r\n               Katonda                                     Oli wa kitiibwa tunaakutenda\r\n\r\n        (b) Tukwagala nnyo atatusuula       Yee Ddunda\r\n              Katonda                                     Oli wa kitiibwa tunaakutenda\r\n\t     Tukwagala nnyo atatudaaza     Yee Ddunda\r\n              Katonda                                     Oli wa kitiibwa tunaakutenda\r\n\r\n       (c) Tunaalitenda                                Erinya lyo\r\n             Buli olukedde                              Erinya lyo\r\n\t    Mukama ow’obuyinza byonna obisinga  -  Olw’ekitiibwa kyo    \r\n                               Ddunda buli lunaku tunaakutenda, tunaakutenda\r\n\r\n    4(a) Ebitonde byonna binaakutenda          Yee Ddunda\r\n            Mutonzi                                        Oli wa kitiibwa tunaakutenda\r\n\t   Buli ludda lwonna lunaakutenda       Yee Ddunda\r\n            Mutonzi                                        Oli wa kitiibwa tunaakutenda\r\n\r\n      (b) Birya butaala n’ebyegazanya             Yee Ddunda\r\n            Mutonzi                                        Oli wa kitiibwa tunaakutenda\r\n\t   Bikwekola nnyo ggwe atabisuula      Yee Ddunda\r\n            Mutonzi                                        Oli wa kitiibwa tunaakutenda\r\n\r\n      (c) Tunaalitenda                                       Erinya lyo\r\n            Buli olukedde                                     Erinya lyo\r\n\t   Mukama ow’obuyinza byonna obisinga  -  Olw’ekitiibwa kyo    \r\n                               Ddunda buli lunaku tunaakutenda, tunaakutenda\r\n\r\n    5(a) Ggwe Kitaffe yonna tunakutenda       Yee Ddunda\r\n            Kagingo                                        Oli wa kitiibwa tunaakutenda\r\n\t   Tumutende ffenna Katonda Mwaana    Yee Ddunda\r\n            Osaana                                          Oli wa kitiibwa tunaakutenda\r\n\r\n(b) Tukwagala nnyo Mwoyo atuyamba    Yee Ddunda\r\n                Osaana                                      Oli wa kitiibwa tunaakutenda\r\n                Tukwesiga nnyo Mukama waffe        Yee Ddunda \r\n\t       Katonda                                    Oli wa kitiibwa tunaakutenda\r\n\r\n\t (c) Tunaalitenda                            Erinya lyo\r\n                Buli olukedde                          Erinya lyo\r\n                Mukama ow’obuyinza byonna obisinga  -  Olw’ekitiibwa kyo    \r\n                              Ddunda buli lunaku tunaakutenda, tunaakutenda.",
+      "number": 8,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
     }
   ]
 }
