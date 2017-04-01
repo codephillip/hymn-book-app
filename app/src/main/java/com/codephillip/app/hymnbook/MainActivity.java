@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.utilities.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;

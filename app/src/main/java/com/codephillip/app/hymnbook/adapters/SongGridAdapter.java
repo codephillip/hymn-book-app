@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.codephillip.app.hymnbook.ColourQueue;
+import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.R;
 
 /**

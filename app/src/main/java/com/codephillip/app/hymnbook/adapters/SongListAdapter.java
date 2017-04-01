@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.codephillip.app.hymnbook.ColourQueue;
+import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SongActivity;
-import com.codephillip.app.hymnbook.Utils;
+import com.codephillip.app.hymnbook.utilities.Utils;
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 

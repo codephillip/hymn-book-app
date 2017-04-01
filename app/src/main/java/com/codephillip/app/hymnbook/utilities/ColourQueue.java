@@ -1,4 +1,4 @@
-package com.codephillip.app.hymnbook;
+package com.codephillip.app.hymnbook.utilities;
 
 /**
  * Created by codephillip on 01/04/17.
