@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.codephillip.app.hymnbook.ColourQueue;
 import com.codephillip.app.hymnbook.R;
 
 /**
@@ -17,6 +18,7 @@ import com.codephillip.app.hymnbook.R;
 
 public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHolder> {
 
+    private final ColourQueue colourQueue;
     private String[] mData = new String[0];
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
@@ -25,6 +27,7 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     public SongGridAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        colourQueue = new ColourQueue();
     }
 
     // inflates the cell layout from xml when needed
@@ -40,7 +43,7 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         String animal = mData[position];
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        int color1 = generator.getRandomColor();
+        int color1 = generator.getColor(colourQueue.getCount());
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
                 .width(140)  // width in px

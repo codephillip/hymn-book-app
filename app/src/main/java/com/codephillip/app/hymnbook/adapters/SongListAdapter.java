@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.codephillip.app.hymnbook.ColourQueue;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.Utils;
@@ -25,11 +26,13 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     private static final String TAG = SongListAdapter.class.getSimpleName();
     ArrayList<Hymn> dataCursor;
     private static Context context;
+    private ColourQueue colourQueue;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
         private ImageView numberView;
         private TextView titleView;
+
         private ViewHolder(View v) {
             super(v);
             numberView = (ImageView) v.findViewById(R.id.numberImageView);
@@ -41,6 +44,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         dataCursor = cursor;
         context = mContext;
         HymnDatabase.getInstance();
+        colourQueue = new ColourQueue();
     }
 
 
@@ -67,12 +71,12 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     public void filter(String text) {
         Log.d(TAG, "filter: " + text);
         dataCursor.clear();
-        if(text.isEmpty()){
+        if (text.isEmpty()) {
             dataCursor = HymnDatabase.hymns.getHymnArrayList();
-        } else{
+        } else {
             text = text.toLowerCase();
             for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
-                if(hymn.getTitle().toLowerCase().contains(text) || hymn.getContent().toLowerCase().contains(text) || hymn.getNumber() == Integer.parseInt(text)) {
+                if (hymn.getTitle().toLowerCase().contains(text) || hymn.getContent().toLowerCase().contains(text) || hymn.getNumber() == Integer.parseInt(text)) {
                     dataCursor.add(hymn);
                 }
             }
@@ -82,11 +86,10 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
         try {
             holder.titleView.setText(dataCursor.get(position).getTitle());
             ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-            int color1 = generator.getRandomColor();
+            int color1 = generator.getColor(colourQueue.getCount());
             TextDrawable drawable = TextDrawable.builder()
                     .beginConfig()
                     .width(140)  // width in px
