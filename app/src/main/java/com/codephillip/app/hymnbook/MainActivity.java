@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
-    String[] screenNames = {"title1", "title2", "title3"};
+    String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,19 +136,16 @@ public class MainActivity extends AppCompatActivity
         Log.d("Navigation bar", "onNavigationItemSelected: " + id);
         Fragment fragment = null;
 
-        if (id == R.id.nav_camera) {
-            fragment = hasChangedView(this) ? new AllSongsFragment() : new AllSongsGridFragment();
+        if (id == R.id.all_songs) {
+            fragment = hasChangedView(this) ?  new AllSongsFragment() : new AllSongsGridFragment();
             getSupportActionBar().setTitle(screenNames[0]);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.category) {
             fragment = new SongFragment();
             getSupportActionBar().setTitle(screenNames[0]);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.favorite) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        }
+        else if (id == R.id.about) {
 
         } else {
             return true;
