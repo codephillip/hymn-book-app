@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 
 /**
@@ -20,6 +21,7 @@ public class SongFragment extends Fragment {
     private static final String SONG_NUMBER = "song_number";
     private TextView titleView;
     private TextView contentView;
+    private TextView navigationView;
 
     public SongFragment() {
     }
@@ -38,13 +40,16 @@ public class SongFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_song, container, false);
         titleView = (TextView) rootView.findViewById(R.id.title);
         contentView = (TextView) rootView.findViewById(R.id.content);
+        navigationView = (TextView) rootView.findViewById(R.id.navigation);
 
         HymnDatabase.getInstance();
         int position = getArguments().getInt(SONG_NUMBER);
         Log.d(TAG, "onCreateView: position#" + position);
+        Hymn hymn = HymnDatabase.hymns.getHymnArrayList().get(position);
         try {
-            titleView.setText(HymnDatabase.hymns.getHymnArrayList().get(position).getTitle());
-            contentView.setText(HymnDatabase.hymns.getHymnArrayList().get(position).getContent());
+            titleView.setText(hymn.getNumber() + ". " +hymn.getTitle());
+            contentView.setText(hymn.getContent());
+            navigationView.setText(hymn.getNumber() + " / " + HymnDatabase.hymns.getHymnArrayList().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
