@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="6"
-    android:minHeight="?android:attr/listPreferredItemHeight">
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:weightSum="6">
 
-    <TextView
-        android:id="@+id/number_view"
+
+    <FrameLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:text="123"/>
+        android:layout_height="80dp"
+        android:layout_weight="1.5">
+
+        <ImageView
+            android:id="@+id/numberImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_menu_send" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/title_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
         android:layout_gravity="center"
-        android:text="All the above"/>
+        android:layout_weight="4.5"
+        android:text="All the above" />
 
 </LinearLayout>

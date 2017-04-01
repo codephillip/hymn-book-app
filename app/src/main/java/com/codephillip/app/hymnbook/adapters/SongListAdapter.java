@@ -7,8 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.Utils;
@@ -25,24 +28,12 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
-        private TextView numberView;
+        private ImageView numberView;
         private TextView titleView;
         private ViewHolder(View v) {
             super(v);
-            numberView = (TextView) v.findViewById(R.id.number_view);
+            numberView = (ImageView) v.findViewById(R.id.numberImageView);
             titleView = (TextView) v.findViewById(R.id.title_view);
-
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d(TAG, "onClick: " + numberView.getText());
-                    Utils.getInstance();
-                    //subtract 1 because the ArrayList starts from zero
-                    Utils.position = Integer.parseInt(String.valueOf(numberView.getText()));
-                    Utils.isSongActivityActive = false;
-                    context.startActivity(new Intent(context, SongActivity.class));
-                }
-            });
         }
     }
 
@@ -90,14 +81,33 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         try {
             holder.titleView.setText(dataCursor.get(position).getTitle());
-            holder.numberView.setText(String.valueOf(dataCursor.get(position).getNumber()));
+            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+            int color1 = generator.getRandomColor();
+            TextDrawable drawable = TextDrawable.builder()
+                    .beginConfig()
+                    .width(140)  // width in px
+                    .height(140) // height in px
+                    .endConfig()
+                    .buildRound(String.valueOf(dataCursor.get(position).getNumber()), color1);
+            holder.numberView.setImageDrawable(drawable);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: ");
+                Utils.getInstance();
+                Utils.position = dataCursor.get(position).getNumber();
+                Utils.isSongActivityActive = false;
+                context.startActivity(new Intent(context, SongActivity.class));
+            }
+        });
     }
 
     @Override

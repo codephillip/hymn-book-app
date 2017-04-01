@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.R;
 
 /**
@@ -37,7 +39,15 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String animal = mData[position];
-        holder.myTextView.setText(animal);
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        int color1 = generator.getRandomColor();
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .width(140)  // width in px
+                .height(140) // height in px
+                .endConfig()
+                .buildRound(animal, color1);
+        holder.numberView.setImageDrawable(drawable);
     }
 
     // total number of cells
@@ -49,11 +59,11 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView myTextView;
+        public ImageView numberView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            myTextView = (TextView) itemView.findViewById(R.id.info_text);
+            numberView = (ImageView) itemView.findViewById(R.id.numberImageView);
             itemView.setOnClickListener(this);
         }
 
