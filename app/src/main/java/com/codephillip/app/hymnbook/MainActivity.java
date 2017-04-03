@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
-    String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
+    private final String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

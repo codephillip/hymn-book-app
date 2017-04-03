@@ -49,10 +49,7 @@ public class SongFragment extends Fragment {
         likeButton = (ImageButton) rootView.findViewById(R.id.like);
 
         HymnDatabase.getInstance();
-        position = getArguments().getInt(SONG_NUMBER);
-        Log.d(TAG, "onCreateView: position#" + position);
-        final Hymn hymn = HymnDatabase.hymns.getHymnArrayList().get(position);
-
+        final Hymn hymn = getHymnFromList();
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +59,11 @@ public class SongFragment extends Fragment {
         });
         attachDataToViews(hymn);
         return rootView;
+    }
+
+    private Hymn getHymnFromList() {
+        position = getArguments().getInt(SONG_NUMBER);
+        return HymnDatabase.hymns.getHymnArrayList().get(position);
     }
 
     private void changeLikePreference(boolean liked, String title) {

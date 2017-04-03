@@ -34,9 +34,9 @@ import java.util.ArrayList;
 public class AllSongsFragment extends Fragment {
 
     private static final String TAG = AllSongsFragment.class.getSimpleName();
-    SongListAdapter listAdapter;
-    SongGridAdapter gridAdapter;
-    RecyclerView recyclerView;
+    private SongListAdapter listAdapter;
+    private SongGridAdapter gridAdapter;
+    private RecyclerView recyclerView;
 
     public AllSongsFragment() {
     }
@@ -60,26 +60,35 @@ public class AllSongsFragment extends Fragment {
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
         if (hasChangedView()) {
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            listAdapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
-            recyclerView.setAdapter(listAdapter);
+            attachListAdapter();
         } else {
-            //gridview
-            // data to populate the RecyclerView with
-            String[] data = new String[HymnDatabase.hymns.getHymnArrayList().size()];
-            int counter = 0;
-            for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
-                data[counter++] = String.valueOf(hymn.getNumber());
-            }
-
-            int numberOfColumns = 5;
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
-            gridAdapter = new SongGridAdapter(getContext(), data);
-            recyclerView.setAdapter(gridAdapter);
+            attachGridAdapter();
         }
 
         return rootView;
+    }
+
+    private void attachListAdapter() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        listAdapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
+        recyclerView.setAdapter(listAdapter);
+    }
+
+    private void attachGridAdapter() {
+        int numberOfColumns = 5;
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
+        gridAdapter = new SongGridAdapter(getContext(), generateGridViewData());
+        recyclerView.setAdapter(gridAdapter);
+    }
+
+    private String[] generateGridViewData() {
+        String[] data = new String[HymnDatabase.hymns.getHymnArrayList().size()];
+        int counter = 0;
+        for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
+            data[counter++] = String.valueOf(hymn.getNumber());
+        }
+        return data;
     }
 
     private void updateSingletonHymns(boolean showFavoriteScreen) {

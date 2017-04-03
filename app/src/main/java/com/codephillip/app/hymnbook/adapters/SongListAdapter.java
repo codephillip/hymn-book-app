@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
     private static final String TAG = SongListAdapter.class.getSimpleName();
-    ArrayList<Hymn> dataCursor;
+    private ArrayList<Hymn> dataCursor;
     private static Context context;
     private ColourQueue colourQueue;
 
