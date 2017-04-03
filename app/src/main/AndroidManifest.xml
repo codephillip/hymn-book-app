@@ -28,6 +28,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codephillip.app.hymnbook.MainActivity" />
         </activity>
+
+        <provider
+            android:name="com.codephillip.app.hymnbook.provider.HymnbookProvider"
+            android:authorities="com.codephillip.app.hymnbook.provider"
+            android:exported="false" />
+
     </application>
 
 </manifest>

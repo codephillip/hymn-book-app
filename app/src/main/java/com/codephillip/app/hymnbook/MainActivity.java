@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import org.json.JSONArray;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject innerObject = jsonArray.getJSONObject(i);
                 hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name")));
+                storeInHymnTable(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name"), false);
             }
             HymnDatabase.hymns.setHymnArrayList(hymnList);
         } catch (JSONException e) {
@@ -85,6 +87,16 @@ public class MainActivity extends AppCompatActivity
         } catch (IOException e){
             Log.e(TAG, e.toString());
         }
+    }
+
+    private void storeInHymnTable(int number, String title, String content, String category, boolean like) {
+        HymntableContentValues hymn = new HymntableContentValues();
+        hymn.putNumber(number);
+        hymn.putTitle(title);
+        hymn.putContent(content);
+        hymn.putCategory(category);
+        hymn.putLike(like);
+        hymn.insert(getContentResolver());
     }
 
     @Override
