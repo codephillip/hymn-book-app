@@ -162,10 +162,10 @@ public class MainActivity extends AppCompatActivity
             fragment = AllSongsFragment.newInstance(false);
             getSupportActionBar().setTitle(screenNames[0]);
         } else if (id == R.id.category) {
-            fragment = new SongFragment();
+            fragment = new CategoryFragment();
             getSupportActionBar().setTitle(screenNames[1]);
         } else if (id == R.id.favorite) {
-            fragment = AllSongsFragment.newInstance(false);
+            fragment = AllSongsFragment.newInstance(true);
             getSupportActionBar().setTitle(screenNames[2]);
         }
         else if (id == R.id.about) {
