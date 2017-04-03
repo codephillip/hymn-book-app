@@ -53,28 +53,33 @@ public class AllSongsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        ArrayList<Hymn> hymnArrayList = new ArrayList<>();
         boolean showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
-
-        HymntableCursor cursor = new HymntableSelection().query(getContext().getContentResolver());
-
-        
-        if (cursor.moveToFirst()) {
-            do {
-                if (showFavoriteScreen) {
-                    if (cursor.getLike())
-                        hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
-                } else {
-                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
-                }
-            } while (cursor.moveToNext());
-        }
-
-        HymnDatabase.hymns.setHymnArrayList(hymnArrayList);
-        Log.d(TAG, "onCreateView: ###" + HymnDatabase.hymns.getHymnArrayList().size());
+        updateSingletonHymns(showFavoriteScreen);
         adapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
         recyclerView.setAdapter(adapter);
         return rootView;
+    }
+
+    private void updateSingletonHymns(boolean showFavoriteScreen) {
+        ArrayList<Hymn> hymnArrayList = new ArrayList<>();
+        HymntableCursor cursor = queryHymnTable(showFavoriteScreen);
+        if (cursor.moveToFirst()) {
+            do {
+                hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
+            } while (cursor.moveToNext());
+        }
+        HymnDatabase.hymns.setHymnArrayList(hymnArrayList);
+        Log.d(TAG, "onCreateView: ###" + HymnDatabase.hymns.getHymnArrayList().size());
+    }
+
+    private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
+        HymntableCursor cursor;
+        if (showFavoriteScreen) {
+            cursor = new HymntableSelection().like(true).query(getContext().getContentResolver());
+        } else {
+            cursor = new HymntableSelection().query(getContext().getContentResolver());
+        }
+        return cursor;
     }
 
     //todo work on search
