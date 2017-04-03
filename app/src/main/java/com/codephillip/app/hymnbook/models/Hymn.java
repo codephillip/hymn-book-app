@@ -10,6 +10,7 @@ public class Hymn {
     private String title;
     private String content;
     private String category;
+    private long id;
     private boolean liked = false;
 
     public Hymn(int number, String title, String content, String category) {
@@ -28,6 +29,15 @@ public class Hymn {
     }
 
     public Hymn() {
+    }
+
+    public Hymn(int number, String title, String content, String category, long id, boolean liked) {
+        this.number = number;
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.id = id;
+        this.liked = liked;
     }
 
     public int getNumber() {
@@ -68,5 +78,13 @@ public class Hymn {
 
     public void setLiked(boolean liked) {
         this.liked = liked;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

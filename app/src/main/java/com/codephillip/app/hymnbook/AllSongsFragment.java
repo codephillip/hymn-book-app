@@ -64,7 +64,7 @@ public class AllSongsFragment extends Fragment {
             FavoritetableCursor cursor = new FavoritetableCursor(cursorLoader.loadInBackground());
             if (cursor.moveToFirst()) {
                 do {
-                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory()));
+                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
                 } while (cursor.moveToNext());
             }
         } else {
@@ -72,7 +72,7 @@ public class AllSongsFragment extends Fragment {
             HymntableCursor cursor = new HymntableCursor(cursorLoader.loadInBackground());
             if (cursor.moveToFirst()) {
                 do {
-                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory()));
+                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
                 } while (cursor.moveToNext());
             }
 

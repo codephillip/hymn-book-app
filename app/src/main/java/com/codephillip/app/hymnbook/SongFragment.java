@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableColumns;
 import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableContentValues;
 
 /**
@@ -26,6 +27,7 @@ public class SongFragment extends Fragment {
     private TextView contentView;
     private TextView navigationView;
     private ImageButton likeButton;
+    private int position;
 
     public SongFragment() {
     }
@@ -48,7 +50,7 @@ public class SongFragment extends Fragment {
         likeButton = (ImageButton) rootView.findViewById(R.id.like);
 
         HymnDatabase.getInstance();
-        int position = getArguments().getInt(SONG_NUMBER);
+        position = getArguments().getInt(SONG_NUMBER);
         Log.d(TAG, "onCreateView: position#" + position);
         final Hymn hymn = HymnDatabase.hymns.getHymnArrayList().get(position);
 
@@ -56,17 +58,27 @@ public class SongFragment extends Fragment {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                storeInFavouriteTable(hymn.getNumber(), hymn.getTitle(), hymn.getContent(), hymn.getCategory(), true);
+                Log.d(TAG, "onClick: " + hymn.isLiked());
+                if (hymn.isLiked())
+                    deleteFavorite(hymn.getTitle());
+                else
+                    storeInFavouriteTable(hymn.getNumber(), hymn.getTitle(), hymn.getContent(), hymn.getCategory(), true);
             }
         });
         attachDataToViews(hymn);
         return rootView;
     }
 
+    private void deleteFavorite(String title) {
+        long deleted = getContext().getContentResolver().delete(FavoritetableColumns.CONTENT_URI, FavoritetableColumns.TITLE + " LIKE ?", new String[]{String.valueOf(title)});
+        Log.d(TAG, "deleteHymnTable: " + deleted);
+    }
+
     private void attachDataToViews(Hymn hymn) {
         try {
-            titleView.setText(hymn.getNumber() + ". " +hymn.getTitle());
+            titleView.setText(hymn.getNumber() + ". " + hymn.getTitle());
             contentView.setText(hymn.getContent());
+            navigationView.setText((position + 1) + "/" + HymnDatabase.hymns.getHymnArrayList().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
