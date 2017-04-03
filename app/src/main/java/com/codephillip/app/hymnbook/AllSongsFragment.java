@@ -2,6 +2,7 @@ package com.codephillip.app.hymnbook;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
+import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableColumns;
+import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableCursor;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
+import com.codephillip.app.hymnbook.utilities.Utils;
+
+import java.util.ArrayList;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -31,6 +40,16 @@ public class AllSongsFragment extends Fragment {
     public AllSongsFragment() {
     }
 
+
+    public static AllSongsFragment newInstance(boolean isFavorite) {
+        Log.d(TAG, "newInstance: " + isFavorite);
+        AllSongsFragment fragment = new AllSongsFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(Utils.IS_FAVORITE, isFavorite);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,6 +57,28 @@ public class AllSongsFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        ArrayList<Hymn> hymnArrayList = new ArrayList<>();
+        if (getArguments().getBoolean(Utils.IS_FAVORITE, false)) {
+            CursorLoader cursorLoader = new CursorLoader(getContext(), FavoritetableColumns.CONTENT_URI, null, null, null, null);
+            FavoritetableCursor cursor = new FavoritetableCursor(cursorLoader.loadInBackground());
+            if (cursor.moveToFirst()) {
+                do {
+                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory()));
+                } while (cursor.moveToNext());
+            }
+        } else {
+            CursorLoader cursorLoader = new CursorLoader(getContext(), HymntableColumns.CONTENT_URI, null, null, null, null);
+            HymntableCursor cursor = new HymntableCursor(cursorLoader.loadInBackground());
+            if (cursor.moveToFirst()) {
+                do {
+                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory()));
+                } while (cursor.moveToNext());
+            }
+
+        }
+        HymnDatabase.hymns.setHymnArrayList(hymnArrayList);
+        Log.d(TAG, "onCreateView: ###" + HymnDatabase.hymns.getHymnArrayList().size());
         adapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
         recyclerView.setAdapter(adapter);
         return rootView;

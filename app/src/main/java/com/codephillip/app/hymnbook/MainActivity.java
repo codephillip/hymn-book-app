@@ -1,6 +1,5 @@
 package com.codephillip.app.hymnbook;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +16,7 @@ import android.view.MenuItem;
 
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         HymnDatabase.getInstance();
-        Log.d(TAG, "onCreate: " + hasChangedView(this));
+        Log.d(TAG, "onCreate: " + hasChangedView());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -55,11 +55,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Log.d(TAG, "onCreate: connectToStorage");
-        connectToStorage();
+        if (isFirstLaunch())
+            connectToStorage();
 
         //populate the first default fragment
-        Fragment fragment = hasChangedView(this) ? new AllSongsFragment() : new AllSongsGridFragment();
+        Fragment fragment = hasChangedView() ? AllSongsFragment.newInstance(false) : new AllSongsGridFragment();
         getSupportActionBar().setTitle(screenNames[0]);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,fragment);
@@ -68,6 +68,11 @@ public class MainActivity extends AppCompatActivity
 
     private void connectToStorage() {
         Log.d(TAG, "onCreate: connectToStorage started");
+        deleteHymnTable();
+        saveFirstLaunch(true);
+        //todo remove on release
+//        getContentResolver().delete(FavoritetableColumns.CONTENT_URI, null, null);
+
         try {
             InputStream inputStream = getResources().openRawResource(R.raw.data);
             byte[] b = new byte[inputStream.available()];
@@ -78,15 +83,19 @@ public class MainActivity extends AppCompatActivity
             ArrayList<Hymn> hymnList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject innerObject = jsonArray.getJSONObject(i);
-                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name")));
+//                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name")));
                 storeInHymnTable(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name"), false);
             }
-            HymnDatabase.hymns.setHymnArrayList(hymnList);
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
         } catch (IOException e){
             Log.e(TAG, e.toString());
         }
+    }
+
+    private void deleteHymnTable() {
+        long deleted = getContentResolver().delete(HymntableColumns.CONTENT_URI, null, null);
+        Log.d(TAG, "deleteHymnTable: " + deleted);
     }
 
     private void storeInHymnTable(int number, String title, String content, String category, boolean like) {
@@ -130,7 +139,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.change_view) {
             Log.d(TAG, "onOptionsItemSelected: changing view#");
             switchView();
-            Fragment fragment = hasChangedView(this) ? new AllSongsFragment() : new AllSongsGridFragment();
+            Fragment fragment = hasChangedView() ? AllSongsFragment.newInstance(false) : new AllSongsGridFragment();
             getSupportActionBar().setTitle(screenNames[0]);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment);
@@ -150,13 +159,14 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.all_songs) {
-            fragment = hasChangedView(this) ?  new AllSongsFragment() : new AllSongsGridFragment();
+            fragment = hasChangedView() ?  AllSongsFragment.newInstance(false) : new AllSongsGridFragment();
             getSupportActionBar().setTitle(screenNames[0]);
         } else if (id == R.id.category) {
             fragment = new SongFragment();
-            getSupportActionBar().setTitle(screenNames[0]);
+            getSupportActionBar().setTitle(screenNames[1]);
         } else if (id == R.id.favorite) {
-
+            fragment = hasChangedView() ?  AllSongsFragment.newInstance(true) : new AllSongsGridFragment();
+            getSupportActionBar().setTitle(screenNames[2]);
         }
         else if (id == R.id.about) {
 
@@ -174,19 +184,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void switchView() {
-        Log.d(TAG, "switchView: " + hasChangedView(this));
-        saveChangedView(this, !hasChangedView(this));
+        Log.d(TAG, "switchView: " + hasChangedView());
+        saveChangedView(!hasChangedView());
     }
 
-    private void saveChangedView(Context context, boolean hasChangedView) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    private void saveChangedView(boolean hasChangedView) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(Utils.CHANGE_VIEW, hasChangedView);
         editor.apply();
     }
 
-    private boolean hasChangedView(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    private boolean hasChangedView() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         return prefs.getBoolean(Utils.CHANGE_VIEW, false);
+    }
+
+    private void saveFirstLaunch(boolean hasChangedView) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Utils.FIRST_LAUNCH, hasChangedView);
+        editor.apply();
+    }
+
+    private boolean isFirstLaunch() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getBoolean(Utils.FIRST_LAUNCH, true);
     }
 }

@@ -10,12 +10,21 @@ public class Hymn {
     private String title;
     private String content;
     private String category;
+    private boolean liked = false;
 
     public Hymn(int number, String title, String content, String category) {
         this.number = number;
         this.title = title;
         this.content = content;
         this.category = category;
+    }
+
+    public Hymn(int number, String title, String content, String category, boolean liked) {
+        this.number = number;
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.liked = liked;
     }
 
     public Hymn() {
@@ -51,5 +60,13 @@ public class Hymn {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 }

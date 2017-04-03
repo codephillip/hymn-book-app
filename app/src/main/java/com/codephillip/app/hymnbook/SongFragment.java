@@ -1,5 +1,6 @@
 package com.codephillip.app.hymnbook;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -66,7 +67,6 @@ public class SongFragment extends Fragment {
         try {
             titleView.setText(hymn.getNumber() + ". " +hymn.getTitle());
             contentView.setText(hymn.getContent());
-            navigationView.setText(hymn.getNumber() + " / " + HymnDatabase.hymns.getHymnArrayList().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,6 +79,7 @@ public class SongFragment extends Fragment {
         hymn.putContent(content);
         hymn.putCategory(category);
         hymn.putLike(like);
-        hymn.insert(getContext().getContentResolver());
+        Uri uri = hymn.insert(getContext().getContentResolver());
+        Log.d("INSERT: ", "inserting" + uri.toString());
     }
 }
