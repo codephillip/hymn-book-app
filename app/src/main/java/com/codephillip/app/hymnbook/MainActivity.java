@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
             connectToStorage();
 
         //populate the first default fragment
-        Fragment fragment = hasChangedView() ? AllSongsFragment.newInstance(false) : AllSongsGridFragment.newInstance(false);
+        Fragment fragment = AllSongsFragment.newInstance(false);
         getSupportActionBar().setTitle(screenNames[0]);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,fragment);
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.change_view) {
             Log.d(TAG, "onOptionsItemSelected: changing view#");
             switchView();
-            Fragment fragment = hasChangedView() ? AllSongsFragment.newInstance(false) : AllSongsGridFragment.newInstance(false);
+            Fragment fragment = AllSongsFragment.newInstance(false);
             getSupportActionBar().setTitle(screenNames[0]);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment);
@@ -159,13 +159,13 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.all_songs) {
-            fragment = hasChangedView() ?  AllSongsFragment.newInstance(false) : AllSongsGridFragment.newInstance(false);
+            fragment = AllSongsFragment.newInstance(false);
             getSupportActionBar().setTitle(screenNames[0]);
         } else if (id == R.id.category) {
             fragment = new SongFragment();
             getSupportActionBar().setTitle(screenNames[1]);
         } else if (id == R.id.favorite) {
-            fragment = hasChangedView() ?  AllSongsFragment.newInstance(true) : AllSongsGridFragment.newInstance(true);
+            fragment = AllSongsFragment.newInstance(false);
             getSupportActionBar().setTitle(screenNames[2]);
         }
         else if (id == R.id.about) {

@@ -1,8 +1,12 @@
 package com.codephillip.app.hymnbook;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -14,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codephillip.app.hymnbook.adapters.SongGridAdapter;
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
@@ -27,10 +32,11 @@ import java.util.ArrayList;
  * Created by codephillip on 31/03/17.
  */
 
-public class AllSongsFragment extends Fragment {
+public class AllSongsFragment extends Fragment implements SongGridAdapter.ItemClickListener {
 
     private static final String TAG = AllSongsFragment.class.getSimpleName();
-    SongListAdapter adapter;
+    SongListAdapter listAdapter;
+    SongGridAdapter gridAdapter;
     RecyclerView recyclerView;
 
     public AllSongsFragment() {
@@ -49,14 +55,32 @@ public class AllSongsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_songs, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         boolean showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
         updateSingletonHymns(showFavoriteScreen);
-        adapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
-        recyclerView.setAdapter(adapter);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
+        if (hasChangedView()) {
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            listAdapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
+            recyclerView.setAdapter(listAdapter);
+        } else {
+            //gridview
+            // data to populate the RecyclerView with
+            String[] data = new String[HymnDatabase.hymns.getHymnArrayList().size()];
+            int counter = 0;
+            for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
+                data[counter++] = String.valueOf(hymn.getNumber());
+            }
+
+            int numberOfColumns = 5;
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
+            gridAdapter = new SongGridAdapter(getContext(), data);
+            gridAdapter.setClickListener(this);
+            recyclerView.setAdapter(gridAdapter);
+        }
+
         return rootView;
     }
 
@@ -82,6 +106,11 @@ public class AllSongsFragment extends Fragment {
         return cursor;
     }
 
+    private boolean hasChangedView() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        return prefs.getBoolean(Utils.CHANGE_VIEW, false);
+    }
+
     //todo work on search
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -94,16 +123,24 @@ public class AllSongsFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d(TAG, "onQueryTextSubmit: ");
-                adapter.filter(query);
+                listAdapter.filter(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d(TAG, "onQueryTextChange: ");
-                adapter.filter(newText);
+                listAdapter.filter(newText);
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.i("TAG", "You clicked number " + gridAdapter.getItem(position) + ", which is at cell position " + position);
+        Utils.position = Integer.parseInt(gridAdapter.getItem(position - 1));
+        Utils.isSongActivityActive = false;
+        startActivity(new Intent(getContext(), SongActivity.class));
     }
 }
