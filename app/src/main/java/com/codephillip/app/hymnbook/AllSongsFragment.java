@@ -1,6 +1,5 @@
 package com.codephillip.app.hymnbook;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -32,7 +31,7 @@ import java.util.ArrayList;
  * Created by codephillip on 31/03/17.
  */
 
-public class AllSongsFragment extends Fragment implements SongGridAdapter.ItemClickListener {
+public class AllSongsFragment extends Fragment {
 
     private static final String TAG = AllSongsFragment.class.getSimpleName();
     SongListAdapter listAdapter;
@@ -77,7 +76,6 @@ public class AllSongsFragment extends Fragment implements SongGridAdapter.ItemCl
             int numberOfColumns = 5;
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
             gridAdapter = new SongGridAdapter(getContext(), data);
-            gridAdapter.setClickListener(this);
             recyclerView.setAdapter(gridAdapter);
         }
 
@@ -134,13 +132,5 @@ public class AllSongsFragment extends Fragment implements SongGridAdapter.ItemCl
                 return true;
             }
         });
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        Log.i("TAG", "You clicked number " + gridAdapter.getItem(position) + ", which is at cell position " + position);
-        Utils.position = Integer.parseInt(gridAdapter.getItem(position - 1));
-        Utils.isSongActivityActive = false;
-        startActivity(new Intent(getContext(), SongActivity.class));
     }
 }

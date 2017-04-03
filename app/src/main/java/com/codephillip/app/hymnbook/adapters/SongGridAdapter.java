@@ -1,7 +1,9 @@
 package com.codephillip.app.hymnbook.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,12 @@ import android.widget.ImageView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.R;
+import com.codephillip.app.hymnbook.SongActivity;
+import com.codephillip.app.hymnbook.utilities.ColourQueue;
+import com.codephillip.app.hymnbook.utilities.Utils;
+
+import static com.codephillip.app.hymnbook.utilities.Utils.position;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -21,11 +27,12 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     private final ColourQueue colourQueue;
     private String[] mData = new String[0];
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private static Context context;
 
     // data is passed into the constructor
     public SongGridAdapter(Context context, String[] data) {
         this.mInflater = LayoutInflater.from(context);
+        this.context = context;
         this.mData = data;
         colourQueue = new ColourQueue();
     }
@@ -61,33 +68,21 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView numberView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             numberView = (ImageView) itemView.findViewById(R.id.numberImageView);
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i("TAG", "You clicked number " + getAdapterPosition() + ", which is at cell position " + position);
+                    Utils.position = getAdapterPosition();
+                    Utils.isSongActivityActive = false;
+                    context.startActivity(new Intent(context, SongActivity.class));
+                }
+            });
         }
-
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-        }
-    }
-
-    // convenience method for getting data at click position
-    public String getItem(int id) {
-        return mData[id];
-    }
-
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
     }
 }
