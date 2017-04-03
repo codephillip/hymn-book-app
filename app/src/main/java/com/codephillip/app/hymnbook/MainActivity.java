@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
     private void connectToStorage() {
         Log.d(TAG, "onCreate: connectToStorage started");
         deleteHymnTable();
-        saveFirstLaunch(true);
+        saveFirstLaunch(false);
         //todo remove on release
 //        getContentResolver().delete(FavoritetableColumns.CONTENT_URI, null, null);
 

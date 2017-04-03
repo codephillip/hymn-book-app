@@ -1,6 +1,5 @@
 package com.codephillip.app.hymnbook;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,8 +11,8 @@ import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
-import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableColumns;
-import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableContentValues;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -54,24 +53,21 @@ public class SongFragment extends Fragment {
         Log.d(TAG, "onCreateView: position#" + position);
         final Hymn hymn = HymnDatabase.hymns.getHymnArrayList().get(position);
 
-
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: " + hymn.isLiked());
-                if (hymn.isLiked())
-                    deleteFavorite(hymn.getTitle());
-                else
-                    storeInFavouriteTable(hymn.getNumber(), hymn.getTitle(), hymn.getContent(), hymn.getCategory(), true);
+                changeLikePreference(!hymn.isLiked(), hymn.getTitle());
             }
         });
         attachDataToViews(hymn);
         return rootView;
     }
 
-    private void deleteFavorite(String title) {
-        long deleted = getContext().getContentResolver().delete(FavoritetableColumns.CONTENT_URI, FavoritetableColumns.TITLE + " LIKE ?", new String[]{String.valueOf(title)});
-        Log.d(TAG, "deleteHymnTable: " + deleted);
+    private void changeLikePreference(boolean liked, String title) {
+        HymntableContentValues values = new HymntableContentValues();
+        values.putLike(liked);
+        values.update(getContext().getContentResolver(), new HymntableSelection().titleLike(title));
     }
 
     private void attachDataToViews(Hymn hymn) {
@@ -82,16 +78,5 @@ public class SongFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void storeInFavouriteTable(int number, String title, String content, String category, boolean like) {
-        FavoritetableContentValues hymn = new FavoritetableContentValues();
-        hymn.putNumber(number);
-        hymn.putTitle(title);
-        hymn.putContent(content);
-        hymn.putCategory(category);
-        hymn.putLike(like);
-        Uri uri = hymn.insert(getContext().getContentResolver());
-        Log.d("INSERT: ", "inserting" + uri.toString());
     }
 }

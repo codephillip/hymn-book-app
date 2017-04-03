@@ -2,7 +2,6 @@ package com.codephillip.app.hymnbook;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,10 +17,8 @@ import android.view.ViewGroup;
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
-import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableColumns;
-import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableCursor;
-import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import java.util.ArrayList;
@@ -36,10 +33,8 @@ public class AllSongsFragment extends Fragment {
     SongListAdapter adapter;
     RecyclerView recyclerView;
 
-
     public AllSongsFragment() {
     }
-
 
     public static AllSongsFragment newInstance(boolean isFavorite) {
         Log.d(TAG, "newInstance: " + isFavorite);
@@ -59,24 +54,22 @@ public class AllSongsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<Hymn> hymnArrayList = new ArrayList<>();
-        if (getArguments().getBoolean(Utils.IS_FAVORITE, false)) {
-            CursorLoader cursorLoader = new CursorLoader(getContext(), FavoritetableColumns.CONTENT_URI, null, null, null, null);
-            FavoritetableCursor cursor = new FavoritetableCursor(cursorLoader.loadInBackground());
-            if (cursor.moveToFirst()) {
-                do {
-                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
-                } while (cursor.moveToNext());
-            }
-        } else {
-            CursorLoader cursorLoader = new CursorLoader(getContext(), HymntableColumns.CONTENT_URI, null, null, null, null);
-            HymntableCursor cursor = new HymntableCursor(cursorLoader.loadInBackground());
-            if (cursor.moveToFirst()) {
-                do {
-                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
-                } while (cursor.moveToNext());
-            }
+        boolean showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
 
+        HymntableCursor cursor = new HymntableSelection().query(getContext().getContentResolver());
+
+        
+        if (cursor.moveToFirst()) {
+            do {
+                if (showFavoriteScreen) {
+                    if (cursor.getLike())
+                        hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
+                } else {
+                    hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
+                }
+            } while (cursor.moveToNext());
         }
+
         HymnDatabase.hymns.setHymnArrayList(hymnArrayList);
         Log.d(TAG, "onCreateView: ###" + HymnDatabase.hymns.getHymnArrayList().size());
         adapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
