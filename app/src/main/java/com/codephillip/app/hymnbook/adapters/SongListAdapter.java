@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SongActivity;
-import com.codephillip.app.hymnbook.utilities.Utils;
 import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.utilities.ColourQueue;
+import com.codephillip.app.hymnbook.utilities.Utils;
 
 import java.util.ArrayList;
 
@@ -57,6 +57,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     public ArrayList<Hymn> swapCursor(ArrayList<Hymn> cursor) {
         Log.d(TAG, "swapCursor: ");
+        Log.d(TAG, String.valueOf(cursor));
         if (dataCursor == cursor) {
             return null;
         }
@@ -68,20 +69,19 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return oldCursor;
     }
 
-    public void filter(String text) {
-        Log.d(TAG, "filter: " + text);
-        dataCursor.clear();
+    public void filter(String text, ArrayList<Hymn> hymnArrayList) {
+        ArrayList<Hymn> filteredList = new ArrayList<>();
         if (text.isEmpty()) {
-            dataCursor = HymnDatabase.hymns.getHymnArrayList();
+            Log.d(TAG, "filter: empty string");
         } else {
             text = text.toLowerCase();
-            for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
-                if (hymn.getTitle().toLowerCase().contains(text) || hymn.getContent().toLowerCase().contains(text) || hymn.getNumber() == Integer.parseInt(text)) {
-                    dataCursor.add(hymn);
+            for (Hymn hymn : hymnArrayList) {
+                if (hymn.getTitle().toLowerCase().contains(text) || hymn.getContent().toLowerCase().contains(text)) {
+                    filteredList.add(hymn);
                 }
+                swapCursor(filteredList);
             }
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -111,6 +111,8 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 context.startActivity(new Intent(context, SongActivity.class));
             }
         });
+
+        Log.d(TAG, String.valueOf(HymnDatabase.hymns.getHymnArrayList()));
     }
 
     @Override

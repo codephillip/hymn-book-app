@@ -55,6 +55,11 @@ public class AllSongsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_songs, container, false);
 
+        // We have a menu item to show in action bar.
+        setHasOptionsMenu(true);
+
+        HymnDatabase.getInstance();
+
         boolean showFavoriteScreen = false;
         try {
             showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
@@ -124,26 +129,25 @@ public class AllSongsFragment extends Fragment {
         return prefs.getBoolean(Utils.CHANGE_VIEW, false);
     }
 
-    //todo work on search
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         Log.d(TAG, "onCreateOptionsMenu: ");
 //        super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.main, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d(TAG, "onQueryTextSubmit: ");
-                listAdapter.filter(query);
+                listAdapter.filter(query, HymnDatabase.hymns.getHymnArrayList());
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d(TAG, "onQueryTextChange: ");
-                listAdapter.filter(newText);
+                listAdapter.filter(newText, HymnDatabase.hymns.getHymnArrayList());
                 return true;
             }
         });
