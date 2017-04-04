@@ -13,8 +13,7 @@ public class Utils {
     public static final String CATEGORY = "category";
     public static final String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
     public static String category = "worship";
-
-
+    public static boolean clickedFavorite;
 
 
     public static Utils getInstance() {

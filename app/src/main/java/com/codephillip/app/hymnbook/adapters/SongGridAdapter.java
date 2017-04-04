@@ -79,6 +79,9 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
                 public void onClick(View view) {
                     Log.i("TAG", "You clicked number " + getAdapterPosition() + ", which is at cell position " + position);
                     Utils.position = getAdapterPosition();
+                    //moves the ViewPager to the right position
+                    if (Utils.clickedFavorite)
+                        Utils.position++;
                     Utils.isSongActivityActive = false;
                     context.startActivity(new Intent(context, SongActivity.class));
                 }

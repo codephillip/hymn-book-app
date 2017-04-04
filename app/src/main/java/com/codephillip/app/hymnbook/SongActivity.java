@@ -47,11 +47,16 @@ public class SongActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Log.d(TAG, "getItem: " + Utils.position + "#" + position);
             try {
+                //move ViewPager to the item clicked on first_click
                 if (!Utils.isSongActivityActive) {
+                    //stops indexOutOfBoundsException when favorite list_item is clicked
+                    if (Utils.clickedFavorite)
+                        Utils.position--;
                     mViewPager.setCurrentItem(Utils.position);
                     Utils.isSongActivityActive = true;
                     return SongFragment.newInstance(Utils.position);
                 }
+                //use default position after the first_click
                 return SongFragment.newInstance(position);
             } catch (Exception e) {
                 e.printStackTrace();

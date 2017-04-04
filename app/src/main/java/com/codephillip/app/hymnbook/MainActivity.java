@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    //    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         HymnDatabase.getInstance();
+        Utils.getInstance();
         Log.d(TAG, "onCreate: " + hasChangedView());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -159,12 +159,15 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
 
         if (id == R.id.all_songs) {
+            Utils.clickedFavorite = false;
             fragment = AllSongsFragment.newInstance(false);
             getSupportActionBar().setTitle(screenNames[0]);
         } else if (id == R.id.category) {
+            Utils.clickedFavorite = false;
             fragment = new CategoryFragment();
             getSupportActionBar().setTitle(screenNames[1]);
         } else if (id == R.id.favorite) {
+            Utils.clickedFavorite = true;
             fragment = AllSongsFragment.newInstance(true);
             getSupportActionBar().setTitle(screenNames[2]);
         }

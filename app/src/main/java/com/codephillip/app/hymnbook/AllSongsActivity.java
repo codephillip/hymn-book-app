@@ -14,6 +14,8 @@ public class AllSongsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+
 //        Fragment fragment = AllSongsFragment.newInstance(false);
 //        getSupportActionBar().setTitle(screenNames[0]);
 //        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
