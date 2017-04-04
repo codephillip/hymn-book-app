@@ -106,7 +106,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             public void onClick(View view) {
                 Log.d(TAG, "onClick: ");
                 Utils.getInstance();
-                Utils.position = position;
+                Utils.position = dataCursor.get(position).getNumber() - 1;
                 Utils.isSongActivityActive = false;
                 context.startActivity(new Intent(context, SongActivity.class));
             }
