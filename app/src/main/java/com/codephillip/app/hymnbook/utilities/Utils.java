@@ -10,6 +10,11 @@ public class Utils {
     public static boolean isSongActivityActive;
     public static final String CHANGE_VIEW = "change_view";
     public static final String IS_FAVORITE = "is_favorite";
+    public static final String CATEGORY = "category";
+    public static final String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
+    public static String category = "worship";
+
+
 
 
     public static Utils getInstance() {

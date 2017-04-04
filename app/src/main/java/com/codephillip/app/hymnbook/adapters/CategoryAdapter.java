@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.codephillip.app.hymnbook.AllSongsActivity;
 import com.codephillip.app.hymnbook.R;
-import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.utilities.Utils;
@@ -75,10 +75,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: ");
-                Utils.getInstance();
-                Utils.position = position;
-                Utils.isSongActivityActive = false;
-                context.startActivity(new Intent(context, SongActivity.class));
+                Utils.category = dataCursor.get(position);
+                context.startActivity(new Intent(context, AllSongsActivity.class));
             }
         });
     }

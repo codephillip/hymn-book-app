@@ -55,7 +55,13 @@ public class AllSongsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_songs, container, false);
 
-        boolean showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
+        boolean showFavoriteScreen = false;
+        try {
+            showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showFavoriteScreen = false;
+        }
         updateSingletonHymns(showFavoriteScreen);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);

@@ -22,7 +22,6 @@
         <activity
             android:name=".SongActivity"
             android:label="@string/title_activity_song"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -30,10 +29,19 @@
         </activity>
 
         <provider
-            android:name="com.codephillip.app.hymnbook.provider.HymnbookProvider"
+            android:name=".provider.HymnbookProvider"
             android:authorities="com.codephillip.app.hymnbook.provider"
             android:exported="false" />
 
+        <activity
+            android:name=".AllSongsActivity"
+            android:label="@string/title_activity_all_songs"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codephillip.app.hymnbook.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

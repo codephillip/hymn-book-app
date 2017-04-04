@@ -28,13 +28,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.screenNames;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //    String[] screenNames = {"Nyinba Zona", "Category", "Ezisinga"};
-    private final String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
