@@ -67,11 +67,5 @@ public class SongActivity extends AppCompatActivity {
         public int getCount() {
             return cursor.getCount();
         }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-//            return Utils.cursor.getTitle();
-            return "title1";
-        }
     }
 }

@@ -81,7 +81,8 @@ public class AllSongsFragment extends Fragment {
     private void attachListAdapter() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        listAdapter = new SongListAdapter(getContext(), queryHymnTable(showFavoriteScreen));
+        Utils.cursor = queryHymnTable(showFavoriteScreen);
+        listAdapter = new SongListAdapter(getContext(), Utils.cursor);
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -102,14 +103,7 @@ public class AllSongsFragment extends Fragment {
     }
 
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
-        HymntableCursor cursor;
-        if (showFavoriteScreen) {
-            cursor = new HymntableSelection().like(true).query(getContext().getContentResolver());
-        } else {
-            cursor = new HymntableSelection().query(getContext().getContentResolver());
-        }
-        Utils.cursor = cursor;
-        return cursor;
+        return showFavoriteScreen ? new HymntableSelection().like(true).query(getContext().getContentResolver()) : new HymntableSelection().query(getContext().getContentResolver());
     }
 
     private boolean hasChangedView() {
@@ -143,7 +137,8 @@ public class AllSongsFragment extends Fragment {
             searchView.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override
                 public boolean onClose() {
-                    listAdapter.swapCursor(queryHymnTable(showFavoriteScreen));
+                    Utils.cursor = queryHymnTable(showFavoriteScreen);
+                    listAdapter.swapCursor(Utils.cursor);
                     return false;
                 }
             });

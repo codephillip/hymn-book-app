@@ -15,6 +15,7 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
 
 /**
@@ -30,7 +31,6 @@ public class SongFragment extends Fragment {
     private TextView navigationView;
     private ImageButton likeButton;
     private int position;
-    private HymntableCursor cursor;
 
     public SongFragment() {
     }
@@ -62,11 +62,9 @@ public class SongFragment extends Fragment {
         position = getArguments().getInt(SONG_NUMBER);
         Log.d(TAG, "onCreateView: ###" + position);
 
-        cursor =  queryHymnTable(showFavoriteScreen);
         //you can only get a value once very time you move a cursor position
         cursor.moveToPosition(position);
-        final boolean like = cursor.getLike();
-        attachDataToViews(like);
+        attachDataToViews();
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,22 +79,12 @@ public class SongFragment extends Fragment {
     }
 
     private void changeLikeImageButton(Boolean like) {
+        int image;
         if (like)
-            likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_black_16dp));
+            image = R.drawable.ic_star_black_16dp;
         else
-            likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_16dp));
-    }
-
-
-    private void attachDataToViews(boolean isLiked) {
-        try {
-            titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
-            contentView.setText(cursor.getContent());
-            navigationView.setText((position + 1) + "/" + cursor.getCount());
-            changeLikeImageButton(isLiked);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            image = R.drawable.ic_star_border_black_16dp;
+        likeButton.setImageDrawable(getResources().getDrawable(image));
     }
 
     private void changeLikePreference(boolean liked, String title) {
@@ -108,12 +96,17 @@ public class SongFragment extends Fragment {
     }
 
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
-        HymntableCursor cursor;
-        if (showFavoriteScreen) {
-            cursor = new HymntableSelection().like(true).query(getContext().getContentResolver());
-        } else {
-            cursor = new HymntableSelection().query(getContext().getContentResolver());
+        return showFavoriteScreen ? new HymntableSelection().like(true).query(getContext().getContentResolver()) : new HymntableSelection().query(getContext().getContentResolver());
+    }
+
+    private void attachDataToViews() {
+        try {
+            titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
+            contentView.setText(cursor.getContent());
+            navigationView.setText((position + 1) + "/" + cursor.getCount());
+            changeLikeImageButton(cursor.getLike());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return cursor;
     }
 }

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SongActivity;
-import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
@@ -38,9 +37,10 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     }
 
     public SongListAdapter(Context mContext, HymntableCursor cursor) {
+        Utils.getInstance();
+        Utils.cursor = cursor;
         dataCursor = cursor;
         context = mContext;
-        HymnDatabase.getInstance();
         colourQueue = new ColourQueue();
     }
 
