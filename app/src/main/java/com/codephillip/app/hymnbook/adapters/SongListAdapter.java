@@ -60,6 +60,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         HymntableCursor oldCursor = dataCursor;
         this.dataCursor = cursor;
         if (cursor != null) {
+            Utils.cursor = cursor;
             this.notifyDataSetChanged();
         }
         return oldCursor;
@@ -70,7 +71,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             Log.d(TAG, "filter: empty string");
         } else {
             text = text.toLowerCase();
-            HymntableSelection selection  = new HymntableSelection();
+            HymntableSelection selection = new HymntableSelection();
             selection.titleContains(text);
             HymntableCursor cursor = selection.query(context.getContentResolver());
             swapCursor(cursor);
@@ -82,7 +83,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         dataCursor.moveToPosition(position);
         try {
             holder.titleView.setText(dataCursor.getTitle());
-            holder.numberView.setImageDrawable(Utils.generateTextDrawable(position, colourQueue));
+            holder.numberView.setImageDrawable(Utils.generateTextDrawable(dataCursor.getNumber() - 1, colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
         }

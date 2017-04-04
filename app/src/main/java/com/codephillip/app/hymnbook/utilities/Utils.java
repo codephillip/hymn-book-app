@@ -21,6 +21,7 @@ public class Utils {
     //used to position the ViewPager in SongActivity
     public static int position = 0;
     public static HymntableCursor cursor;
+    public static boolean showFavoriteScreen;
 
     public static Utils getInstance() {
         return ourInstance;

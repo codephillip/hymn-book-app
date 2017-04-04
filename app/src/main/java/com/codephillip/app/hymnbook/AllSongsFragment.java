@@ -25,6 +25,8 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+
 /**
  * Created by codephillip on 31/03/17.
  */
@@ -35,8 +37,6 @@ public class AllSongsFragment extends Fragment {
     private SongListAdapter listAdapter;
     private SongGridAdapter gridAdapter;
     private RecyclerView recyclerView;
-    boolean showFavoriteScreen = false;
-
 
     public AllSongsFragment() {
     }
@@ -59,6 +59,7 @@ public class AllSongsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         HymnDatabase.getInstance();
+        Utils.getInstance();
 
         try {
             showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);

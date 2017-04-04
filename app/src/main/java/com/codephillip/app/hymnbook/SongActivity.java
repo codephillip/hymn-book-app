@@ -12,6 +12,8 @@ import android.util.Log;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
+
 public class SongActivity extends AppCompatActivity {
 
     private static final String TAG = SongActivity.class.getSimpleName();
@@ -46,13 +48,9 @@ public class SongActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Log.d(TAG, "getItem: " + Utils.position + "#" + position);
-            Utils.cursor.moveToPosition(position);
             try {
                 //move ViewPager to the item clicked on first_click
                 if (!Utils.isSongActivityActive) {
-                    //stops indexOutOfBoundsException when favorite list_item is clicked
-                    if (Utils.clickedFavorite)
-                        Utils.position--;
                     mViewPager.setCurrentItem(Utils.position);
                     Utils.isSongActivityActive = true;
                     return SongFragment.newInstance(Utils.position);
@@ -67,7 +65,7 @@ public class SongActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return Utils.cursor.getCount();
+            return cursor.getCount();
         }
 
         @Override

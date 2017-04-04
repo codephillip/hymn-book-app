@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
+import com.codephillip.app.hymnbook.utilities.Utils;
 
-import java.util.ArrayList;
+import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -30,7 +30,6 @@ public class SongFragment extends Fragment {
     private TextView navigationView;
     private ImageButton likeButton;
     private int position;
-    private Hymn hymn;
     private HymntableCursor cursor;
 
     public SongFragment() {
@@ -49,57 +48,52 @@ public class SongFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_song, container, false);
 
+        Log.d(TAG, "STARTED FRAGMENT");
+
         titleView = (TextView) rootView.findViewById(R.id.title);
         contentView = (TextView) rootView.findViewById(R.id.content);
         navigationView = (TextView) rootView.findViewById(R.id.navigation);
         likeButton = (ImageButton) rootView.findViewById(R.id.like);
 
         HymnDatabase.getInstance();
+        Utils.getInstance();
 
         Log.d(TAG, "onCreateView: started");
         position = getArguments().getInt(SONG_NUMBER);
         Log.d(TAG, "onCreateView: ###" + position);
-//        cursor = new HymntableSelection().number(position).query(getContext().getContentResolver());
-        cursor = new HymntableSelection().query(getContext().getContentResolver());
 
+        cursor =  queryHymnTable(showFavoriteScreen);
+        //you can only get a value once very time you move a cursor position
         cursor.moveToPosition(position);
-        Log.d(TAG, "onCreateView: CURSOR " + cursor.getTitle());
+        final boolean like = cursor.getLike();
+        attachDataToViews(like);
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: " + cursor.getLike());
-                changeLikePreference(cursor.getLike(), cursor.getTitle());
-                changeLikeImageButton();
+                cursor.moveToPosition(position);
+                boolean liked = cursor.getLike();
+                changeLikeImageButton(!liked);
+                changeLikePreference(!liked, cursor.getTitle());
             }
         });
-        attachDataToViews();
         return rootView;
     }
 
-    private void changeLikeImageButton() {
-        if (hymn.isLiked())
+    private void changeLikeImageButton(Boolean like) {
+        if (like)
             likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_black_16dp));
         else
             likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border_black_16dp));
     }
 
-    private Hymn getHymnFromList() {
-        position = getArguments().getInt(SONG_NUMBER);
-        try {
-            return HymnDatabase.hymns.getHymnArrayList().get(position - 1);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return HymnDatabase.hymns.getHymnArrayList().get(position - 2);
-        }
-    }
 
-    private void attachDataToViews() {
+    private void attachDataToViews(boolean isLiked) {
         try {
             titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
             contentView.setText(cursor.getContent());
-            navigationView.setText((position + 1) + "/" + "200");
-            changeLikeImageButton();
+            navigationView.setText((position + 1) + "/" + cursor.getCount());
+            changeLikeImageButton(isLiked);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,18 +104,7 @@ public class SongFragment extends Fragment {
         HymntableContentValues values = new HymntableContentValues();
         values.putLike(liked);
         values.update(getContext().getContentResolver(), new HymntableSelection().titleLike(title));
-    }
-
-    private void updateSingletonHymns(boolean showFavoriteScreen) {
-        ArrayList<Hymn> hymnArrayList = new ArrayList<>();
-        HymntableCursor cursor = queryHymnTable(showFavoriteScreen);
-        if (cursor.moveToFirst()) {
-            do {
-                hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
-            } while (cursor.moveToNext());
-        }
-        HymnDatabase.hymns.setHymnArrayList(hymnArrayList);
-        Log.d(TAG, "onCreateView: ###" + HymnDatabase.hymns.getHymnArrayList().size());
+        cursor = queryHymnTable(showFavoriteScreen);
     }
 
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
