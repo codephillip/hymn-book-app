@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
@@ -49,15 +47,7 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String animal = mData[position];
-        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        int color1 = generator.getColor(colourQueue.getCount());
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .width(140)  // width in px
-                .height(140) // height in px
-                .endConfig()
-                .buildRound(animal, color1);
-        holder.numberView.setImageDrawable(drawable);
+        holder.numberView.setImageDrawable(Utils.generateTextDrawable(position, colourQueue));
     }
 
     // total number of cells

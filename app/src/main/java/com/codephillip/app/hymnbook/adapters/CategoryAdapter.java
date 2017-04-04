@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.AllSongsActivity;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
@@ -58,15 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         try {
             holder.titleView.setText(dataCursor.get(position));
-            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-            int color1 = generator.getColor(colourQueue.getCount());
-            TextDrawable drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .width(140)  // width in px
-                    .height(140) // height in px
-                    .endConfig()
-                    .buildRound(String.valueOf(position + 1), color1);
-            holder.numberView.setImageDrawable(drawable);
+            holder.numberView.setImageDrawable(Utils.generateTextDrawable(position, colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
         }

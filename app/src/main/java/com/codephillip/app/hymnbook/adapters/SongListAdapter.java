@@ -88,15 +88,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         try {
             holder.titleView.setText(dataCursor.get(position).getTitle());
-            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-            int color1 = generator.getColor(colourQueue.getCount());
-            TextDrawable drawable = TextDrawable.builder()
-                    .beginConfig()
-                    .width(140)  // width in px
-                    .height(140) // height in px
-                    .endConfig()
-                    .buildRound(String.valueOf(dataCursor.get(position).getNumber()), color1);
-            holder.numberView.setImageDrawable(drawable);
+            holder.numberView.setImageDrawable(Utils.generateTextDrawable(position, colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
         }

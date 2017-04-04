@@ -1,5 +1,8 @@
 package com.codephillip.app.hymnbook.utilities;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+
 /**
  * Created by codephillip on 31/03/17.
  */
@@ -14,14 +17,25 @@ public class Utils {
     public static final String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
     public static String category = "worship";
     public static boolean clickedFavorite;
-
+    //used to position the ViewPager in SongActivity
+    public static int position = 0;
 
     public static Utils getInstance() {
         return ourInstance;
     }
 
-    public static int position = 0;
-
     private Utils() {
+    }
+
+    public static TextDrawable generateTextDrawable(int position, ColourQueue colourQueue) {
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        int color1 = generator.getColor(colourQueue.getCount());
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .width(140)  // width in px
+                .height(140) // height in px
+                .endConfig()
+                .buildRound(String.valueOf(position + 1), color1);
+        return drawable;
     }
 }

@@ -6,9 +6,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
-    <string name="title_activity_song">SongActivity</string>
+    <string name="title_activity_song">Song</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="change_view">Change View</string>
-    <string name="title_activity_all_songs">AllSongsActivity</string>
+    <string name="title_activity_all_songs">AllSongs</string>
     <string name="like">Like</string>
 </resources>
