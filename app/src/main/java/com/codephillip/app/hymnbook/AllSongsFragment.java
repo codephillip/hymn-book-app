@@ -131,25 +131,34 @@ public class AllSongsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.d(TAG, "onCreateOptionsMenu: ");
-//        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.main, menu);
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.d(TAG, "onQueryTextSubmit: ");
-                listAdapter.filter(query, HymnDatabase.hymns.getHymnArrayList());
-                return true;
-            }
+        if (hasChangedView()) {
+            inflater.inflate(R.menu.allsong_toolbar, menu);
+            final MenuItem searchItem = menu.findItem(R.id.action_search);
+            final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.d(TAG, "onQueryTextChange: ");
-                listAdapter.filter(newText, HymnDatabase.hymns.getHymnArrayList());
-                return true;
-            }
-        });
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.d(TAG, "onQueryTextSubmit: ");
+                    listAdapter.filter(query, HymnDatabase.hymns.getHymnArrayList());
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.d(TAG, "onQueryTextChange: ");
+                    listAdapter.filter(newText, HymnDatabase.hymns.getHymnArrayList());
+                    return true;
+                }
+            });
+
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    listAdapter.swapCursor(HymnDatabase.hymns.getHymnArrayList());
+                    return false;
+                }
+            });
+        }
     }
 }
