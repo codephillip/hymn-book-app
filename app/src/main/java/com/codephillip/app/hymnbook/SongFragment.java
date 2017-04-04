@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -34,7 +31,6 @@ public class SongFragment extends Fragment {
     private ImageButton likeButton;
     private int position;
     private Hymn hymn;
-    private MenuItem likeItem;
 
     public SongFragment() {
     }
@@ -51,9 +47,6 @@ public class SongFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_song, container, false);
-
-        // We have a menu item to show in action bar.
-        setHasOptionsMenu(true);
 
         titleView = (TextView) rootView.findViewById(R.id.title);
         contentView = (TextView) rootView.findViewById(R.id.content);
@@ -96,33 +89,6 @@ public class SongFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.song_toolbar, menu);
-        likeItem = menu.findItem(R.id.action_like);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_like) {
-            Log.d(TAG, "onOptionsItemSelected: changing view#");
-            Log.d(TAG, "onOptionsItemSelected: " + hymn.isLiked());
-            changeLikePreference(!hymn.isLiked(), hymn.getTitle());
-            changeLikeImage(item);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void changeLikeImage(MenuItem item) {
-        if (hymn.isLiked())
-            item.setIcon(R.drawable.ic_star_black_16dp);
-        else
-            item.setIcon(R.drawable.ic_star_border_black_16dp);
     }
 
     private void changeLikePreference(boolean liked, String title) {
