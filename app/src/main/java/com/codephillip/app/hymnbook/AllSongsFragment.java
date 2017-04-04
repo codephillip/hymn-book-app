@@ -25,8 +25,6 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
-import java.util.ArrayList;
-
 /**
  * Created by codephillip on 31/03/17.
  */
@@ -37,6 +35,8 @@ public class AllSongsFragment extends Fragment {
     private SongListAdapter listAdapter;
     private SongGridAdapter gridAdapter;
     private RecyclerView recyclerView;
+    boolean showFavoriteScreen = false;
+
 
     public AllSongsFragment() {
     }
@@ -60,14 +60,12 @@ public class AllSongsFragment extends Fragment {
 
         HymnDatabase.getInstance();
 
-        boolean showFavoriteScreen = false;
         try {
             showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
         } catch (Exception e) {
             e.printStackTrace();
             showFavoriteScreen = false;
         }
-        updateSingletonHymns(showFavoriteScreen);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
         if (hasChangedView()) {
@@ -82,7 +80,7 @@ public class AllSongsFragment extends Fragment {
     private void attachListAdapter() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        listAdapter = new SongListAdapter(getContext(), HymnDatabase.hymns.getHymnArrayList());
+        listAdapter = new SongListAdapter(getContext(), queryHymnTable(showFavoriteScreen));
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -102,18 +100,6 @@ public class AllSongsFragment extends Fragment {
         return data;
     }
 
-    private void updateSingletonHymns(boolean showFavoriteScreen) {
-        ArrayList<Hymn> hymnArrayList = new ArrayList<>();
-        HymntableCursor cursor = queryHymnTable(showFavoriteScreen);
-        if (cursor.moveToFirst()) {
-            do {
-                hymnArrayList.add(new Hymn(cursor.getNumber(), cursor.getTitle(), cursor.getContent(), cursor.getCategory(), cursor.getId(), cursor.getLike()));
-            } while (cursor.moveToNext());
-        }
-        HymnDatabase.hymns.setHymnArrayList(hymnArrayList);
-        Log.d(TAG, "onCreateView: ###" + HymnDatabase.hymns.getHymnArrayList().size());
-    }
-
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
         HymntableCursor cursor;
         if (showFavoriteScreen) {
@@ -121,6 +107,7 @@ public class AllSongsFragment extends Fragment {
         } else {
             cursor = new HymntableSelection().query(getContext().getContentResolver());
         }
+        Utils.cursor = cursor;
         return cursor;
     }
 
@@ -140,14 +127,14 @@ public class AllSongsFragment extends Fragment {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.d(TAG, "onQueryTextSubmit: ");
-                    listAdapter.filter(query, HymnDatabase.hymns.getHymnArrayList());
+                    listAdapter.filter(query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     Log.d(TAG, "onQueryTextChange: ");
-                    listAdapter.filter(newText, HymnDatabase.hymns.getHymnArrayList());
+                    listAdapter.filter(newText);
                     return true;
                 }
             });
@@ -155,7 +142,7 @@ public class AllSongsFragment extends Fragment {
             searchView.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override
                 public boolean onClose() {
-                    listAdapter.swapCursor(HymnDatabase.hymns.getHymnArrayList());
+                    listAdapter.swapCursor(queryHymnTable(showFavoriteScreen));
                     return false;
                 }
             });

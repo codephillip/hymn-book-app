@@ -2,6 +2,7 @@ package com.codephillip.app.hymnbook.utilities;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -19,6 +20,7 @@ public class Utils {
     public static boolean clickedFavorite;
     //used to position the ViewPager in SongActivity
     public static int position = 0;
+    public static HymntableCursor cursor;
 
     public static Utils getInstance() {
         return ourInstance;

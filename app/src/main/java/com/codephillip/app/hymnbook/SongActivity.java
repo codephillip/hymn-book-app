@@ -46,6 +46,7 @@ public class SongActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Log.d(TAG, "getItem: " + Utils.position + "#" + position);
+            Utils.cursor.moveToPosition(position);
             try {
                 //move ViewPager to the item clicked on first_click
                 if (!Utils.isSongActivityActive) {
@@ -66,12 +67,13 @@ public class SongActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return HymnDatabase.hymns.getHymnArrayList().size();
+            return Utils.cursor.getCount();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return HymnDatabase.hymns.getHymnArrayList().get(position).getTitle();
+//            return Utils.cursor.getTitle();
+            return "title1";
         }
     }
 }

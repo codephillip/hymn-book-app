@@ -10,21 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SongActivity;
-import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.utilities.Utils;
-
-import java.util.ArrayList;
 
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
     private static final String TAG = SongListAdapter.class.getSimpleName();
-    private ArrayList<Hymn> dataCursor;
+    private HymntableCursor dataCursor;
     private static Context context;
     private ColourQueue colourQueue;
 
@@ -40,7 +37,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         }
     }
 
-    public SongListAdapter(Context mContext, ArrayList<Hymn> cursor) {
+    public SongListAdapter(Context mContext, HymntableCursor cursor) {
         dataCursor = cursor;
         context = mContext;
         HymnDatabase.getInstance();
@@ -55,13 +52,12 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return new ViewHolder(cardview);
     }
 
-    public ArrayList<Hymn> swapCursor(ArrayList<Hymn> cursor) {
+    public HymntableCursor swapCursor(HymntableCursor cursor) {
         Log.d(TAG, "swapCursor: ");
-        Log.d(TAG, String.valueOf(cursor));
         if (dataCursor == cursor) {
             return null;
         }
-        ArrayList<Hymn> oldCursor = dataCursor;
+        HymntableCursor oldCursor = dataCursor;
         this.dataCursor = cursor;
         if (cursor != null) {
             this.notifyDataSetChanged();
@@ -69,25 +65,23 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return oldCursor;
     }
 
-    public void filter(String text, ArrayList<Hymn> hymnArrayList) {
-        ArrayList<Hymn> filteredList = new ArrayList<>();
+    public void filter(String text) {
         if (text.isEmpty()) {
             Log.d(TAG, "filter: empty string");
         } else {
             text = text.toLowerCase();
-            for (Hymn hymn : hymnArrayList) {
-                if (hymn.getTitle().toLowerCase().contains(text) || hymn.getContent().toLowerCase().contains(text)) {
-                    filteredList.add(hymn);
-                }
-                swapCursor(filteredList);
-            }
+            HymntableSelection selection  = new HymntableSelection();
+            selection.titleContains(text);
+            HymntableCursor cursor = selection.query(context.getContentResolver());
+            swapCursor(cursor);
         }
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        dataCursor.moveToPosition(position);
         try {
-            holder.titleView.setText(dataCursor.get(position).getTitle());
+            holder.titleView.setText(dataCursor.getTitle());
             holder.numberView.setImageDrawable(Utils.generateTextDrawable(position, colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,18 +92,16 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             public void onClick(View view) {
                 Log.d(TAG, "onClick: ");
                 Utils.getInstance();
-                Utils.position = dataCursor.get(position).getNumber() - 1;
+                Utils.position = position;
                 Utils.isSongActivityActive = false;
                 context.startActivity(new Intent(context, SongActivity.class));
             }
         });
-
-        Log.d(TAG, String.valueOf(HymnDatabase.hymns.getHymnArrayList()));
     }
 
     @Override
     public int getItemCount() {
         // any number other than zero will cause a bug
-        return (dataCursor == null) ? 0 : dataCursor.size();
+        return (dataCursor == null) ? 0 : dataCursor.getCount();
     }
 }
