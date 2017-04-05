@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean hasChangedView() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        return prefs.getBoolean(Utils.CHANGE_VIEW, false);
+        return prefs.getBoolean(Utils.CHANGE_VIEW, true);
     }
 
     private void saveFirstLaunch(boolean hasChangedView) {

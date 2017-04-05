@@ -38,7 +38,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     public SongListAdapter(Context mContext, HymntableCursor cursor) {
         Utils.getInstance();
-        Utils.cursor = cursor;
+        cursor = cursor;
         dataCursor = cursor;
         context = mContext;
         colourQueue = new ColourQueue();
@@ -60,7 +60,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         HymntableCursor oldCursor = dataCursor;
         this.dataCursor = cursor;
         if (cursor != null) {
-            Utils.cursor = cursor;
+            cursor = cursor;
             this.notifyDataSetChanged();
         }
         return oldCursor;
@@ -73,10 +73,21 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             text = text.toLowerCase();
             HymntableSelection selection = new HymntableSelection();
             selection.titleContains(text);
+            selection.contentContains(text);
             HymntableCursor cursor = selection.query(context.getContentResolver());
             swapCursor(cursor);
         }
     }
+
+//    private HymntableCursor queryHymnTable() {
+//        if (showFavoriteScreen) {
+//            return new HymntableSelection().like(true).query(context.getContentResolver());
+//        } else if (isFromCategoryFragment) {
+//            return new HymntableSelection().categoryContains(category).query(context.getContentResolver());
+//        } else {
+//            return new HymntableSelection().query(context.getContentResolver());
+//        }
+//    }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {

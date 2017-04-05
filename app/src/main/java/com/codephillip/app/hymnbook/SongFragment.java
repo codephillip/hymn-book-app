@@ -96,7 +96,6 @@ public class SongFragment extends Fragment {
         values.putLike(liked);
         values.update(getContext().getContentResolver(), new HymntableSelection().titleLike(title));
         cursor = queryHymnTable(showFavoriteScreen);
-        getActivity().onCreate(null, null);
     }
 
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {

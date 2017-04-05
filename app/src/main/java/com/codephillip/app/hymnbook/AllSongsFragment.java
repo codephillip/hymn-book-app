@@ -19,12 +19,15 @@ import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.SongGridAdapter;
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
-import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.CATEGORY;
+import static com.codephillip.app.hymnbook.utilities.Utils.category;
+import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
+import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
 
 /**
@@ -50,6 +53,15 @@ public class AllSongsFragment extends Fragment {
         return fragment;
     }
 
+    public static AllSongsFragment newInstance(String category) {
+        Log.d(TAG, "newInstance: " + category);
+        AllSongsFragment fragment = new AllSongsFragment();
+        Bundle args = new Bundle();
+        args.putString(CATEGORY, category);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,10 +74,21 @@ public class AllSongsFragment extends Fragment {
         Utils.getInstance();
 
         try {
+            //Incase navigation is from CategoryFragment, NullPointerException is thrown
             showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
         } catch (Exception e) {
             e.printStackTrace();
             showFavoriteScreen = false;
+        }
+
+        //navigation from CategoryFragment
+        try {
+            Utils.category = getArguments().getString(CATEGORY);
+            isFromCategoryFragment = !Utils.category.isEmpty();
+            Log.d(TAG, "onCreateView: isFromCategoryFragment " + isFromCategoryFragment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            isFromCategoryFragment = false;
         }
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
@@ -81,8 +104,8 @@ public class AllSongsFragment extends Fragment {
     private void attachListAdapter() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        Utils.cursor = queryHymnTable(showFavoriteScreen);
-        listAdapter = new SongListAdapter(getContext(), Utils.cursor);
+        cursor = queryHymnTable();
+        listAdapter = new SongListAdapter(getContext(), cursor);
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -94,21 +117,29 @@ public class AllSongsFragment extends Fragment {
     }
 
     private String[] generateGridViewData() {
-        String[] data = new String[HymnDatabase.hymns.getHymnArrayList().size()];
+        String[] data = new String[cursor.getCount()];
         int counter = 0;
-        for (Hymn hymn : HymnDatabase.hymns.getHymnArrayList()) {
-            data[counter++] = String.valueOf(hymn.getNumber());
+        if (cursor.moveToFirst()) {
+            do {
+                data[counter++] = String.valueOf(cursor.getNumber());
+            } while (cursor.moveToNext());
         }
         return data;
     }
 
-    private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
-        return showFavoriteScreen ? new HymntableSelection().like(true).query(getContext().getContentResolver()) : new HymntableSelection().query(getContext().getContentResolver());
+    private HymntableCursor queryHymnTable() {
+        if (showFavoriteScreen) {
+            return new HymntableSelection().like(true).query(getContext().getContentResolver());
+        } else if (isFromCategoryFragment) {
+            return new HymntableSelection().categoryContains(category).query(getContext().getContentResolver());
+        } else {
+            return new HymntableSelection().query(getContext().getContentResolver());
+        }
     }
 
     private boolean hasChangedView() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return prefs.getBoolean(Utils.CHANGE_VIEW, false);
+        return prefs.getBoolean(Utils.CHANGE_VIEW, true);
     }
 
     @Override
@@ -137,8 +168,8 @@ public class AllSongsFragment extends Fragment {
             searchView.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override
                 public boolean onClose() {
-                    Utils.cursor = queryHymnTable(showFavoriteScreen);
-                    listAdapter.swapCursor(Utils.cursor);
+                    cursor = queryHymnTable();
+                    listAdapter.swapCursor(cursor);
                     return false;
                 }
             });

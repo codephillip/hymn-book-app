@@ -66,7 +66,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             public void onClick(View view) {
                 Log.d(TAG, "onClick: ");
                 Utils.category = dataCursor.get(position);
-                context.startActivity(new Intent(context, AllSongsActivity.class));
+                context.startActivity(new Intent(context, AllSongsActivity.class).putExtra(Utils.CATEGORY, dataCursor.get(position)));
             }
         });
     }

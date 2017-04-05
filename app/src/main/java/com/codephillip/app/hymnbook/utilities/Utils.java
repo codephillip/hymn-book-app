@@ -22,6 +22,7 @@ public class Utils {
     public static int position = 0;
     public static HymntableCursor cursor;
     public static boolean showFavoriteScreen;
+    public static boolean isFromCategoryFragment;
 
     public static Utils getInstance() {
         return ourInstance;

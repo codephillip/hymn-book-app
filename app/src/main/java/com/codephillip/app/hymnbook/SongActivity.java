@@ -49,7 +49,7 @@ public class SongActivity extends AppCompatActivity {
             try {
                 //move ViewPager to the item clicked on first_click
                 if (!Utils.isSongActivityActive) {
-                    mViewPager.setCurrentItem(Utils.position);
+                    mViewPager.setCurrentItem(Utils.position, true);
                     Utils.isSongActivityActive = true;
                     return SongFragment.newInstance(Utils.position);
                 }

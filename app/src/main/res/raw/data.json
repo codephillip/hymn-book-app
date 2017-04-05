@@ -79,6 +79,36 @@
         "id": 1,
         "name": "EZA MAYINGIRA"
       }
+    },
+    {
+      "id": 9,
+      "title": "MARCHING UNITED IN JESUS THE KING",
+      "content": "Chorus: Marching united in Jesus the King,\r\n               Marching together to Heaven.\r\n               Marching united in Jesus the King,\r\n               Marching together to Heaven.\r\n\r\n1. God our Creator and Father,\r\nChildren of yours we are.\r\nSo now we ask you to bless us,\r\nBless both our children and parents.\r\n\r\n2. Grateful to you for the great gifts;\r\nCountry and wealth and all;\r\nWhich we your children received\r\nCheerful we sing and praise you.",
+      "number": 9,
+      "category": {
+        "id": 1,
+        "name": "EZA MAYINGIRA"
+      }
+    },
+    {
+      "id": 10,
+      "title": "KATONDA YEEBALE",
+      "content": "Chorus: Katonda yeebale, yeebale nnyo,\r\n               Katonda yeebala, yeebale,\r\n               Nja kumwebazanga emirembe gyonna,\r\n               Nja kumwebazanga obutediza.\r\n\r\n1. Obulamu bwe nnina ku nsi kuno buli ku bwani?\r\nAyi Mukama ggwe abumpa ndi kwebaza ntya!\r\nEssanyu lye nnina ku nsi kuno liri ku bwani?\r\nAyi Mukama ggwe alimpa ndi kwebaza ntya!\r\n\r\n2. Emyaaka gyemaze ku nsi kuno giri ku bwani?\r\nAyi Mukama ggwe ankumye ndi kwebaza nyta!\r\n    \t\tObuggaga bwe nnina ku nsi kuno buli ku bwaani?\r\n   \t\tAyi Mukama ggwe abumpa ndi kwebaza ntya!\r\n\r\n3. Amaka ago gendimu ku nsi kuno gali ku bwani?\r\nAyi Mukama ggwe agampa ndi kwebaza ntya!\r\n\t\tAbaana be nnina ku nsi kuno bali ku bwani?\r\n\t\tAyi Mukama ggwe abampa ndi kwebaza ntya!\r\n\r\n4. Abazadde be nnina ku nsi kuno bali ku bwani?\r\nAyi Mukama nze omwaana ndi kwebaza ntya!\r\n\t \tEmikwano gye nnina ku nsi kuno giri ku bwani?\r\n\t\tAyi Mukama ggwe agimpa ndi kwebaza ntya!\r\n\r\n5. Ebyo bye nkoze ku nsi kuno biri ku bwani?\r\nAyi Mukama ggwe ankumye ndi kwebaza ntya!\r\nEntalo ze ngobye ku nsi kuno ziri ku bwani?\r\nAyi Mukama ggwe annyambye ndi kwebaza ntya!\r\n\r\n6. Ebigambo byo ku nsi kuno biri ku bwani?\r\nAyi Mukama ggwe Ddunda ndi kwebaza ntya!\r\nE Ggulu gye ndaga gy’obeera liri ku bwani?\r\nAyi Mukama, ggwe Ddunda ndi kwebaza ntya!",
+      "number": 95,
+      "category": {
+        "id": 2,
+        "name": "EZO KWEBAZA"
+      }
+    },
+    {
+      "id": 11,
+      "title": "MUJJE TWEBAZE OMUKAMA",
+      "content": "Chorus: Mujje ctwebaze Omukama,\r\n               Kubanga mulungi, muzirakisa,\r\n               N’okusaasira okukwe kwa mirembe gyonna.\r\n\r\n1. Sirina bigambo nze bya kukwebaza, Mukama wange.\r\n    Olw’ebirungi by’onkolera ng’ondabirira.\r\n\r\n2. Okwegayirira okwange wakuwulira mu ssaala zange.\r\n    Okutu watega n’owulira nze bye nkugamba.\r\n\r\n3. Amakubo n’emitego ebya Sitaani nze nabiwona.\r\n    Kubanga nnakusaba okulokola obulamu bwange.\r\n\r\n4. Oli mutuufu era wa kisa, Mukama wange.\r\n    Abatene n’abanaku era ggwe tobasuula muguluka.\r\n\r\n5. Mwoyo wange wesirikire, jaguliza mu Katonda.\r\n    Wedire mu nteeko, n’Omukama omuyimbire.\r\n\r\n6. Mwoyo gwange ye yaguwonya olumbe, gwali gwa kufa.\r\n    Omukama, amaziga gange nago yagasangula.",
+      "number": 96,
+      "category": {
+        "id": 2,
+        "name": "EZO KWEBAZA"
+      }
     }
   ]
 }

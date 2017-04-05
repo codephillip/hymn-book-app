@@ -1,9 +1,11 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment"
-    android:name="com.codephillip.app.hymnbook.AllSongsFragment"
+    android:id="@+id/frame"
     android:layout_width="match_parent"
+    android:layout_marginTop="55dp"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:layout="@layout/fragment_all_songs" />
+    tools:context="com.codephillip.app.hymnbook.AllSongsActivity"
+    tools:showIn="@layout/content_all_songs"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>

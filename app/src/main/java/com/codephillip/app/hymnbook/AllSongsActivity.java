@@ -1,8 +1,13 @@
 package com.codephillip.app.hymnbook;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.codephillip.app.hymnbook.utilities.Utils;
+
+import static com.codephillip.app.hymnbook.utilities.Utils.screenNames;
 
 public class AllSongsActivity extends AppCompatActivity {
 
@@ -14,13 +19,16 @@ public class AllSongsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-
-//        Fragment fragment = AllSongsFragment.newInstance(false);
-//        getSupportActionBar().setTitle(screenNames[0]);
-//        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.frame, fragment);
-//        fragmentTransaction.commit();
+        try {
+            String category = getIntent().getStringExtra(Utils.CATEGORY);
+            Fragment fragment = AllSongsFragment.newInstance(category);
+            getSupportActionBar().setTitle(screenNames[0]);
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, fragment);
+            fragmentTransaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
