@@ -1,5 +1,7 @@
 package com.codephillip.app.hymnbook.utilities;
 
+import android.content.Context;
+
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
@@ -11,6 +13,7 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 public class Utils {
     private static final Utils ourInstance = new Utils();
     public static final String FIRST_LAUNCH = "first_launch";
+    private static final String TAG = Utils.class.getSimpleName();
     public static boolean isSongActivityActive;
     public static final String CHANGE_VIEW = "change_view";
     public static final String IS_FAVORITE = "is_favorite";

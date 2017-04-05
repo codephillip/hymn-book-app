@@ -17,6 +17,10 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.category;
+import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
+import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
     private static final String TAG = SongListAdapter.class.getSimpleName();
@@ -52,6 +56,15 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         return new ViewHolder(cardview);
     }
 
+    public void filter(String text) {
+        if (text.isEmpty()) {
+            Log.d(TAG, "filter: empty string");
+        } else {
+            text = text.toLowerCase();
+            swapCursor(queryHymnTable(text));
+        }
+    }
+
     public HymntableCursor swapCursor(HymntableCursor cursor) {
         Log.d(TAG, "swapCursor: ");
         if (dataCursor == cursor) {
@@ -60,34 +73,30 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         HymntableCursor oldCursor = dataCursor;
         this.dataCursor = cursor;
         if (cursor != null) {
-            cursor = cursor;
+            Utils.cursor = cursor;
             this.notifyDataSetChanged();
         }
         return oldCursor;
     }
 
-    public void filter(String text) {
-        if (text.isEmpty()) {
-            Log.d(TAG, "filter: empty string");
+    private HymntableCursor queryHymnTable(String text) {
+        HymntableSelection selection = new HymntableSelection();
+        selection.titleContains(text);
+
+        Log.d(TAG, "queryHymnTable: " + isFromCategoryFragment);
+
+        if (showFavoriteScreen) {
+            selection.and();
+            return selection.like(true).query(context.getContentResolver());
+        } else if (isFromCategoryFragment) {
+            selection.and();
+            Log.d(TAG, "queryHymnTable: category#");
+            return selection.category(category).query(context.getContentResolver());
         } else {
-            text = text.toLowerCase();
-            HymntableSelection selection = new HymntableSelection();
-            selection.titleContains(text);
-            selection.contentContains(text);
-            HymntableCursor cursor = selection.query(context.getContentResolver());
-            swapCursor(cursor);
+            Log.d(TAG, "queryHymnTable: default#");
+            return selection.query(context.getContentResolver());
         }
     }
-
-//    private HymntableCursor queryHymnTable() {
-//        if (showFavoriteScreen) {
-//            return new HymntableSelection().like(true).query(context.getContentResolver());
-//        } else if (isFromCategoryFragment) {
-//            return new HymntableSelection().categoryContains(category).query(context.getContentResolver());
-//        } else {
-//            return new HymntableSelection().query(context.getContentResolver());
-//        }
-//    }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
