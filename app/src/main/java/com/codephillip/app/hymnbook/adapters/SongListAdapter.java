@@ -29,7 +29,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     private ColourQueue colourQueue;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private static final String TAG = "ViewHolder";
         private ImageView numberView;
         private TextView titleView;
 
@@ -42,7 +41,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     public SongListAdapter(Context mContext, HymntableCursor cursor) {
         Utils.getInstance();
-        cursor = cursor;
+        Utils.cursor = cursor;
         dataCursor = cursor;
         context = mContext;
         colourQueue = new ColourQueue();

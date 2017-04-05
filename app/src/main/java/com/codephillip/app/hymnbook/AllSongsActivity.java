@@ -26,6 +26,7 @@ public class AllSongsActivity extends AppCompatActivity {
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment);
             fragmentTransaction.commit();
+            getSupportActionBar().setTitle(category);
         } catch (Exception e) {
             e.printStackTrace();
         }
