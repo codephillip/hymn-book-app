@@ -1,5 +1,7 @@
 package com.codephillip.app.hymnbook;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -87,12 +89,14 @@ public class SongFragment extends Fragment {
         likeButton.setImageDrawable(getResources().getDrawable(image));
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void changeLikePreference(boolean liked, String title) {
         Log.d(TAG, "changeLikePreference: " + liked);
         HymntableContentValues values = new HymntableContentValues();
         values.putLike(liked);
         values.update(getContext().getContentResolver(), new HymntableSelection().titleLike(title));
         cursor = queryHymnTable(showFavoriteScreen);
+        getActivity().onCreate(null, null);
     }
 
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {

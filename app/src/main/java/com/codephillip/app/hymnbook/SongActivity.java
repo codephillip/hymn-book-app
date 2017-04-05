@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
@@ -32,7 +31,6 @@ public class SongActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         Utils.getInstance();
-        HymnDatabase.getInstance();
     }
 
     /**
