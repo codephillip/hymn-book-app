@@ -1,7 +1,5 @@
 package com.codephillip.app.hymnbook;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -80,16 +78,22 @@ public class SongFragment extends Fragment {
         return rootView;
     }
 
+    private void attachDataToViews() {
+        try {
+            titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
+            contentView.setText(cursor.getContent());
+            navigationView.setText((position + 1) + "/" + cursor.getCount());
+            changeLikeImageButton(cursor.getLike());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void changeLikeImageButton(Boolean like) {
-        int image;
-        if (like)
-            image = R.drawable.ic_star_black_16dp;
-        else
-            image = R.drawable.ic_star_border_black_16dp;
+        int image = like ? R.drawable.ic_star_black_16dp : R.drawable.ic_star_border_black_16dp;
         likeButton.setImageDrawable(getResources().getDrawable(image));
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void changeLikePreference(boolean liked, String title) {
         Log.d(TAG, "changeLikePreference: " + liked);
         HymntableContentValues values = new HymntableContentValues();
@@ -100,16 +104,5 @@ public class SongFragment extends Fragment {
 
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
         return showFavoriteScreen ? new HymntableSelection().like(true).query(getContext().getContentResolver()) : new HymntableSelection().query(getContext().getContentResolver());
-    }
-
-    private void attachDataToViews() {
-        try {
-            titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
-            contentView.setText(cursor.getContent());
-            navigationView.setText((position + 1) + "/" + cursor.getCount());
-            changeLikeImageButton(cursor.getLike());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

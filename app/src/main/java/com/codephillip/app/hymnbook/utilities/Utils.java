@@ -1,7 +1,5 @@
 package com.codephillip.app.hymnbook.utilities;
 
-import android.content.Context;
-
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
@@ -42,7 +40,7 @@ public class Utils {
                 .width(140)  // width in px
                 .height(140) // height in px
                 .endConfig()
-                .buildRound(String.valueOf(position + 1), color1);
+                .buildRound(String.valueOf(position), color1);
         return drawable;
     }
 }

@@ -92,19 +92,18 @@ public class AllSongsFragment extends Fragment {
         }
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
+        cursor = queryHymnTable();
         if (hasChangedView()) {
-            attachListAdapter();
+            attachListAdapter(cursor);
         } else {
             attachGridAdapter();
         }
-
         return rootView;
     }
 
-    private void attachListAdapter() {
+    private void attachListAdapter(HymntableCursor cursor) {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        cursor = queryHymnTable();
         listAdapter = new SongListAdapter(getContext(), cursor);
         recyclerView.setAdapter(listAdapter);
     }
@@ -112,7 +111,7 @@ public class AllSongsFragment extends Fragment {
     private void attachGridAdapter() {
         int numberOfColumns = 5;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
-        gridAdapter = new SongGridAdapter(getContext(), generateGridViewData());
+        gridAdapter = new SongGridAdapter(getContext());
         recyclerView.setAdapter(gridAdapter);
     }
 

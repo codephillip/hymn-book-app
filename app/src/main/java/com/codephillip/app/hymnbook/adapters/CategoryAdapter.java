@@ -56,7 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         try {
             holder.titleView.setText(dataCursor.get(position));
-            holder.numberView.setImageDrawable(Utils.generateTextDrawable(position, colourQueue));
+            holder.numberView.setImageDrawable(Utils.generateTextDrawable(position + 1, colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
         }

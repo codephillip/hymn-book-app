@@ -14,6 +14,7 @@ import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.position;
 
 /**
@@ -23,37 +24,14 @@ import static com.codephillip.app.hymnbook.utilities.Utils.position;
 public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHolder> {
 
     private final ColourQueue colourQueue;
-    private String[] mData = new String[0];
     private LayoutInflater mInflater;
     private static Context context;
 
     // data is passed into the constructor
-    public SongGridAdapter(Context context, String[] data) {
+    public SongGridAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
-        this.mData = data;
         colourQueue = new ColourQueue();
-    }
-
-    // inflates the cell layout from xml when needed
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
-    }
-
-    // binds the data to the textview in each cell
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData[position];
-        holder.numberView.setImageDrawable(Utils.generateTextDrawable(position, colourQueue));
-    }
-
-    // total number of cells
-    @Override
-    public int getItemCount() {
-        return mData.length;
     }
 
 
@@ -77,5 +55,26 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
                 }
             });
         }
+    }
+
+    // inflates the cell layout from xml when needed
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
+    }
+
+    // binds the data to the textview in each cell
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        cursor.moveToPosition(position);
+        holder.numberView.setImageDrawable(Utils.generateTextDrawable(cursor.getNumber(), colourQueue));
+    }
+
+    // total number of cells
+    @Override
+    public int getItemCount() {
+        return cursor.getCount();
     }
 }

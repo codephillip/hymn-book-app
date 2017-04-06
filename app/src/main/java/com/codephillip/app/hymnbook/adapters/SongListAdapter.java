@@ -102,7 +102,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         dataCursor.moveToPosition(position);
         try {
             holder.titleView.setText(dataCursor.getTitle());
-            holder.numberView.setImageDrawable(Utils.generateTextDrawable(dataCursor.getNumber() - 1, colourQueue));
+            holder.numberView.setImageDrawable(Utils.generateTextDrawable(dataCursor.getNumber(), colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
         }

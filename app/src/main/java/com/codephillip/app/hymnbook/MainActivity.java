@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.codephillip.app.hymnbook.models.Hymn;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
@@ -26,7 +25,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.screenNames;
 
@@ -81,10 +79,8 @@ public class MainActivity extends AppCompatActivity
             JSONObject jsonObject = new JSONObject(new String(b));
             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-            ArrayList<Hymn> hymnList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject innerObject = jsonArray.getJSONObject(i);
-//                hymnList.add(new Hymn(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name")));
                 storeInHymnTable(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name"), false);
             }
         } catch (JSONException e) {
