@@ -109,21 +109,10 @@ public class AllSongsFragment extends Fragment {
     }
 
     private void attachGridAdapter() {
-        int numberOfColumns = 5;
+        int numberOfColumns = 4;
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
         gridAdapter = new SongGridAdapter(getContext());
         recyclerView.setAdapter(gridAdapter);
-    }
-
-    private String[] generateGridViewData() {
-        String[] data = new String[cursor.getCount()];
-        int counter = 0;
-        if (cursor.moveToFirst()) {
-            do {
-                data[counter++] = String.valueOf(cursor.getNumber());
-            } while (cursor.moveToNext());
-        }
-        return data;
     }
 
     private HymntableCursor queryHymnTable() {
