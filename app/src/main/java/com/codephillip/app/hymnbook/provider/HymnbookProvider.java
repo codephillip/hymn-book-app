@@ -1,18 +1,19 @@
 package com.codephillip.app.hymnbook.provider;
 
+import java.util.Arrays;
+
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.codephillip.app.hymnbook.BuildConfig;
 import com.codephillip.app.hymnbook.provider.base.BaseContentProvider;
-import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableColumns;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
-
-import java.util.Arrays;
 
 public class HymnbookProvider extends BaseContentProvider {
     private static final String TAG = HymnbookProvider.class.getSimpleName();
@@ -25,8 +26,8 @@ public class HymnbookProvider extends BaseContentProvider {
     public static final String AUTHORITY = "com.codephillip.app.hymnbook.provider";
     public static final String CONTENT_URI_BASE = "content://" + AUTHORITY;
 
-    private static final int URI_TYPE_FAVORITETABLE = 0;
-    private static final int URI_TYPE_FAVORITETABLE_ID = 1;
+    private static final int URI_TYPE_CATEGORYTABLE = 0;
+    private static final int URI_TYPE_CATEGORYTABLE_ID = 1;
 
     private static final int URI_TYPE_HYMNTABLE = 2;
     private static final int URI_TYPE_HYMNTABLE_ID = 3;
@@ -36,8 +37,8 @@ public class HymnbookProvider extends BaseContentProvider {
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        URI_MATCHER.addURI(AUTHORITY, FavoritetableColumns.TABLE_NAME, URI_TYPE_FAVORITETABLE);
-        URI_MATCHER.addURI(AUTHORITY, FavoritetableColumns.TABLE_NAME + "/#", URI_TYPE_FAVORITETABLE_ID);
+        URI_MATCHER.addURI(AUTHORITY, CategorytableColumns.TABLE_NAME, URI_TYPE_CATEGORYTABLE);
+        URI_MATCHER.addURI(AUTHORITY, CategorytableColumns.TABLE_NAME + "/#", URI_TYPE_CATEGORYTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, HymntableColumns.TABLE_NAME, URI_TYPE_HYMNTABLE);
         URI_MATCHER.addURI(AUTHORITY, HymntableColumns.TABLE_NAME + "/#", URI_TYPE_HYMNTABLE_ID);
     }
@@ -56,10 +57,10 @@ public class HymnbookProvider extends BaseContentProvider {
     public String getType(Uri uri) {
         int match = URI_MATCHER.match(uri);
         switch (match) {
-            case URI_TYPE_FAVORITETABLE:
-                return TYPE_CURSOR_DIR + FavoritetableColumns.TABLE_NAME;
-            case URI_TYPE_FAVORITETABLE_ID:
-                return TYPE_CURSOR_ITEM + FavoritetableColumns.TABLE_NAME;
+            case URI_TYPE_CATEGORYTABLE:
+                return TYPE_CURSOR_DIR + CategorytableColumns.TABLE_NAME;
+            case URI_TYPE_CATEGORYTABLE_ID:
+                return TYPE_CURSOR_ITEM + CategorytableColumns.TABLE_NAME;
 
             case URI_TYPE_HYMNTABLE:
                 return TYPE_CURSOR_DIR + HymntableColumns.TABLE_NAME;
@@ -108,12 +109,12 @@ public class HymnbookProvider extends BaseContentProvider {
         String id = null;
         int matchedId = URI_MATCHER.match(uri);
         switch (matchedId) {
-            case URI_TYPE_FAVORITETABLE:
-            case URI_TYPE_FAVORITETABLE_ID:
-                res.table = FavoritetableColumns.TABLE_NAME;
-                res.idColumn = FavoritetableColumns._ID;
-                res.tablesWithJoins = FavoritetableColumns.TABLE_NAME;
-                res.orderBy = FavoritetableColumns.DEFAULT_ORDER;
+            case URI_TYPE_CATEGORYTABLE:
+            case URI_TYPE_CATEGORYTABLE_ID:
+                res.table = CategorytableColumns.TABLE_NAME;
+                res.idColumn = CategorytableColumns._ID;
+                res.tablesWithJoins = CategorytableColumns.TABLE_NAME;
+                res.orderBy = CategorytableColumns.DEFAULT_ORDER;
                 break;
 
             case URI_TYPE_HYMNTABLE:
@@ -129,7 +130,7 @@ public class HymnbookProvider extends BaseContentProvider {
         }
 
         switch (matchedId) {
-            case URI_TYPE_FAVORITETABLE_ID:
+            case URI_TYPE_CATEGORYTABLE_ID:
             case URI_TYPE_HYMNTABLE_ID:
                 id = uri.getLastPathSegment();
         }

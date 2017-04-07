@@ -125,6 +125,7 @@ public class AllSongsFragment extends Fragment {
         }
     }
 
+    //true -> list, false -> grid
     private boolean hasChangedView() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         return prefs.getBoolean(Utils.CHANGE_VIEW, true);
@@ -156,7 +157,6 @@ public class AllSongsFragment extends Fragment {
             searchView.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override
                 public boolean onClose() {
-                    cursor = queryHymnTable();
                     listAdapter.swapCursor(cursor);
                     return false;
                 }

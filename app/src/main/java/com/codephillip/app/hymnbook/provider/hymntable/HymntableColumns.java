@@ -4,7 +4,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.codephillip.app.hymnbook.provider.HymnbookProvider;
-import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableColumns;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 
 /**

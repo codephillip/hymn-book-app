@@ -10,7 +10,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.codephillip.app.hymnbook.BuildConfig;
-import com.codephillip.app.hymnbook.provider.favoritetable.FavoritetableColumns;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 
 public class HymnbookSQLiteOpenHelper extends SQLiteOpenHelper {
@@ -23,14 +23,11 @@ public class HymnbookSQLiteOpenHelper extends SQLiteOpenHelper {
     private final HymnbookSQLiteOpenHelperCallbacks mOpenHelperCallbacks;
 
     // @formatter:off
-    public static final String SQL_CREATE_TABLE_FAVORITETABLE = "CREATE TABLE IF NOT EXISTS "
-            + FavoritetableColumns.TABLE_NAME + " ( "
-            + FavoritetableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + FavoritetableColumns.TITLE + " TEXT, "
-            + FavoritetableColumns.CONTENT + " TEXT, "
-            + FavoritetableColumns.NUMBER + " INTEGER, "
-            + FavoritetableColumns.CATEGORY + " TEXT, "
-            + FavoritetableColumns.LIKE + " INTEGER "
+    public static final String SQL_CREATE_TABLE_CATEGORYTABLE = "CREATE TABLE IF NOT EXISTS "
+            + CategorytableColumns.TABLE_NAME + " ( "
+            + CategorytableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + CategorytableColumns.KEY + " INTEGER, "
+            + CategorytableColumns.NAME + " TEXT "
             + " );";
 
     public static final String SQL_CREATE_TABLE_HYMNTABLE = "CREATE TABLE IF NOT EXISTS "
@@ -97,7 +94,7 @@ public class HymnbookSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         mOpenHelperCallbacks.onPreCreate(mContext, db);
-        db.execSQL(SQL_CREATE_TABLE_FAVORITETABLE);
+        db.execSQL(SQL_CREATE_TABLE_CATEGORYTABLE);
         db.execSQL(SQL_CREATE_TABLE_HYMNTABLE);
         mOpenHelperCallbacks.onPostCreate(mContext, db);
     }
