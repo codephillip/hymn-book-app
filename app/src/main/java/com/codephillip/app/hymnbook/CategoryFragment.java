@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.CategoryAdapter;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableCursor;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableSelection;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public class CategoryFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         generateAdapterData();
-        adapter = new CategoryAdapter(getContext(), HymnDatabase.categorys);
+        adapter = new CategoryAdapter(getContext(), queryCategoryTable());
         recyclerView.setAdapter(adapter);
         return rootView;
     }
@@ -46,5 +48,9 @@ public class CategoryFragment extends Fragment {
         categorys.add("EZO MUGAATI OGW’OBULAMU");
         categorys.add("EZO KWEBAZA");
         HymnDatabase.categorys = categorys;
+    }
+
+    private CategorytableCursor queryCategoryTable() {
+        return new CategorytableSelection().query(getContext().getContentResolver());
     }
 }

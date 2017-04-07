@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableContentValues;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
 import com.codephillip.app.hymnbook.utilities.Utils;
@@ -69,15 +71,25 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onCreate: connectToStorage started");
         deleteHymnTable();
         saveFirstLaunch(false);
-        //todo remove on release
-//        getContentResolver().delete(FavoritetableColumns.CONTENT_URI, null, null);
+        getHymnsFromJson();
+        getCategorysFromJson();
+    }
 
+    private void deleteHymnTable() {
+        long deleted;
+        deleted = getContentResolver().delete(CategorytableColumns.CONTENT_URI, null, null);
+        Log.d(TAG, "deleteCategoryTable: " + deleted);
+        deleted = getContentResolver().delete(HymntableColumns.CONTENT_URI, null, null);
+        Log.d(TAG, "deleteHymnTable: " + deleted);
+    }
+
+    private void getHymnsFromJson() {
         try {
-            InputStream inputStream = getResources().openRawResource(R.raw.data);
+            InputStream inputStream = getResources().openRawResource(R.raw.hymns);
             byte[] b = new byte[inputStream.available()];
             inputStream.read(b);
             JSONObject jsonObject = new JSONObject(new String(b));
-            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            JSONArray jsonArray = jsonObject.getJSONArray("hymns");
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject innerObject = jsonArray.getJSONObject(i);
@@ -90,19 +102,40 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void deleteHymnTable() {
-        long deleted = getContentResolver().delete(HymntableColumns.CONTENT_URI, null, null);
-        Log.d(TAG, "deleteHymnTable: " + deleted);
+    private void storeInHymnTable(int number, String title, String content, String category, boolean like) {
+        HymntableContentValues values = new HymntableContentValues();
+        values.putNumber(number);
+        values.putTitle(title);
+        values.putContent(content);
+        values.putCategory(category);
+        values.putLike(like);
+        values.insert(getContentResolver());
     }
 
-    private void storeInHymnTable(int number, String title, String content, String category, boolean like) {
-        HymntableContentValues hymn = new HymntableContentValues();
-        hymn.putNumber(number);
-        hymn.putTitle(title);
-        hymn.putContent(content);
-        hymn.putCategory(category);
-        hymn.putLike(like);
-        hymn.insert(getContentResolver());
+    private void getCategorysFromJson() {
+        try {
+            InputStream inputStream = getResources().openRawResource(R.raw.categorys);
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+            JSONObject jsonObject = new JSONObject(new String(b));
+            JSONArray jsonArray = jsonObject.getJSONArray("categorys");
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject innerObject = jsonArray.getJSONObject(i);
+                storeInCategoryTable(Long.parseLong(innerObject.getString("id")), innerObject.getString("name"));
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, e.toString());
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    private void storeInCategoryTable(long id, String name) {
+        CategorytableContentValues values = new CategorytableContentValues();
+        values.putKey(id);
+        values.putName(name);
+        values.insert(getContentResolver());
     }
 
     @Override

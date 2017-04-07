@@ -27,7 +27,7 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     private LayoutInflater mInflater;
     private static Context context;
 
-    // data is passed into the constructor
+    // hymns is passed into the constructor
     public SongGridAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -65,7 +65,7 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
         return viewHolder;
     }
 
-    // binds the data to the textview in each cell
+    // binds the hymns to the textview in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         cursor.moveToPosition(position);

@@ -13,15 +13,14 @@ import android.widget.TextView;
 import com.codephillip.app.hymnbook.AllSongsActivity;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.models.HymnDatabase;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableCursor;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.utilities.Utils;
-
-import java.util.ArrayList;
 
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private static final String TAG = CategoryAdapter.class.getSimpleName();
-    private ArrayList<String> dataCursor;
+    private CategorytableCursor dataCursor;
     private static Context context;
     private ColourQueue colourQueue;
 
@@ -37,7 +36,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
-    public CategoryAdapter(Context mContext, ArrayList<String> cursor) {
+    public CategoryAdapter(Context mContext, CategorytableCursor cursor) {
         dataCursor = cursor;
         context = mContext;
         HymnDatabase.getInstance();
@@ -54,8 +53,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+        dataCursor.moveToPosition(position);
         try {
-            holder.titleView.setText(dataCursor.get(position));
+            holder.titleView.setText(dataCursor.getName());
             holder.numberView.setImageDrawable(Utils.generateTextDrawable(position + 1, colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,8 +65,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: ");
-                Utils.category = dataCursor.get(position);
-                context.startActivity(new Intent(context, AllSongsActivity.class).putExtra(Utils.CATEGORY, dataCursor.get(position)));
+                dataCursor.moveToPosition(position);
+                context.startActivity(new Intent(context, AllSongsActivity.class).putExtra(Utils.CATEGORY, dataCursor.getName()));
             }
         });
     }
@@ -74,6 +74,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public int getItemCount() {
         // any number other than zero will cause a bug
-        return (dataCursor == null) ? 0 : dataCursor.size();
+        return (dataCursor == null) ? 0 : dataCursor.getCount();
     }
 }
