@@ -47,4 +47,16 @@ public class Utils {
                 .buildRound(String.valueOf(position), color1);
         return drawable;
     }
+
+    public static TextDrawable generateTextDrawable(String text, ColourQueue colourQueue) {
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        int color1 = generator.getColor(colourQueue.getCount());
+        TextDrawable drawable = TextDrawable.builder()
+                .beginConfig()
+                .width(140)  // width in px
+                .height(140) // height in px
+                .endConfig()
+                .buildRound(text, color1);
+        return drawable;
+    }
 }
