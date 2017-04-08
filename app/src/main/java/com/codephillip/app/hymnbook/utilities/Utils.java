@@ -14,6 +14,7 @@ public class Utils {
     private static final Utils ourInstance = new Utils();
     public static final String FIRST_LAUNCH = "first_launch";
     private static final String TAG = Utils.class.getSimpleName();
+    public static final String FONT_SIZE = "font_size";
     public static boolean isSongActivityActive;
     public static final String CHANGE_VIEW = "change_view";
     public static final String IS_FAVORITE = "is_favorite";

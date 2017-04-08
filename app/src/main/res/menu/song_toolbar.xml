@@ -2,9 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_like"
-        android:title="@string/like"
-        android:icon="@drawable/ic_star_black_16dp"
+        android:id="@+id/zoom_in"
+        android:title="@string/zoom_in"
+        android:icon="@drawable/ic_zoom_in_white_36dp"
         android:orderInCategory="1"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/zoom_out"
+        android:title="@string/zoom_in"
+        android:icon="@drawable/ic_zoom_out_white_36dp"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom" />
 </menu>

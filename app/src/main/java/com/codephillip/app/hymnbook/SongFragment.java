@@ -1,9 +1,14 @@
 package com.codephillip.app.hymnbook;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -50,6 +55,8 @@ public class SongFragment extends Fragment {
 
         Log.d(TAG, "STARTED FRAGMENT");
 
+        setHasOptionsMenu(true);
+
         titleView = (TextView) rootView.findViewById(R.id.title);
         contentView = (TextView) rootView.findViewById(R.id.content);
         navigationView = (TextView) rootView.findViewById(R.id.navigation);
@@ -82,6 +89,7 @@ public class SongFragment extends Fragment {
             titleView.setTypeface(typeface);
             contentView.setTypeface(typeface);
             navigationView.setTypeface(typeface);
+            contentView.setTextSize(getFontSize());
             titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
             contentView.setText(cursor.getContent());
             navigationView.setText((position + 1) + "/" + cursor.getCount());
@@ -106,5 +114,47 @@ public class SongFragment extends Fragment {
 
     private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
         return showFavoriteScreen ? new HymntableSelection().like(true).query(getContext().getContentResolver()) : new HymntableSelection().query(getContext().getContentResolver());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.song_toolbar, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.zoom_in) {
+            Log.d(TAG, "onOptionsItemSelected: zoom in");
+            if (getFontSize() >= 27.0f)
+                return true;
+            saveFontSize(getFontSize() + 1);
+            contentView.setTextSize(getFontSize());
+            Log.d(TAG, "onOptionsItemSelected: " + contentView.getTextSize());
+            return true;
+        } else  if (id == R.id.zoom_out) {
+            Log.d(TAG, "onOptionsItemSelected: zoom out");
+            if (getFontSize() <= 10.0f)
+                return true;
+            saveFontSize(getFontSize() - 1);
+            contentView.setTextSize(getFontSize());
+            Log.d(TAG, "onOptionsItemSelected: " + contentView.getTextSize());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveFontSize(float fontSize) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putFloat(Utils.FONT_SIZE, fontSize);
+        editor.apply();
+    }
+
+    private float getFontSize() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        //default size 42.0f
+        return prefs.getFloat(Utils.FONT_SIZE, 17.0f);
     }
 }
