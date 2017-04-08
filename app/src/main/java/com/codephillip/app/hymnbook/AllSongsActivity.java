@@ -2,14 +2,13 @@ package com.codephillip.app.hymnbook;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.screenNames;
 
-public class AllSongsActivity extends AppCompatActivity {
+public class AllSongsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

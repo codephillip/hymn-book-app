@@ -1,13 +1,10 @@
 package com.codephillip.app.hymnbook;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -15,7 +12,7 @@ import com.codephillip.app.hymnbook.utilities.Utils;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 
-public class SongActivity extends AppCompatActivity {
+public class SongActivity extends BaseActivity {
 
     private static final String TAG = SongActivity.class.getSimpleName();
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -23,7 +20,6 @@ public class SongActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        activateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
 
@@ -67,15 +63,6 @@ public class SongActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return cursor.getCount();
-        }
-    }
-
-    private void activateTheme() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean useDarkTheme = prefs.getBoolean("app_theme", false);
-        Log.d(TAG, "activateTheme: " + useDarkTheme);
-        if(useDarkTheme) {
-            setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
     }
 }

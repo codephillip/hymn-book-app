@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -32,14 +31,13 @@ import java.io.InputStream;
 import static com.codephillip.app.hymnbook.utilities.Utils.screenNames;
 
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        activateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -68,15 +66,6 @@ public class MainActivity extends AppCompatActivity
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,fragment);
         fragmentTransaction.commit();
-    }
-
-    private void activateTheme() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean useDarkTheme = prefs.getBoolean("app_theme", false);
-        Log.d(TAG, "activateTheme: " + useDarkTheme);
-        if(useDarkTheme) {
-            setTheme(R.style.AppTheme_Dark_NoActionBar);
-        }
     }
 
     private void activateFont() {
