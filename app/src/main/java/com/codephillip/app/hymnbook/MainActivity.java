@@ -1,5 +1,6 @@
 package com.codephillip.app.hymnbook;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -199,8 +200,10 @@ public class MainActivity extends AppCompatActivity
             Utils.clickedFavorite = true;
             fragment = AllSongsFragment.newInstance(true);
             getSupportActionBar().setTitle(screenNames[2]);
-        }
-        else if (id == R.id.about) {
+        } else if (id == R.id.settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.about) {
 
         } else {
             return true;

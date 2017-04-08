@@ -96,8 +96,6 @@ public class SongFragment extends Fragment {
 
     private void attachDataToViews() {
         try {
-//            Typeface typeFace = Typeface.createFromAsset(getContext().getAssets(),getResources().getResourceName(R.raw.opensans));
-//            "raw/opensans.ttf"
             titleView.setTypeface(typeFace);
             contentView.setTypeface(typeFace);
             titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
