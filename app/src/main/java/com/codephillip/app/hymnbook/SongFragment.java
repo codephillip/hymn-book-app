@@ -126,20 +126,16 @@ public class SongFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.zoom_in) {
-            Log.d(TAG, "onOptionsItemSelected: zoom in");
-            if (getFontSize() >= 27.0f)
+            if (getFontSize() >= 23.0f)
                 return true;
             saveFontSize(getFontSize() + 1);
             contentView.setTextSize(getFontSize());
-            Log.d(TAG, "onOptionsItemSelected: " + contentView.getTextSize());
             return true;
         } else  if (id == R.id.zoom_out) {
-            Log.d(TAG, "onOptionsItemSelected: zoom out");
             if (getFontSize() <= 10.0f)
                 return true;
             saveFontSize(getFontSize() - 1);
             contentView.setTextSize(getFontSize());
-            Log.d(TAG, "onOptionsItemSelected: " + contentView.getTextSize());
             return true;
         }
         return super.onOptionsItemSelected(item);

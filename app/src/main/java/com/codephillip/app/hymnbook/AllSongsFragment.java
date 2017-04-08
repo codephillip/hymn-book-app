@@ -155,7 +155,7 @@ public class AllSongsFragment extends Fragment {
             searchView.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override
                 public boolean onClose() {
-                    listAdapter.swapCursor(cursor);
+                    listAdapter.swapCursor(queryHymnTable());
                     return false;
                 }
             });
