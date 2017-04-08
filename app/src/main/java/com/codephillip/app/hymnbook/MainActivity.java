@@ -15,8 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableContentValues;
@@ -36,21 +34,12 @@ import static com.codephillip.app.hymnbook.utilities.Utils.screenNames;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String PREF_DARK_THEME = "dark_theme";
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
-
-        Log.d("BOOLEAN", "onCreate: " + useDarkTheme);
-        if(useDarkTheme) {
-            setTheme(R.style.AppTheme_Dark_NoActionBar);
-        }
-
+        activateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,16 +62,6 @@ public class MainActivity extends AppCompatActivity
 
         activateFont();
 
-        Switch toogleThemeSwitch = (Switch) findViewById(R.id.switch1);
-        toogleThemeSwitch.setChecked(useDarkTheme);
-        toogleThemeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton view, boolean isChecked) {
-                toggleTheme(isChecked);
-            }
-        });
-
-
         //populate the first default fragment
         Fragment fragment = AllSongsFragment.newInstance(false);
         getSupportActionBar().setTitle(screenNames[0]);
@@ -91,15 +70,13 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-    private void toggleTheme(boolean darkTheme) {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putBoolean(PREF_DARK_THEME, darkTheme);
-        editor.apply();
-
-        Intent intent = getIntent();
-        finish();
-
-        startActivity(intent);
+    private void activateTheme() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean useDarkTheme = prefs.getBoolean("app_theme", false);
+        Log.d(TAG, "activateTheme: " + useDarkTheme);
+        if(useDarkTheme) {
+            setTheme(R.style.AppTheme_Dark_NoActionBar);
+        }
     }
 
     private void activateFont() {
@@ -116,7 +93,6 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
             Utils.typeface = Typeface.DEFAULT;
         }
-
     }
 
     private void connectToStorage() {

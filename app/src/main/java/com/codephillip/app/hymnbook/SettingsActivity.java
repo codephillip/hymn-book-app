@@ -187,6 +187,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
 
             bindPreferenceSummaryToValue(findPreference("font_list"));
+            //switch is not registered
+//            bindPreferenceSummaryToValue(findPreference("app_theme"));
         }
 
         @Override

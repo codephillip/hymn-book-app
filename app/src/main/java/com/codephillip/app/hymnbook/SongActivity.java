@@ -1,6 +1,8 @@
 package com.codephillip.app.hymnbook;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,6 +23,7 @@ public class SongActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        activateTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
 
@@ -64,6 +67,15 @@ public class SongActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return cursor.getCount();
+        }
+    }
+
+    private void activateTheme() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean useDarkTheme = prefs.getBoolean("app_theme", false);
+        Log.d(TAG, "activateTheme: " + useDarkTheme);
+        if(useDarkTheme) {
+            setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
     }
 }

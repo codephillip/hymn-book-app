@@ -139,4 +139,5 @@
     <string name="change_font">Change font</string>
     <string name="default_font">Default</string>
     <string name="zoom_in">Zoom In</string>
+    <string name="change_theme">Change theme</string>
 </resources>
