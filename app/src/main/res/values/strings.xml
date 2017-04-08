@@ -136,8 +136,13 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="fonts">Change font</string>
     <string name="pref_units_key">font_key</string>
-    <string name="change_font">Change font</string>
+    <string name="change_font">Select font</string>
     <string name="default_font">Default</string>
     <string name="zoom_in">Zoom In</string>
-    <string name="change_theme">Activate Dark theme</string>
+    <string name="change_theme">Select theme</string>
+    <string name="theme_desc">Use Dark or Light theme</string>
+    <string name="font_desc">Change the text font</string>
+    <string name="summary">Update hymns in your database</string>
+    <string name="sync">Sync data</string>
+    <string name="build_version">Version 1.0 BETA</string>
 </resources>

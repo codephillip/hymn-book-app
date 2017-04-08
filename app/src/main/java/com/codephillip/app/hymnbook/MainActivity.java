@@ -219,8 +219,6 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
-        } else if (id == R.id.about) {
-
         } else {
             return true;
         }
