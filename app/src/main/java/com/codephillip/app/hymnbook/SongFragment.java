@@ -1,5 +1,8 @@
 package com.codephillip.app.hymnbook;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,6 +34,7 @@ public class SongFragment extends Fragment {
     private TextView navigationView;
     private ImageButton likeButton;
     private int position;
+    private Typeface typeFace;
 
     public SongFragment() {
     }
@@ -78,8 +82,24 @@ public class SongFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            typeFace = Typeface.createFromAsset(getContext().getAssets(), "fonts/Ubuntu-R.ttf");
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+            typeFace = Typeface.DEFAULT;
+        }
+
+    }
+
     private void attachDataToViews() {
         try {
+//            Typeface typeFace = Typeface.createFromAsset(getContext().getAssets(),getResources().getResourceName(R.raw.opensans));
+//            "raw/opensans.ttf"
+            titleView.setTypeface(typeFace);
+            contentView.setTypeface(typeFace);
             titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
             contentView.setText(cursor.getContent());
             navigationView.setText((position + 1) + "/" + cursor.getCount());
