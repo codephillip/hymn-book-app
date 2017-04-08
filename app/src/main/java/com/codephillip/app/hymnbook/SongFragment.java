@@ -126,7 +126,7 @@ public class SongFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.zoom_in) {
-            if (getFontSize() >= 23.0f)
+            if (getFontSize() >= 25.0f)
                 return true;
             saveFontSize(getFontSize() + 1);
             contentView.setTextSize(getFontSize());
