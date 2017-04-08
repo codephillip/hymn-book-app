@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.SongGridAdapter;
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
-import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
@@ -70,7 +69,6 @@ public class AllSongsFragment extends Fragment {
         // We have a menu item to show in action bar.
         setHasOptionsMenu(true);
 
-        HymnDatabase.getInstance();
         Utils.getInstance();
 
         try {

@@ -20,6 +20,7 @@ import com.codephillip.app.hymnbook.utilities.Utils;
 import static com.codephillip.app.hymnbook.utilities.Utils.category;
 import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
 
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
@@ -36,6 +37,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             super(v);
             numberView = (ImageView) v.findViewById(R.id.numberImageView);
             titleView = (TextView) v.findViewById(R.id.title_view);
+            titleView.setTypeface(typeface);
         }
     }
 

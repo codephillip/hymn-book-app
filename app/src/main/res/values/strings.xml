@@ -27,15 +27,65 @@
     <string name="pref_default_display_name">John Smith</string>
 
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
+    <string-array name="pref_font_list_titles">
+        <item>Default</item>
+        <item>Arvo-Bold</item>
+        <item>Arvo-Italic</item>
+        <item>Arvo-Regular</item>
+        <item>BodoniFLF-Bold</item>
+        <item>BodoniFLF-Italic</item>
+        <item>BodoniFLF-Roman</item>
+        <item>DejaVuSans</item>
+        <item>DejaVuSans-ExtraLight</item>
+        <item>DejaVuSansMono</item>
+        <item>DroidSans</item>
+        <item>graduate-regular-webfont</item>
+        <item>JosefinSlab-Bold</item>
+        <item>JosefinSlab-Regular</item>
+        <item>Lato-Light</item>
+        <item>Lato-Regular</item>
+        <item>OldStandard-Regular</item>
+        <item>OldStandard-Bold</item>
+        <item>OpenSans-Italic-webfont</item>
+        <item>opensans</item>
+        <item>Sanchez-Regular</item>
+        <item>slabo</item>
+        <item>UbuntuMono-RI</item>
+        <item>UbuntuMono-R</item>
+        <item>Ubuntu-RI</item>
+        <item>Ubuntu-R</item>
+        <item>Oswald-Regular-webfont</item>
+        <item>DroidSans-Bold</item>
     </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
+    <string-array name="pref_font_list_values">
+        <item>Default.ttf</item>
+        <item>Arvo-Bold.ttf</item>
+        <item>Arvo-Italic.ttf</item>
+        <item>Arvo-Regular.ttf</item>
+        <item>BodoniFLF-Bold.ttf</item>
+        <item>BodoniFLF-Italic.ttf</item>
+        <item>BodoniFLF-Roman.ttf</item>
+        <item>DejaVuSans.ttf</item>
+        <item>DejaVuSans-ExtraLight.ttf</item>
+        <item>DejaVuSansMono.ttf</item>
+        <item>DroidSans.ttf</item>
+        <item>graduate-regular-webfont.ttf</item>
+        <item>JosefinSlab-Bold.ttf</item>
+        <item>JosefinSlab-Regular.ttf</item>
+        <item>Lato-Light.ttf</item>
+        <item>Lato-Regular.ttf</item>
+        <item>OldStandard-Regular.ttf</item>
+        <item>OldStandard-Bold.ttf</item>
+        <item>OpenSans-Italic-webfont.ttf</item>
+        <item>opensans.ttf</item>
+        <item>Sanchez-Regular.ttf</item>
+        <item>slabo.ttf</item>
+        <item>UbuntuMono-RI.ttf</item>
+        <item>UbuntuMono-R.ttf</item>
+        <item>Ubuntu-RI.ttf</item>
+        <item>Ubuntu-R.ttf</item>
+        <item>Oswald-Regular-webfont.ttf</item>
+        <item>DroidSans-Bold.ttf.ttf</item>
     </string-array>
 
     <!-- Example settings for Data & Sync -->
@@ -84,4 +134,8 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="fonts">Change font</string>
+    <string name="pref_units_key">font_key</string>
+    <string name="change_font">Change font</string>
+    <string name="default_font">Default</string>
 </resources>

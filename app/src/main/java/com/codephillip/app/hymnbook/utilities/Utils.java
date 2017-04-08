@@ -1,5 +1,7 @@
 package com.codephillip.app.hymnbook.utilities;
 
+import android.graphics.Typeface;
+
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
@@ -24,6 +26,7 @@ public class Utils {
     public static HymntableCursor cursor;
     public static boolean showFavoriteScreen;
     public static boolean isFromCategoryFragment;
+    public static Typeface typeface;
 
     public static Utils getInstance() {
         return ourInstance;

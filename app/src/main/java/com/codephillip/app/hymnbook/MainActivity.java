@@ -2,6 +2,7 @@ package com.codephillip.app.hymnbook;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -15,7 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableContentValues;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        HymnDatabase.getInstance();
         Utils.getInstance();
         Log.d(TAG, "onCreate: " + hasChangedView());
 
@@ -60,12 +59,31 @@ public class MainActivity extends AppCompatActivity
         if (isFirstLaunch())
             connectToStorage();
 
+        activateFont();
+
         //populate the first default fragment
         Fragment fragment = AllSongsFragment.newInstance(false);
         getSupportActionBar().setTitle(screenNames[0]);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame,fragment);
         fragmentTransaction.commit();
+    }
+
+    private void activateFont() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String fontName = null;
+        try {
+            fontName = prefs.getString("font_list", "Default");
+            Log.d(TAG, "onCreate: PREF " + fontName);
+            if (fontName.equals("Default"))
+                Utils.typeface = Typeface.DEFAULT;
+            else
+                Utils.typeface = Typeface.createFromAsset(getAssets(), "fonts/" + fontName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Utils.typeface = Typeface.DEFAULT;
+        }
+
     }
 
     private void connectToStorage() {

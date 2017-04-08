@@ -12,10 +12,11 @@ import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.AllSongsActivity;
 import com.codephillip.app.hymnbook.R;
-import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableCursor;
 import com.codephillip.app.hymnbook.utilities.ColourQueue;
 import com.codephillip.app.hymnbook.utilities.Utils;
+
+import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
 
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
@@ -25,7 +26,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private ColourQueue colourQueue;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private static final String TAG = "ViewHolder";
         private ImageView numberView;
         private TextView titleView;
 
@@ -33,13 +33,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             super(v);
             numberView = (ImageView) v.findViewById(R.id.numberImageView);
             titleView = (TextView) v.findViewById(R.id.title_view);
+            titleView.setTypeface(typeface);
         }
     }
 
     public CategoryAdapter(Context mContext, CategorytableCursor cursor) {
         dataCursor = cursor;
         context = mContext;
-        HymnDatabase.getInstance();
+        Utils.getInstance();
         colourQueue = new ColourQueue();
     }
 

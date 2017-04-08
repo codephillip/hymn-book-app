@@ -9,11 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codephillip.app.hymnbook.adapters.CategoryAdapter;
-import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableCursor;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableSelection;
-
-import java.util.ArrayList;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -36,18 +33,9 @@ public class CategoryFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        generateAdapterData();
         adapter = new CategoryAdapter(getContext(), queryCategoryTable());
         recyclerView.setAdapter(adapter);
         return rootView;
-    }
-
-    private void generateAdapterData() {
-        ArrayList<String> categorys = new ArrayList<>();
-        categorys.add("EZA MAYINGIRA");
-        categorys.add("EZO MUGAATI OGW’OBULAMU");
-        categorys.add("EZO KWEBAZA");
-        HymnDatabase.categorys = categorys;
     }
 
     private CategorytableCursor queryCategoryTable() {

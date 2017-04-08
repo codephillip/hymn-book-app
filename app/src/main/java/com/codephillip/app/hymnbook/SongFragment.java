@@ -1,8 +1,5 @@
 package com.codephillip.app.hymnbook;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.codephillip.app.hymnbook.models.HymnDatabase;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
@@ -20,6 +16,7 @@ import com.codephillip.app.hymnbook.utilities.Utils;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -34,7 +31,6 @@ public class SongFragment extends Fragment {
     private TextView navigationView;
     private ImageButton likeButton;
     private int position;
-    private Typeface typeFace;
 
     public SongFragment() {
     }
@@ -59,7 +55,6 @@ public class SongFragment extends Fragment {
         navigationView = (TextView) rootView.findViewById(R.id.navigation);
         likeButton = (ImageButton) rootView.findViewById(R.id.like);
 
-        HymnDatabase.getInstance();
         Utils.getInstance();
 
         Log.d(TAG, "onCreateView: started");
@@ -82,22 +77,11 @@ public class SongFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            typeFace = Typeface.createFromAsset(getContext().getAssets(), "fonts/Ubuntu-R.ttf");
-        } catch (Resources.NotFoundException e) {
-            e.printStackTrace();
-            typeFace = Typeface.DEFAULT;
-        }
-
-    }
-
     private void attachDataToViews() {
         try {
-            titleView.setTypeface(typeFace);
-            contentView.setTypeface(typeFace);
+            titleView.setTypeface(typeface);
+            contentView.setTypeface(typeface);
+            navigationView.setTypeface(typeface);
             titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
             contentView.setText(cursor.getContent());
             navigationView.setText((position + 1) + "/" + cursor.getCount());
