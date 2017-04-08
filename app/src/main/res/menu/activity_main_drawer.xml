@@ -14,9 +14,18 @@
             android:id="@+id/favorite"
             android:icon="@drawable/ic_star_black_36dp"
             android:title="Favorite" />
-        <item
-            android:id="@+id/about"
-            android:icon="@drawable/ic_info_outline_black_36dp"
-            android:title="About" />
     </group>
+
+    <item android:title="Configuration">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_settings_black_36dp"
+                android:title="@string/action_settings" />
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/ic_info_outline_black_36dp"
+                android:title="About" />
+        </menu>
+    </item>
 </menu>
