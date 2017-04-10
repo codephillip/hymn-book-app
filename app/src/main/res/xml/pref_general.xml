@@ -11,7 +11,7 @@
         android:title="@string/change_font" />
 
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="app_theme"
         android:summary="@string/theme_desc"
         android:title="@string/change_theme" />
