@@ -17,6 +17,8 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.codephillip.app.hymnbook.services.ServerService;
+
 import java.util.List;
 
 /**
@@ -194,6 +196,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Log.d(TAG, "onPreferenceClick: clicked");
+                    getActivity().startService(new Intent(getActivity().getApplicationContext(), ServerService.class));
                     return true;
                 }
             });

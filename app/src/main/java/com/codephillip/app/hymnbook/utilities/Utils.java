@@ -28,6 +28,8 @@ public class Utils {
     public static boolean showFavoriteScreen;
     public static boolean isFromCategoryFragment;
     public static Typeface typeface;
+    public static final String BASE_URL = "http://10.0.3.2:8000";
+
 
     public static Utils getInstance() {
         return ourInstance;

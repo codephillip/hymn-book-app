@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codephillip.app.hymnbook">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -50,6 +52,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codephillip.app.hymnbook.MainActivity" />
         </activity>
+
+        <service
+            android:name=".services.ServerService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
