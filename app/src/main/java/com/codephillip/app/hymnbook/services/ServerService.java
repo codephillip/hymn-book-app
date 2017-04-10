@@ -2,8 +2,12 @@ package com.codephillip.app.hymnbook.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 import com.codephillip.app.hymnbook.utilities.Utils;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -21,18 +25,18 @@ public class ServerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "onHandleIntent: started");
         try {
-            MyJson.saveData(this, connectToServer(Utils.BASE_URL + "/api/v1/hymns"));
+            MyJson.saveData(this, connectToServer(Utils.BASE_URL + "/api/v1/hymns"), HymntableColumns.TABLE_NAME);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
-            Log.d(TAG, "onHandleIntent: getData#");
-            String data = MyJson.getData(this);
-            Log.d(TAG, "onHandleIntent: DATA# " + data);
+            MyJson.saveData(this, connectToServer(Utils.BASE_URL + "/api/v1/categorys"), CategorytableColumns.TABLE_NAME);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        saveHasSynchronized(true);
     }
 
     private String connectToServer(String urlConnection) throws Exception{
@@ -43,5 +47,12 @@ public class ServerService extends IntentService {
         String jsonData = response.body().string();
         Log.d("JSON STRING_DATA", jsonData);
         return jsonData;
+    }
+
+    private void saveHasSynchronized(boolean hasSynchronized) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Utils.HAS_SYNCHRONIZED, hasSynchronized);
+        editor.apply();
     }
 }

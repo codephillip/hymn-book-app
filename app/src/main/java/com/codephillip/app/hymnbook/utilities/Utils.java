@@ -29,6 +29,7 @@ public class Utils {
     public static boolean isFromCategoryFragment;
     public static Typeface typeface;
     public static final String BASE_URL = "http://10.0.3.2:8000";
+    public static String HAS_SYNCHRONIZED = "has_synch";
 
 
     public static Utils getInstance() {

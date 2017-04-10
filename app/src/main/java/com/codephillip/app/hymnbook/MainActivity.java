@@ -19,6 +19,7 @@ import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableContentValues;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
+import com.codephillip.app.hymnbook.services.MyJson;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import org.json.JSONArray;
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (isFirstLaunch())
+        if (isFirstLaunch() || isSynchronized())
             connectToStorage();
 
         activateFont();
@@ -86,18 +87,37 @@ public class MainActivity extends BaseActivity
 
     private void connectToStorage() {
         Log.d(TAG, "onCreate: connectToStorage started");
-        deleteHymnTable();
+        deleteTables();
+
+        boolean hasSynchronized = isSynchronized();
+        if (hasSynchronized) {
+            getSynchronizedData();
+        }
+        else {
+            getCategorysFromJson();
+            getHymnsFromJson();
+        }
+
         saveFirstLaunch(false);
-        getHymnsFromJson();
-        getCategorysFromJson();
+        saveHasSynchronized(false);
     }
 
-    private void deleteHymnTable() {
+    private void getSynchronizedData() {
+        Log.d(TAG, "onHandleIntent: getData#");
+        try {
+            extractHymnJsonData(MyJson.getData(this, HymntableColumns.TABLE_NAME));
+            extractCategoryJsonData(MyJson.getData(this, CategorytableColumns.TABLE_NAME));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteTables() {
         long deleted;
         deleted = getContentResolver().delete(CategorytableColumns.CONTENT_URI, null, null);
         Log.d(TAG, "deleteCategoryTable: " + deleted);
         deleted = getContentResolver().delete(HymntableColumns.CONTENT_URI, null, null);
-        Log.d(TAG, "deleteHymnTable: " + deleted);
+        Log.d(TAG, "deleteTables: " + deleted);
     }
 
     private void getHymnsFromJson() {
@@ -105,17 +125,20 @@ public class MainActivity extends BaseActivity
             InputStream inputStream = getResources().openRawResource(R.raw.hymns);
             byte[] b = new byte[inputStream.available()];
             inputStream.read(b);
-            JSONObject jsonObject = new JSONObject(new String(b));
-            JSONArray jsonArray = jsonObject.getJSONArray("hymns");
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject innerObject = jsonArray.getJSONObject(i);
-                storeInHymnTable(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name"), false);
-            }
+            extractHymnJsonData(new String(b));
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
         } catch (IOException e){
             Log.e(TAG, e.toString());
+        }
+    }
+
+    private void extractHymnJsonData(String jsonString) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray jsonArray = jsonObject.getJSONArray("hymns");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject innerObject = jsonArray.getJSONObject(i);
+            storeInHymnTable(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name"), false);
         }
     }
 
@@ -134,17 +157,20 @@ public class MainActivity extends BaseActivity
             InputStream inputStream = getResources().openRawResource(R.raw.categorys);
             byte[] b = new byte[inputStream.available()];
             inputStream.read(b);
-            JSONObject jsonObject = new JSONObject(new String(b));
-            JSONArray jsonArray = jsonObject.getJSONArray("categorys");
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject innerObject = jsonArray.getJSONObject(i);
-                storeInCategoryTable(Long.parseLong(innerObject.getString("id")), innerObject.getString("name"));
-            }
+            extractCategoryJsonData(new String(b));
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
         } catch (IOException e){
             Log.e(TAG, e.toString());
+        }
+    }
+
+    private void extractCategoryJsonData(String jsonString) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray jsonArray = jsonObject.getJSONArray("categorys");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject innerObject = jsonArray.getJSONObject(i);
+            storeInCategoryTable(Long.parseLong(innerObject.getString("id")), innerObject.getString("name"));
         }
     }
 
@@ -259,5 +285,17 @@ public class MainActivity extends BaseActivity
     private boolean isFirstLaunch() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         return prefs.getBoolean(Utils.FIRST_LAUNCH, true);
+    }
+
+    private void saveHasSynchronized(boolean hasSynchronized) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean(Utils.HAS_SYNCHRONIZED, hasSynchronized);
+        editor.apply();
+    }
+
+    private boolean isSynchronized() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getBoolean(Utils.HAS_SYNCHRONIZED, false);
     }
 }
