@@ -5,6 +5,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -16,6 +18,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codephillip.app.hymnbook.services.ServerService;
 
@@ -196,7 +199,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Log.d(TAG, "onPreferenceClick: clicked");
-                    getActivity().startService(new Intent(getActivity().getApplicationContext(), ServerService.class));
+                    if (isConnectedToInternet()) {
+                        getActivity().startService(new Intent(getActivity().getApplicationContext(), ServerService.class));
+                        Toast.makeText(getActivity().getApplicationContext(), "Updating hymns from server", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Check Internet connection", Toast.LENGTH_LONG).show();
+                    }
                     return true;
                 }
             });
@@ -210,6 +219,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+
+        private boolean isConnectedToInternet() {
+            ConnectivityManager connectivity = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity != null) {
+                NetworkInfo[] info = connectivity.getAllNetworkInfo();
+                if (info != null)
+                    for (int i = 0; i < info.length; i++)
+                        if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                            return true;
+                        }
+            }
+            return false;
         }
     }
 }

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableContentValues;
@@ -91,15 +92,25 @@ public class MainActivity extends BaseActivity
 
         boolean hasSynchronized = isSynchronized();
         if (hasSynchronized) {
-            getSynchronizedData();
+            try {
+                getSynchronizedData();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed to update hymns, Check Internet connection", Toast.LENGTH_LONG).show();
+                fetchLocalData();
+            }
         }
         else {
-            getCategorysFromJson();
-            getHymnsFromJson();
+            fetchLocalData();
         }
 
         saveFirstLaunch(false);
         saveHasSynchronized(false);
+    }
+
+    private void fetchLocalData() {
+        getCategorysFromJson();
+        getHymnsFromJson();
     }
 
     private void getSynchronizedData() {
