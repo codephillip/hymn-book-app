@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.codephillip.app.hymnbook.adapters.SongGridAdapter;
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
@@ -39,6 +40,7 @@ public class AllSongsFragment extends Fragment {
     private SongListAdapter listAdapter;
     private SongGridAdapter gridAdapter;
     private RecyclerView recyclerView;
+    private LinearLayout errorLinearLayout;
 
     public AllSongsFragment() {
     }
@@ -90,13 +92,27 @@ public class AllSongsFragment extends Fragment {
         }
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
+        errorLinearLayout = (LinearLayout) rootView.findViewById(R.id.error_layout);
         cursor = queryHymnTable();
+        showErrorMessage();
+
         if (hasChangedView()) {
             attachListAdapter(cursor);
         } else {
             attachGridAdapter();
         }
         return rootView;
+    }
+
+    private void showErrorMessage() {
+        Log.d(TAG, "showErrorMessage: started");
+        if (!cursor.moveToFirst()) {
+            recyclerView.setVisibility(View.GONE);
+            errorLinearLayout.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            errorLinearLayout.setVisibility(View.GONE);
+        }
     }
 
     private void attachListAdapter(HymntableCursor cursor) {
