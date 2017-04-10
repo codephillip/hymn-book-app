@@ -102,6 +102,7 @@ public class SongFragment extends Fragment {
     private void changeLikeImageButton(Boolean like) {
         int image = like ? R.drawable.ic_star_black_16dp : R.drawable.ic_star_border_black_16dp;
         likeButton.setImageDrawable(getResources().getDrawable(image));
+        likeButton.setColorFilter(getResources().getColor((R.color.colorAccent)));
     }
 
     private void changeLikePreference(boolean liked, String title) {

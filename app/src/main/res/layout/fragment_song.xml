@@ -12,6 +12,8 @@
             android:id="@+id/navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_gravity="center"
             android:text="@string/app_name"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
@@ -29,24 +31,37 @@
                 android:layout_width="0dp"
                 android:layout_weight="5"
                 android:text="@string/app_name"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
 
             <ImageButton
                 android:id="@+id/like"
-                android:layout_height="30dp"
                 android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
-                android:background="@color/grey"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_star_black_16dp" />
 
 
         </LinearLayout>
+
+        <View
+            android:layout_width="150dp"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="left"
+            android:background="@color/colorAccent" />
 
 
         <TextView
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:text="@string/app_name" />
     </LinearLayout>
 </ScrollView>
