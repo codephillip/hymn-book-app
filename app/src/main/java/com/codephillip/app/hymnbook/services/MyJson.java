@@ -15,9 +15,11 @@ import java.io.IOException;
 
 public class MyJson {
 
+    private static final String TAG = MyJson.class.getSimpleName();
     static String fileName = "myBlog.json";
 
     public static void saveData(Context context, String mJsonResponse) {
+        Log.d(TAG, "saveData: writing to storage");
         try {
             FileWriter file = new FileWriter(context.getFilesDir().getPath() + "/" + fileName);
             file.write(mJsonResponse);
@@ -29,6 +31,7 @@ public class MyJson {
     }
 
     public static String getData(Context context) {
+        Log.d(TAG, "getData: fetching from storage");
         try {
             File f = new File(context.getFilesDir().getPath() + "/" + fileName);
             //check whether file exists

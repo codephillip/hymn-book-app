@@ -21,7 +21,15 @@ public class ServerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "onHandleIntent: started");
         try {
-            connectToServer(Utils.BASE_URL + "/api/v1/hymns");
+            MyJson.saveData(this, connectToServer(Utils.BASE_URL + "/api/v1/hymns"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Log.d(TAG, "onHandleIntent: getData#");
+            String data = MyJson.getData(this);
+            Log.d(TAG, "onHandleIntent: DATA# " + data);
         } catch (Exception e) {
             e.printStackTrace();
         }
