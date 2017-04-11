@@ -28,12 +28,14 @@ public class ServerService extends IntentService {
             MyJson.saveData(this, connectToServer(Utils.BASE_URL + "/api/v1/hymns"), HymntableColumns.TABLE_NAME);
         } catch (Exception e) {
             e.printStackTrace();
+            onDestroy();
         }
 
         try {
             MyJson.saveData(this, connectToServer(Utils.BASE_URL + "/api/v1/categorys"), CategorytableColumns.TABLE_NAME);
         } catch (Exception e) {
             e.printStackTrace();
+            onDestroy();
         }
 
         saveHasSynchronized(true);
