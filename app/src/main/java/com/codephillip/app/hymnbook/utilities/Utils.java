@@ -19,7 +19,7 @@ public class Utils {
     public static final String CHANGE_VIEW = "change_view";
     public static final String IS_FAVORITE = "is_favorite";
     public static final String CATEGORY = "category";
-    public static final String[] screenNames = {"All Songs", "Category", "Favorite", "About"};
+    public static final String[] screenNames = {"All Songs", "Category", "Favorite"};
     public static String category = "worship";
     public static boolean clickedFavorite;
     //used to position the ViewPager in SongActivity
@@ -28,7 +28,10 @@ public class Utils {
     public static boolean showFavoriteScreen;
     public static boolean isFromCategoryFragment;
     public static Typeface typeface;
-    public static final String BASE_URL = "http://10.0.3.2:8000";
+    //local environment
+    //public static final String BASE_URL = "http://10.0.3.2:8000";
+    //production environment
+    public static final String BASE_URL = "https://hymnbook.herokuapp.com";
     public static String HAS_SYNCHRONIZED = "has_synch";
 
 
