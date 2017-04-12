@@ -26,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="4.5"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+        android:textSize="14sp"
         android:text="All the above" />
 
 </LinearLayout>
