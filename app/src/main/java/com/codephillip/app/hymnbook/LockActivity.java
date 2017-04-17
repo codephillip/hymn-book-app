@@ -24,8 +24,10 @@ public class LockActivity extends AppCompatActivity {
         Button unlockButton = (Button) findViewById(R.id.unlock_button);
         passwordView = (TextView) findViewById(R.id.password);
 
-        if (!isLocked())
+        if (!isLocked()) {
             startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
 
         unlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
