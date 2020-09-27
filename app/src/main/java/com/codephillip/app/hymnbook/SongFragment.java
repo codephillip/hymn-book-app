@@ -19,6 +19,8 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
+import java.util.Locale;
+
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
 import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
@@ -90,9 +92,9 @@ public class SongFragment extends Fragment {
             contentView.setTypeface(typeface);
             navigationView.setTypeface(typeface);
             contentView.setTextSize(getFontSize());
-            titleView.setText(cursor.getNumber() + ". " + cursor.getTitle());
+            titleView.setText(String.format(Locale.US, "%d. %s", cursor.getNumber(), cursor.getTitle()));
             contentView.setText(cursor.getContent());
-            navigationView.setText((position + 1) + "/" + cursor.getCount());
+            navigationView.setText(String.format(Locale.US, "%d/%d", position + 1, cursor.getCount()));
             changeLikeImageButton(cursor.getLike());
         } catch (Exception e) {
             e.printStackTrace();

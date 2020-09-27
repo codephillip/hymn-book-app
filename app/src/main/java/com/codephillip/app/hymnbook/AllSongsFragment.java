@@ -29,6 +29,7 @@ import static com.codephillip.app.hymnbook.utilities.Utils.category;
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+import static com.codephillip.app.hymnbook.utilities.Utils.songType;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -45,20 +46,32 @@ public class AllSongsFragment extends Fragment {
     public AllSongsFragment() {
     }
 
-    public static AllSongsFragment newInstance(boolean isFavorite) {
+    public static AllSongsFragment newInstance(boolean isFavorite, String songType) {
         Log.d(TAG, "newInstance: " + isFavorite);
         AllSongsFragment fragment = new AllSongsFragment();
         Bundle args = new Bundle();
         args.putBoolean(Utils.IS_FAVORITE, isFavorite);
+        args.putString(Utils.SONG_TYPE, songType);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static AllSongsFragment newInstance(String category) {
+    public static AllSongsFragment newInstance(boolean isFavorite) {
+        Log.d(TAG, "newInstance: fav" + isFavorite);
+        AllSongsFragment fragment = new AllSongsFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(Utils.IS_FAVORITE, isFavorite);
+        args.putString(Utils.SONG_TYPE, songType);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static AllSongsFragment newInstance(String category, String songType) {
         Log.d(TAG, "newInstance: " + category);
         AllSongsFragment fragment = new AllSongsFragment();
         Bundle args = new Bundle();
         args.putString(CATEGORY, category);
+        args.putString(Utils.SONG_TYPE, songType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,9 +89,9 @@ public class AllSongsFragment extends Fragment {
         try {
             //Incase navigation is from CategoryFragment, NullPointerException is thrown
             showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
+            songType = getArguments().getString(Utils.SONG_TYPE, Utils.ORIGINAL_SONGS);
         } catch (Exception e) {
             e.printStackTrace();
-            showFavoriteScreen = false;
         }
 
         //navigation from CategoryFragment
@@ -130,12 +143,31 @@ public class AllSongsFragment extends Fragment {
     }
 
     private HymntableCursor queryHymnTable() {
-        if (showFavoriteScreen) {
-            return new HymntableSelection().like(true).query(getContext().getContentResolver());
-        } else if (isFromCategoryFragment) {
-            return new HymntableSelection().categoryContains(category).query(getContext().getContentResolver());
+        Log.d(TAG, "queryHymnTable: show " + showFavoriteScreen);
+        if (songType.equals(Utils.HOME_SONGS)) {
+            if (showFavoriteScreen) {
+                return new HymntableSelection().like(true).and().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
+            } else if (isFromCategoryFragment) {
+                return new HymntableSelection().categoryContains(category).and().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
+            } else {
+                return new HymntableSelection().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
+            }
+        } else if (songType.equals(Utils.ORIGINAL_SONGS)) {
+            if (showFavoriteScreen) {
+                return new HymntableSelection().like(true).and().categoryEndsWith("ORIGINAL").orderByNumber().query(getContext().getContentResolver());
+            } else if (isFromCategoryFragment) {
+                return new HymntableSelection().categoryContains(category).and().categoryEndsWith("ORIGINAL").orderByNumber().query(getContext().getContentResolver());
+            } else {
+                return new HymntableSelection().categoryEndsWith("ORIGINAL").orderByNumber().query(getContext().getContentResolver());
+            }
         } else {
-            return new HymntableSelection().query(getContext().getContentResolver());
+            if (showFavoriteScreen) {
+                return new HymntableSelection().like(true).query(getContext().getContentResolver());
+            } else if (isFromCategoryFragment) {
+                return new HymntableSelection().categoryContains(category).query(getContext().getContentResolver());
+            } else {
+                return new HymntableSelection().query(getContext().getContentResolver());
+            }
         }
     }
 

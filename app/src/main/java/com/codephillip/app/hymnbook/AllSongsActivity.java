@@ -20,7 +20,8 @@ public class AllSongsActivity extends BaseActivity {
 
         try {
             String category = getIntent().getStringExtra(Utils.CATEGORY);
-            Fragment fragment = AllSongsFragment.newInstance(category);
+            String songType = category.endsWith("- HS") ? Utils.HOME_SONGS : Utils.ORIGINAL_SONGS;
+            Fragment fragment = AllSongsFragment.newInstance(category, songType);
             getSupportActionBar().setTitle(screenNames[0]);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, fragment);

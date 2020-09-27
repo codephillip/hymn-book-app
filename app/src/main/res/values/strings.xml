@@ -148,4 +148,8 @@
     <string name="lock_desc">Locks the app</string>
     <string name="lock_app">Set lock</string>
     <string name="password">Password</string>
+    <string name="original_songs">Original Songs</string>
+    <string name="category">Category</string>
+    <string name="favorite">Favorite</string>
+    <string name="home_songs">Home Songs</string>
 </resources>

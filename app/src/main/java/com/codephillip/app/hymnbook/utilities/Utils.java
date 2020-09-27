@@ -19,14 +19,18 @@ public class Utils {
     public static boolean isSongActivityActive;
     public static final String CHANGE_VIEW = "change_view";
     public static final String IS_FAVORITE = "is_favorite";
+    public static final String SONG_TYPE = "song_type";
     public static final String CATEGORY = "category";
-    public static final String[] screenNames = {"All Songs", "Category", "Favorite"};
+    public static final String[] screenNames = {"Original Songs", "Home Songs", "Category", "Favorite"};
     public static String category = "worship";
+    public static String ORIGINAL_SONGS = "Original songs";
+    public static String HOME_SONGS = "Home songs";
     public static boolean clickedFavorite;
     //used to position the ViewPager in SongActivity
     public static int position = 0;
     public static HymntableCursor cursor;
-    public static boolean showFavoriteScreen;
+    public static boolean showFavoriteScreen = false;
+    public static String songType = "";
     public static boolean isFromCategoryFragment;
     public static Typeface typeface;
     //local environment

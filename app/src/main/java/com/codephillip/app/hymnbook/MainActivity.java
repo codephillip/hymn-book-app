@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +64,10 @@ public class MainActivity extends BaseActivity
         activateFont();
 
         //populate the first default fragment
-        Fragment fragment = AllSongsFragment.newInstance(false);
+        Fragment fragment = AllSongsFragment.newInstance(false, Utils.ORIGINAL_SONGS);
         getSupportActionBar().setTitle(screenNames[0]);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame,fragment);
+        fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
     }
 
@@ -99,8 +100,7 @@ public class MainActivity extends BaseActivity
                 Toast.makeText(this, "Failed to update hymns, Check Internet connection", Toast.LENGTH_LONG).show();
                 fetchLocalData();
             }
-        }
-        else {
+        } else {
             fetchLocalData();
         }
 
@@ -139,7 +139,7 @@ public class MainActivity extends BaseActivity
             extractHymnJsonData(new String(b));
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, e.toString());
         }
     }
@@ -149,17 +149,17 @@ public class MainActivity extends BaseActivity
         JSONArray jsonArray = jsonObject.getJSONArray("hymns");
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject innerObject = jsonArray.getJSONObject(i);
-            storeInHymnTable(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name"), false);
+            storeInHymnTable(Integer.parseInt(innerObject.getString("number")), innerObject.getString("title"), innerObject.getString("content"), innerObject.getJSONObject("category").getString("name"));
         }
     }
 
-    private void storeInHymnTable(int number, String title, String content, String category, boolean like) {
+    private void storeInHymnTable(int number, String title, String content, String category) {
         HymntableContentValues values = new HymntableContentValues();
         values.putNumber(number);
         values.putTitle(title);
         values.putContent(content);
         values.putCategory(category);
-        values.putLike(like);
+        values.putLike(false);
         values.insert(getContentResolver());
     }
 
@@ -171,7 +171,7 @@ public class MainActivity extends BaseActivity
             extractCategoryJsonData(new String(b));
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, e.toString());
         }
     }
@@ -209,8 +209,6 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -222,37 +220,38 @@ public class MainActivity extends BaseActivity
         if (id == R.id.change_view) {
             Log.d(TAG, "onOptionsItemSelected: changing view#");
             switchView();
-            Fragment fragment = AllSongsFragment.newInstance(false);
-            getSupportActionBar().setTitle(screenNames[0]);
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.frame, fragment);
-            fragmentTransaction.commit();
-            return true;
+            return startDrawerView();
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        id = item.getItemId();
         Log.d("Navigation bar", "onNavigationItemSelected: " + id);
-        Fragment fragment = null;
+        return startDrawerView();
+    }
 
-        if (id == R.id.all_songs) {
-            Utils.clickedFavorite = false;
-            fragment = AllSongsFragment.newInstance(false);
+    private boolean startDrawerView() {
+        Fragment fragment = null;
+        Utils.clickedFavorite = false;
+
+
+        if (id == R.id.original_songs) {
+            fragment = AllSongsFragment.newInstance(false, Utils.ORIGINAL_SONGS);
             getSupportActionBar().setTitle(screenNames[0]);
-        } else if (id == R.id.category) {
-            Utils.clickedFavorite = false;
-            fragment = new CategoryFragment();
+        } else if (id == R.id.home_songs) {
+            fragment = AllSongsFragment.newInstance(false, Utils.HOME_SONGS);
             getSupportActionBar().setTitle(screenNames[1]);
+        } else if (id == R.id.category) {
+            fragment = new CategoryFragment();
+            getSupportActionBar().setTitle(screenNames[2]);
         } else if (id == R.id.favorite) {
             Utils.clickedFavorite = true;
             fragment = AllSongsFragment.newInstance(true);
-            getSupportActionBar().setTitle(screenNames[2]);
+            getSupportActionBar().setTitle(screenNames[3]);
         } else if (id == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
@@ -261,12 +260,12 @@ public class MainActivity extends BaseActivity
         }
 
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame,fragment);
+        fragmentTransaction.replace(R.id.frame, fragment);
         fragmentTransaction.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     private void switchView() {

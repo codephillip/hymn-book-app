@@ -2,43 +2,91 @@
   "categorys": [
     {
       "id": 1,
-      "name": "EZA MAYINGIRA"
+      "name": "EZA MAYINGIRA - ORIGINAL"
     },
     {
       "id": 2,
-      "name": "EZO KWEBAZA"
+      "name": "EZO KWEBAZA - ORIGINAL"
     },
     {
       "id": 3,
-      "name": "EZ’OKUSINZA"
+      "name": "EZ’OKUSINZA - ORIGINAL"
     },
     {
       "id": 4,
-      "name": "EZO MUGAATI OGW’OBULAMU"
+      "name": "EZO MUGAATI OGW’OBULAMU - ORIGINAL"
     },
     {
       "id": 5,
-      "name": "EZA MWOYO MUTUUKIRIVU"
+      "name": "EZA MWOYO MUTUUKIRIVU - ORIGINAL"
     },
     {
       "id": 6,
-      "name": "EZ’OKWAGALA"
+      "name": "EZ’OKWAGALA - ORIGINAL"
     },
     {
       "id": 7,
-      "name": "EZA MAZAALIBWA"
+      "name": "EZA MAZAALIBWA - ORIGINAL"
     },
     {
       "id": 8,
-      "name": "EZO KUBONABONA"
+      "name": "EZO KUBONABONA - ORIGINAL"
     },
     {
       "id": 9,
-      "name": "EZA MAZUKIRA"
+      "name": "EZA MAZUKIRA - ORIGINAL"
     },
     {
       "id": 10,
-      "name": "ENYIMBA ENDALA"
+      "name": "ENYIMBA ENDALA - ORIGINAL"
+    },
+    {
+      "id": 11,
+      "name": "EZAMAYINGIRA - HS"
+    },
+    {
+      "id": 12,
+      "name": "EZOKUSINZA - HS"
+    },
+    {
+      "id": 13,
+      "name": "EZA OMUGAATI OGW'OBULAMU - HS"
+    },
+    {
+      "id": 14,
+      "name": "EZO KWAGALA - HS"
+    },
+    {
+      "id": 15,
+      "name": "EZO KWEBAZA - HS"
+    },
+    {
+      "id": 16,
+      "name": "EZA MAZAALIBWA - HS"
+    },
+    {
+      "id": 17,
+      "name": "EZA MATABI - HS"
+    },
+    {
+      "id": 18,
+      "name": "EZA MAZUUKIRA - HS"
+    },
+    {
+      "id": 19,
+      "name": "EZA MWOYO MUTUKIRIVU KABAKA - HS"
+    },
+    {
+      "id": 20,
+      "name": "EZA PATRI KABAKA - HS"
+    },
+    {
+      "id": 21,
+      "name": "ENYIMBA ENDALA - HS"
+    },
+    {
+      "id": 22,
+      "name": "EZO KUBONABONA - HS"
     }
   ]
 }
