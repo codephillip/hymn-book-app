@@ -7,8 +7,8 @@ android {
         applicationId "com.codephillip.app.hymnbook"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.2.0"
+        versionCode 3
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

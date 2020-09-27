@@ -32,9 +32,14 @@
         <item>Arvo-Bold</item>
         <item>Arvo-Italic</item>
         <item>Arvo-Regular</item>
-        <item>BodoniFLF-Bold</item>
-        <item>BodoniFLF-Italic</item>
+        <item>AbrilFatface-Regular</item>
+        <item>Amble-Regular-webfont</item>
+        <item>BalooTammudu2-Regular</item>
         <item>BodoniFLF-Roman</item>
+        <item>BreeSerif-Regular</item>
+        <item>Courgette-Regular</item>
+        <item>Cousine-Italic</item>
+        <item>Cousine-Regular</item>
         <item>DejaVuSans</item>
         <item>DejaVuSans-ExtraLight</item>
         <item>DejaVuSansMono</item>
@@ -50,21 +55,64 @@
         <item>opensans</item>
         <item>Sanchez-Regular</item>
         <item>slabo</item>
-        <item>UbuntuMono-RI</item>
-        <item>UbuntuMono-R</item>
-        <item>Ubuntu-RI</item>
-        <item>Ubuntu-R</item>
         <item>Oswald-Regular-webfont</item>
         <item>DroidSans-Bold</item>
+        <item>Domine-Bold</item>
+        <item>Domine-Regular</item>
+        <item>EBGaramond-Regular</item>
+        <item>FrankRuhlLibre-Regular</item>
+        <item>GreatVibes-Regular</item>
+        <item>IBMPlexSerif-Regular</item>
+        <item>Jaldi-Bold</item>
+        <item>Jaldi-Regular</item>
+        <item>JosefinSlab-Italic</item>
+        <item>JosefinSlab-Light</item>
+        <item>JosefinSlab-Bold</item>
+        <item>KumbhSans-Bold</item>
+        <item>KumbhSans-Light</item>
+        <item>KumbhSans-Regular</item>
+        <item>Lato-Bold</item>
+        <item>Lato-Italic</item>
+        <item>Lato-Light</item>
+        <item>Lato-Regular</item>
+        <item>Lobster-Regular</item>
+        <item>LobsterTwo-Bold</item>
+        <item>LobsterTwo-Italic</item>
+        <item>LobsterTwo-Regular</item>
+        <item>MPLUSRounded1c-Bold</item>
+        <item>MPLUSRounded1c-Light</item>
+        <item>MPLUSRounded1c-Regular</item>
+        <item>PassionOne-Bold</item>
+        <item>PassionOne-Regular</item>
+        <item>Prata-Regular</item>
+        <item>Quicksand-Bold</item>
+        <item>Quicksand-Regular</item>
+        <item>Raleway-Bold</item>
+        <item>Raleway-Italic</item>
+        <item>Raleway-Regular</item>
+        <item>RopaSans-Italic</item>
+        <item>RopaSans-Regular</item>
+        <item>Sanchez-Italic</item>
+        <item>Satisfy-Regular</item>
+        <item>Spartan-Bold</item>
+        <item>Spartan-Regular</item>
+        <item>ZillaSlab-Italic</item>
+        <item>ZillaSlab-Regular</item>
+        <item>ZillaSlab-Bold</item>
     </string-array>
     <string-array name="pref_font_list_values">
         <item>Default.ttf</item>
         <item>Arvo-Bold.ttf</item>
         <item>Arvo-Italic.ttf</item>
         <item>Arvo-Regular.ttf</item>
-        <item>BodoniFLF-Bold.ttf</item>
-        <item>BodoniFLF-Italic.ttf</item>
+        <item>AbrilFatface-Regular.ttf</item>
+        <item>Amble-Regular-webfont.ttf</item>
+        <item>BalooTammudu2-Regular.ttf</item>
         <item>BodoniFLF-Roman.ttf</item>
+        <item>BreeSerif-Regular.ttf</item>
+        <item>Courgette-Regular.ttf</item>
+        <item>Cousine-Italic.ttf</item>
+        <item>Cousine-Regular.ttf</item>
         <item>DejaVuSans.ttf</item>
         <item>DejaVuSans-ExtraLight.ttf</item>
         <item>DejaVuSansMono.ttf</item>
@@ -80,12 +128,50 @@
         <item>opensans.ttf</item>
         <item>Sanchez-Regular.ttf</item>
         <item>slabo.ttf</item>
-        <item>UbuntuMono-RI.ttf</item>
-        <item>UbuntuMono-R.ttf</item>
-        <item>Ubuntu-RI.ttf</item>
-        <item>Ubuntu-R.ttf</item>
         <item>Oswald-Regular-webfont.ttf</item>
-        <item>DroidSans-Bold.ttf.ttf</item>
+        <item>DroidSans-Bold.ttf</item>
+        <item>Domine-Bold.ttf</item>
+        <item>Domine-Regular.ttf</item>
+        <item>EBGaramond-Regular.ttf</item>
+        <item>FrankRuhlLibre-Regular.ttf</item>
+        <item>GreatVibes-Regular.ttf</item>
+        <item>IBMPlexSerif-Regular.ttf</item>
+        <item>Jaldi-Bold.ttf</item>
+        <item>Jaldi-Regular.ttf</item>
+        <item>JosefinSlab-Italic.ttf</item>
+        <item>JosefinSlab-Light.ttf</item>
+        <item>JosefinSlab-Bold.ttf</item>
+        <item>KumbhSans-Bold.ttf</item>
+        <item>KumbhSans-Light.ttf</item>
+        <item>KumbhSans-Regular.ttf</item>
+        <item>Lato-Bold.ttf</item>
+        <item>Lato-Italic.ttf</item>
+        <item>Lato-Light.ttf</item>
+        <item>Lato-Regular.ttf</item>
+        <item>Lobster-Regular.ttf</item>
+        <item>LobsterTwo-Bold.ttf</item>
+        <item>LobsterTwo-Italic.ttf</item>
+        <item>LobsterTwo-Regular.ttf</item>
+        <item>MPLUSRounded1c-Bold.ttf</item>
+        <item>MPLUSRounded1c-Light.ttf</item>
+        <item>MPLUSRounded1c-Regular.ttf</item>
+        <item>PassionOne-Bold.ttf</item>
+        <item>PassionOne-Regular.ttf</item>
+        <item>Prata-Regular.ttf</item>
+        <item>Quicksand-Bold.ttf</item>
+        <item>Quicksand-Regular.ttf</item>
+        <item>Raleway-Bold.ttf</item>
+        <item>Raleway-Italic.ttf</item>
+        <item>Raleway-Regular.ttf</item>
+        <item>RopaSans-Italic.ttf</item>
+        <item>RopaSans-Regular.ttf</item>
+        <item>Sanchez-Italic.ttf</item>
+        <item>Satisfy-Regular.ttf</item>
+        <item>Spartan-Bold.ttf</item>
+        <item>Spartan-Regular.ttf</item>
+        <item>ZillaSlab-Italic.ttf</item>
+        <item>ZillaSlab-Regular.ttf</item>
+        <item>ZillaSlab-Bold.ttf</item>
     </string-array>
 
     <!-- Example settings for Data & Sync -->
