@@ -61,7 +61,6 @@ public class AllSongsFragment extends Fragment {
         AllSongsFragment fragment = new AllSongsFragment();
         Bundle args = new Bundle();
         args.putBoolean(Utils.IS_FAVORITE, isFavorite);
-        args.putString(Utils.SONG_TYPE, songType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,11 +84,12 @@ public class AllSongsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         Utils.getInstance();
+        songType = "";
 
         try {
             //Incase navigation is from CategoryFragment, NullPointerException is thrown
-            showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE, false);
-            songType = getArguments().getString(Utils.SONG_TYPE, Utils.ORIGINAL_SONGS);
+            showFavoriteScreen = getArguments().getBoolean(Utils.IS_FAVORITE);
+            songType = getArguments().getString(Utils.SONG_TYPE, "");
         } catch (Exception e) {
             e.printStackTrace();
         }

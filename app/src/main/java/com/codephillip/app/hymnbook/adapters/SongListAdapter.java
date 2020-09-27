@@ -100,8 +100,8 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        dataCursor.moveToPosition(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        dataCursor.moveToPosition(holder.getAdapterPosition());
         try {
             holder.titleView.setText(dataCursor.getTitle());
             holder.numberView.setImageDrawable(Utils.generateTextDrawable(dataCursor.getNumber(), colourQueue));
@@ -114,7 +114,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
             public void onClick(View view) {
                 Log.d(TAG, "onClick: ");
                 Utils.getInstance();
-                Utils.position = position;
+                Utils.position = holder.getAdapterPosition();
                 Utils.isSongActivityActive = false;
                 context.startActivity(new Intent(context, SongActivity.class));
             }

@@ -68,7 +68,7 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     // binds the hymns to the textview in each cell
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        cursor.moveToPosition(position);
+        cursor.moveToPosition(holder.getAdapterPosition());
         holder.numberView.setImageDrawable(Utils.generateTextDrawable(cursor.getNumber(), colourQueue));
     }
 
