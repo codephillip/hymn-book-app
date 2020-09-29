@@ -21,8 +21,11 @@ import com.codephillip.app.hymnbook.utilities.Utils;
 
 import java.util.Locale;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.category;
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
+import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+import static com.codephillip.app.hymnbook.utilities.Utils.songType;
 import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
 
 /**
@@ -78,9 +81,8 @@ public class SongFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 cursor.moveToPosition(position);
-                boolean liked = cursor.getLike();
-                changeLikeImageButton(!liked);
-                changeLikePreference(!liked, cursor.getTitle());
+                changeLikeImageButton(!cursor.getLike());
+                changeLikePreference(!cursor.getLike(), cursor.getTitle());
             }
         });
         return rootView;
@@ -102,9 +104,8 @@ public class SongFragment extends Fragment {
     }
 
     private void changeLikeImageButton(Boolean like) {
-        int image = like ? R.drawable.ic_star_black_16dp : R.drawable.ic_star_border_black_16dp;
+        int image = like ? R.drawable.ic_star_black_36dp : R.drawable.ic_star_outline_black_36dp;
         likeButton.setImageDrawable(getResources().getDrawable(image));
-        likeButton.setColorFilter(getResources().getColor((R.color.colorAccent)));
     }
 
     private void changeLikePreference(boolean liked, String title) {
@@ -112,11 +113,38 @@ public class SongFragment extends Fragment {
         HymntableContentValues values = new HymntableContentValues();
         values.putLike(liked);
         values.update(getContext().getContentResolver(), new HymntableSelection().titleLike(title));
+        cursor = queryHymnTable();
     }
 
-    private HymntableCursor queryHymnTable(boolean showFavoriteScreen) {
-        return showFavoriteScreen ? new HymntableSelection().like(true).query(getContext().getContentResolver()) : new HymntableSelection().query(getContext().getContentResolver());
+    private HymntableCursor queryHymnTable() {
+        Log.d(TAG, "queryHymnTable: show " + showFavoriteScreen);
+        if (songType.equals(Utils.HOME_SONGS)) {
+            if (showFavoriteScreen) {
+                return new HymntableSelection().like(true).and().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
+            } else if (isFromCategoryFragment) {
+                return new HymntableSelection().categoryContains(category).and().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
+            } else {
+                return new HymntableSelection().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
+            }
+        } else if (songType.equals(Utils.ORIGINAL_SONGS)) {
+            if (showFavoriteScreen) {
+                return new HymntableSelection().like(true).and().categoryEndsWith("ORIGINAL").orderByNumber().query(getContext().getContentResolver());
+            } else if (isFromCategoryFragment) {
+                return new HymntableSelection().categoryContains(category).and().categoryEndsWith("ORIGINAL").orderByNumber().query(getContext().getContentResolver());
+            } else {
+                return new HymntableSelection().categoryEndsWith("ORIGINAL").orderByNumber().query(getContext().getContentResolver());
+            }
+        } else {
+            if (showFavoriteScreen) {
+                return new HymntableSelection().like(true).query(getContext().getContentResolver());
+            } else if (isFromCategoryFragment) {
+                return new HymntableSelection().categoryContains(category).query(getContext().getContentResolver());
+            } else {
+                return new HymntableSelection().query(getContext().getContentResolver());
+            }
+        }
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
