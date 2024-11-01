@@ -141,8 +141,8 @@ public class SongFragment extends Fragment {
             contentView.setTextSize(getFontSize());
             titleView.setText(cursor.getTitle());
             contentView.setText(cursor.getContent());
-            // extract largest number from string
-            navigationView.setText(String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), 8));
+            int verses = findLargestNumber(cursor.getContent());
+            navigationView.setText(String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses));
             changeLikeImageButton(cursor.getLike());
         } catch (Exception e) {
             e.printStackTrace();
@@ -202,5 +202,20 @@ public class SongFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         //default size 42.0f
         return prefs.getFloat(Utils.FONT_SIZE, 17.0f);
+    }
+
+    public static int findLargestNumber(String text) {
+        int max = Integer.MIN_VALUE;
+        String[] words = text.split("\\D+");
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                int num = Integer.parseInt(word);
+                if (num > max) {
+                    max = num;
+                }
+            }
+        }
+        return max;
     }
 }
