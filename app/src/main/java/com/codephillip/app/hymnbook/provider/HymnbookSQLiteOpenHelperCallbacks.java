@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import android.util.Log;
 
-import com.codephillip.app.hymnbook.BuildConfig;
+import com.amulyakhare.textdrawable.BuildConfig;
 
 /**
  * Implement your custom database creation or upgrade code here.

@@ -7,10 +7,10 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
-import com.codephillip.app.hymnbook.BuildConfig;
+import com.amulyakhare.textdrawable.BuildConfig;
 import com.codephillip.app.hymnbook.provider.base.BaseContentProvider;
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;

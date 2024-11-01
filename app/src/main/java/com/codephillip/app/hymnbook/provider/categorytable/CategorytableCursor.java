@@ -1,7 +1,7 @@
 package com.codephillip.app.hymnbook.provider.categorytable;
 
 import android.database.Cursor;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.codephillip.app.hymnbook.provider.base.AbstractCursor;
 
