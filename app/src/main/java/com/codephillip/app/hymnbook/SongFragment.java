@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class SongFragment extends Fragment {
     private ImageButton likeButton;
     private ImageView songTypeIcon;
     private ImageView textSizeIcon;
+    private ImageView backButton;
     private int position;
 
     public SongFragment() {
@@ -74,6 +76,7 @@ public class SongFragment extends Fragment {
         textSizeView = rootView.findViewById(R.id.text_size);
         songTypeIcon = rootView.findViewById(R.id.song_type_icon);
         textSizeIcon = rootView.findViewById(R.id.text_size_icon);
+        backButton = rootView.findViewById(R.id.backbutton);
 
         Utils.getInstance();
         position = getArguments().getInt(SONG_NUMBER);
@@ -90,6 +93,8 @@ public class SongFragment extends Fragment {
         songTypeIcon.setOnClickListener(v -> showTypeDialog());
         textSizeView.setOnClickListener(v -> showSizeDialog());
         textSizeIcon.setOnClickListener(v -> showSizeDialog());
+
+        backButton.setOnClickListener(v -> getActivity().onBackPressed());
         return rootView;
     }
 
