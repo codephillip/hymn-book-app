@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">Hymn Book</string>
+    <string name="sample_hymn">
+
+1. Guide me, O Eternal Light,
+Through the darkness of the night.
+Shine upon my weary way,
+Lead me to the break of day.\n\n
+1. Guide me, O Eternal Light,
+Through the darkness of the night.
+Shine upon my weary way,
+Lead me to the break of day.
+</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -234,8 +245,8 @@
     <string name="lock_desc">Locks the app</string>
     <string name="lock_app">Set lock</string>
     <string name="password">Password</string>
-    <string name="original_songs">Original Songs</string>
+    <string name="original_songs">Original</string>
     <string name="category">Category</string>
     <string name="favorite">Favorite</string>
-    <string name="home_songs">Home Songs</string>
+    <string name="home_songs">Home</string>
 </resources>

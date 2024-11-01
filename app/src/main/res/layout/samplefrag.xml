@@ -1,0 +1,65 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<android.support.constraint.ConstraintLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/backbutton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_backarrow" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Sample text goes here"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/backbutton"-->
+<!--        app:layout_constraintStart_toEndOf="@id/backbutton"-->
+<!--        app:layout_constraintTop_toTopOf="@id/backbutton" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/navigation"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Hymns 3 . 5 verses"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/like"-->
+<!--        app:layout_constraintStart_toStartOf="@id/backbutton"-->
+<!--        app:layout_constraintTop_toTopOf="@id/like" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/song_type"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="English"-->
+<!--        android:layout_marginEnd="@dimen/margin_32"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/like"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/text_size"-->
+<!--        app:layout_constraintTop_toTopOf="@id/like" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/text_size"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="16px"-->
+<!--        android:layout_marginEnd="@dimen/margin_32"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/like"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/like"-->
+<!--        app:layout_constraintTop_toTopOf="@id/like" />-->
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/like"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/margin_8"-->
+<!--        android:layout_marginEnd="@dimen/margin_16"-->
+<!--        android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/title"-->
+<!--        app:srcCompat="@drawable/ic_star_black_36dp" />-->
+
+<!--</android.support.constraint.ConstraintLayout>-->

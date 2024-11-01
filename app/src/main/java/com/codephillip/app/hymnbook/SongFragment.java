@@ -1,18 +1,27 @@
 package com.codephillip.app.hymnbook;
 
+import static com.codephillip.app.hymnbook.utilities.Utils.category;
+import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
+import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
+import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+import static com.codephillip.app.hymnbook.utilities.Utils.songType;
+import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
+
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
@@ -20,13 +29,6 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import java.util.Locale;
-
-import static com.codephillip.app.hymnbook.utilities.Utils.category;
-import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
-import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
-import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
-import static com.codephillip.app.hymnbook.utilities.Utils.songType;
-import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -38,8 +40,12 @@ public class SongFragment extends Fragment {
     private static final String SONG_NUMBER = "song_number";
     private TextView titleView;
     private TextView contentView;
+    private TextView songTypeView;
+    private TextView textSizeView;
     private TextView navigationView;
     private ImageButton likeButton;
+    private ImageView songTypeIcon;
+    private ImageView textSizeIcon;
     private int position;
 
     public SongFragment() {
@@ -60,43 +66,83 @@ public class SongFragment extends Fragment {
 
         Log.d(TAG, "STARTED FRAGMENT");
 
-        setHasOptionsMenu(true);
-
-        titleView = (TextView) rootView.findViewById(R.id.title);
-        contentView = (TextView) rootView.findViewById(R.id.content);
-        navigationView = (TextView) rootView.findViewById(R.id.navigation);
-        likeButton = (ImageButton) rootView.findViewById(R.id.like);
+        titleView = rootView.findViewById(R.id.title);
+        contentView = rootView.findViewById(R.id.content);
+        navigationView = rootView.findViewById(R.id.navigation);
+        likeButton = rootView.findViewById(R.id.like);
+        songTypeView = rootView.findViewById(R.id.song_type);
+        textSizeView = rootView.findViewById(R.id.text_size);
+        songTypeIcon = rootView.findViewById(R.id.song_type_icon);
+        textSizeIcon = rootView.findViewById(R.id.text_size_icon);
 
         Utils.getInstance();
-
-        Log.d(TAG, "onCreateView: started");
         position = getArguments().getInt(SONG_NUMBER);
-        Log.d(TAG, "onCreateView: ###" + position);
-
-        //you can only get a value once very time you move a cursor position
         cursor.moveToPosition(position);
-        attachDataToViews();
+        attachDataToViews(cursor);
 
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cursor.moveToPosition(position);
-                changeLikeImageButton(!cursor.getLike());
-                changeLikePreference(!cursor.getLike(), cursor.getTitle());
-            }
+        likeButton.setOnClickListener(view -> {
+            cursor.moveToPosition(position);
+            changeLikeImageButton(!cursor.getLike());
+            changeLikePreference(!cursor.getLike(), cursor.getTitle());
         });
+
+        songTypeView.setOnClickListener(v -> showTypeDialog());
+        songTypeIcon.setOnClickListener(v -> showTypeDialog());
+        textSizeView.setOnClickListener(v -> showSizeDialog());
+        textSizeIcon.setOnClickListener(v -> showSizeDialog());
         return rootView;
     }
 
-    private void attachDataToViews() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        textSizeView.setText(String.format(Locale.US, "%.0fpx", getFontSize()));
+        contentView.setTextSize(getFontSize());
+    }
+
+    private void showTypeDialog() {
+        final String[] options = {"Original", "Home"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Type");
+        builder.setItems(options, (dialog, which) -> {
+            String choice = options[which];
+            songTypeView.setText(choice);
+            Utils.songType = choice.equals("Original") ? Utils.ORIGINAL_SONGS : Utils.HOME_SONGS;
+            int lastPosition = cursor.getPosition();
+            HymntableCursor tempCursor = queryHymnTable();
+            tempCursor.moveToPosition(lastPosition > 0 ? lastPosition - 1 : lastPosition);
+            attachDataToViews(tempCursor);
+        });
+        builder.create().show();
+    }
+
+    private void showSizeDialog() {
+        final String[] options = {"16px", "17px", "18px", "19px", "20px"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Font size");
+        builder.setItems(options, (dialog, which) -> {
+            final float fontsize = Float.parseFloat(options[which].replace("px", ""));
+            saveFontSize(fontsize);
+            contentView.setTextSize(fontsize);
+            textSizeView.setText(String.format(Locale.US, "%.0fpx", fontsize));
+        });
+        builder.create().show();
+    }
+
+    private void attachDataToViews(HymntableCursor cursor) {
         try {
             titleView.setTypeface(typeface);
-            contentView.setTypeface(typeface);
+            textSizeView.setTypeface(typeface);
             navigationView.setTypeface(typeface);
+            songTypeView.setTypeface(typeface);
+
+            Typeface contentTypeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/" + "DMSans.ttf");
+            contentView.setTypeface(contentTypeface);
             contentView.setTextSize(getFontSize());
-            titleView.setText(String.format(Locale.US, "%d. %s", cursor.getNumber(), cursor.getTitle()));
+            titleView.setText(cursor.getTitle());
             contentView.setText(cursor.getContent());
-            navigationView.setText(String.format(Locale.US, "%d/%d", position + 1, cursor.getCount()));
+            // extract largest number from string
+            navigationView.setText(String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), 8));
             changeLikeImageButton(cursor.getLike());
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,32 +189,6 @@ public class SongFragment extends Fragment {
                 return new HymntableSelection().query(getContext().getContentResolver());
             }
         }
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.song_toolbar, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.zoom_in) {
-            if (getFontSize() >= 25.0f)
-                return true;
-            saveFontSize(getFontSize() + 1);
-            contentView.setTextSize(getFontSize());
-            return true;
-        } else  if (id == R.id.zoom_out) {
-            if (getFontSize() <= 10.0f)
-                return true;
-            saveFontSize(getFontSize() - 1);
-            contentView.setTextSize(getFontSize());
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void saveFontSize(float fontSize) {

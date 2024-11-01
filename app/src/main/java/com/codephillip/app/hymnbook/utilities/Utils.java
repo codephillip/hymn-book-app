@@ -50,24 +50,27 @@ public class Utils {
     public static TextDrawable generateTextDrawable(int position, ColourQueue colourQueue) {
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         int color1 = generator.getColor(colourQueue.getCount());
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .width(140)  // width in px
-                .height(140) // height in px
-                .endConfig()
-                .buildRound(String.valueOf(position), color1);
+        TextDrawable drawable = new TextDrawable.Builder()
+                .setWidth(140)  // width in px
+                .setHeight(140) // height in px
+                .setColor(color1)
+                .setText(String.valueOf(position))
+                .setRadius(10)
+                .setShape(TextDrawable.SHAPE_ROUND)
+                .build();
         return drawable;
     }
 
     public static TextDrawable generateTextDrawable(String text, ColourQueue colourQueue) {
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         int color1 = generator.getColor(colourQueue.getCount());
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .width(140)  // width in px
-                .height(140) // height in px
-                .endConfig()
-                .buildRound(text, color1);
+        TextDrawable drawable = new TextDrawable.Builder()
+                .setWidth(140)  // width in px
+                .setHeight(140) // height in px
+                .setColor(color1)
+                .setText(text)
+                .setShape(TextDrawable.SHAPE_ROUND)
+                .build();
         return drawable;
     }
 }

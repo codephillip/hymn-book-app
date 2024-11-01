@@ -75,12 +75,13 @@ public class MainActivity extends BaseActivity
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String fontName = null;
         try {
-            fontName = prefs.getString("font_list", "Default");
-            Log.d(TAG, "onCreate: PREF " + fontName);
-            if (fontName.equals("Default"))
-                Utils.typeface = Typeface.DEFAULT;
-            else
-                Utils.typeface = Typeface.createFromAsset(getAssets(), "fonts/" + fontName);
+            Utils.typeface = Typeface.createFromAsset(getAssets(), "fonts/" + "Raleway-Bold.ttf");
+//            fontName = prefs.getString("font_list", "Default");
+//            Log.d(TAG, "onCreate: PREF " + fontName);
+//            if (fontName.equals("Default"))
+//                Utils.typeface = Typeface.DEFAULT;
+//            else
+//                Utils.typeface = Typeface.createFromAsset(getAssets(), "fonts/" + "Raleway-Bold.ttf");
         } catch (Exception e) {
             e.printStackTrace();
             Utils.typeface = Typeface.DEFAULT;
