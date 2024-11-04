@@ -36,7 +36,7 @@
                     card_view:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/back_image"
+                    android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="@dimen/elevation_card_raised"

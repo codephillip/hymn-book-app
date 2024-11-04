@@ -28,7 +28,7 @@
                     android:id="@+id/discount_view"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_margin="@dimen/margin_large"
+                    android:layout_margin="@dimen/margin_8"
                     android:background="@drawable/ic_circle"
                     android:elevation="@dimen/elevation_card_resting"
                     card_view:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
 
 
                 <ImageView
-                    android:id="@+id/back_image"
+                    android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="@dimen/elevation_card_raised"
@@ -66,11 +66,12 @@
                     card_view:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:elevation="@dimen/elevation_fab_clicked"
-                    android:text="21"
                     android:fontFamily="@font/dm_sans"
+                    android:text="21"
                     android:textAppearance="@style/TextAppearance.Material3.DisplayLarge"
                     android:textColor="@android:color/white"
                     card_view:layout_constraintBottom_toBottomOf="@id/thumbnail"
@@ -81,7 +82,7 @@
 
 
             <TextView
-                android:id="@+id/product_name"
+                android:id="@+id/numb_verses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/image_layout"
@@ -94,10 +95,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/product_name"
+                android:layout_below="@id/numb_verses"
                 android:fontFamily="@font/raleway_semibold"
                 android:paddingLeft="@dimen/padding_large"
                 android:paddingRight="@dimen/padding_large"

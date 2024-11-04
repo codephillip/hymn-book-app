@@ -73,4 +73,19 @@ public class Utils {
                 .build();
         return drawable;
     }
+
+    public static int findLargestNumber(String text) {
+        int max = Integer.MIN_VALUE;
+        String[] words = text.split("\\D+");
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                int num = Integer.parseInt(word);
+                if (num > max) {
+                    max = num;
+                }
+            }
+        }
+        return max;
+    }
 }
