@@ -20,6 +20,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 configurations.all {
@@ -40,4 +43,8 @@ dependencies {
     implementation 'com.squareup.okhttp:okhttp:2.7.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
     implementation 'androidx.core:core-ktx:1.13.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.navigation:navigation-fragment:2.6.0'
+    implementation 'androidx.navigation:navigation-ui:2.6.0'
 }

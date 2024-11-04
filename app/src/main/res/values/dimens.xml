@@ -7,4 +7,98 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_8">8dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <dimen name="fab_middle_margin">80dp</dimen>
+
+    <dimen name="wsgh_middle_text">18sp</dimen>
+
+    <dimen name="cardview_corner_radius">5dp</dimen>
+    <dimen name="cardview_margin">5dp</dimen>
+
+    <dimen name="subtitle_margin_bottom">10dp</dimen>
+    <dimen name="intro_text_margin_top">10dp</dimen>
+    <dimen name="cards_elevation">15dp</dimen>
+
+    <!-- padding -->
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_extra_large">24dp</dimen>
+    <dimen name="padding_extra_extra_large">55dp</dimen>
+
+    <!-- margin -->
+    <dimen name="margin_extra_small">2dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_extra_large">24dp</dimen>
+    <dimen name="margin_extra_extra_large">48dp</dimen>
+
+    <!-- fontSize -->
+    <dimen name="text_size_extra_extra_small">10sp</dimen>
+    <dimen name="text_size_extra_small">12sp</dimen>
+    <dimen name="text_size_small">16sp</dimen>
+    <dimen name="text_size_medium">20sp</dimen>
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="text_size_extra_large">28sp</dimen>
+    <dimen name="text_size_extra_extra_large">40sp</dimen>
+    <dimen name="text_size_percentage">80sp</dimen>
+
+    <!-- elevation -->
+    <dimen name="elevation_switch">1dp</dimen>
+    <dimen name="elevation_card_resting">2dp</dimen>
+    <dimen name="elevation_card_raised">8dp</dimen>
+    <dimen name="elevation_raised_button_resting">2dp</dimen>
+    <dimen name="elevation_raised_button">8dp</dimen>
+    <dimen name="elevation_search_bar_resting">2dp</dimen>
+    <dimen name="elevation_search_bar_scrolling">3dp</dimen>
+    <dimen name="elevation_refresh_indicator">3dp</dimen>
+    <dimen name="elevation_appbar">4dp</dimen>
+    <dimen name="elevation_snackbar">6dp</dimen>
+    <dimen name="elevation_fab_resting">6dp</dimen>
+    <dimen name="elevation_fab_clicked">12dp</dimen>
+    <dimen name="elevation_menu">8dp</dimen>
+    <dimen name="elevation_nav_drawer">16dp</dimen>
+    <dimen name="elevation_bottom_modal_sheet">16dp</dimen>
+    <dimen name="elevation_right_drawer">16dp</dimen>
+    <dimen name="elevation_dialog">24dp</dimen>
+    <dimen name="elevation_picker">24dp</dimen>
+
+    <!-- touch target -->
+    <dimen name="touch_target_size">48dp</dimen>
+    <dimen name="padding_touch_target_minimum">8dp</dimen>
+    <dimen name="divider_accidental_tap">8dp</dimen>
+
+    <!-- corner radius -->
+    <dimen name="corner_radius">2dp</dimen>
+
+    <dimen name="select_item_border">4dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="app_bar_image_height">279dp</dimen>
+    <dimen name="network_status_height">150dp</dimen>
+    <dimen name="app_bar_height_choose_user">350dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="headerTextSize">28sp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+
+    <dimen name="item_offset">10dp</dimen>
+    <dimen name="detail_backdrop_height">250dp</dimen>
+    <dimen name="backdrop_title">30dp</dimen>
+    <dimen name="backdrop_subtitle">18dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_media_radius">10dp</dimen>
+    <dimen name="media_cover_height">160dp</dimen>
+    <dimen name="media_title_padding">10dp</dimen>
+    <dimen name="media_title">15dp</dimen>
+    <dimen name="item_padding_bottom">5dp</dimen>
+    <dimen name="item_count">12dp</dimen>
+    <dimen name="ic_media_overflow_width">20dp</dimen>
+    <dimen name="ic_media_overflow_height">30dp</dimen>
+    <dimen name="ic_media_overflow_margin_top">10dp</dimen>
 </resources>

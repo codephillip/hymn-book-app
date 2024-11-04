@@ -249,4 +249,15 @@ Lead me to the break of day.
     <string name="category">Category</string>
     <string name="favorite">Favorite</string>
     <string name="home_songs">Home</string>
+    <string name="title_activity_main_bottom">MainActivityBottom</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="recent">Recently Viewed</string>
+    <string name="hymn_verse">Hymn 3 . 6 Verses</string>
+    <string name="sample_hymn_short">Let us with a gladsome voice</string>
+    <string name="enter_text">Type a Number, Word or Lyrics</string>
+    <string name="hymn_sample_number">Hymn 23 . Great is thy faithfulness</string>
+    <string name="open_now">Open Now</string>
+    <string name="hymn_day">Hymn of the Day</string>
 </resources>

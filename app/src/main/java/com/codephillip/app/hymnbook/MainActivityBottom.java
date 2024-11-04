@@ -1,20 +1,10 @@
 package com.codephillip.app.hymnbook;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import com.google.android.material.navigation.NavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
@@ -23,6 +13,16 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
 import com.codephillip.app.hymnbook.services.MyJson;
 import com.codephillip.app.hymnbook.utilities.Utils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.codephillip.app.hymnbook.databinding.ActivityMainBottomBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,47 +31,32 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.codephillip.app.hymnbook.utilities.Utils.screenNames;
+public class MainActivityBottom extends AppCompatActivity {
 
-
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private int id;
+    private ActivityMainBottomBinding binding;
+    private static final String TAG = MainActivityBottom.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        Utils.getInstance();
-        Log.d(TAG, "onCreate: " + hasChangedView());
+        binding = ActivityMainBottomBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
         if (isFirstLaunch() || isSynchronized())
             connectToStorage();
 
         activateFont();
 
-        //populate the first default fragment
-        Fragment fragment = AllSongsFragment.newInstance(false, Utils.ORIGINAL_SONGS);
-        getSupportActionBar().setTitle(screenNames[0]);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, fragment);
-        fragmentTransaction.commit();
-
-        startActivity(new Intent(this, MainActivityBottom.class));
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_bottom);
+        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
     private void activateFont() {
@@ -186,82 +171,6 @@ public class MainActivity extends BaseActivity
         values.putKey(id);
         values.putName(name);
         values.insert(getContentResolver());
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.change_view) {
-            Log.d(TAG, "onOptionsItemSelected: changing view#");
-            switchView();
-            return startDrawerView();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        id = item.getItemId();
-        Log.d("Navigation bar", "onNavigationItemSelected: " + id);
-        return startDrawerView();
-    }
-
-    private boolean startDrawerView() {
-        Fragment fragment = null;
-        Utils.clickedFavorite = false;
-
-
-        if (id == R.id.original_songs) {
-            fragment = AllSongsFragment.newInstance(false, Utils.ORIGINAL_SONGS);
-            getSupportActionBar().setTitle(screenNames[0]);
-        } else if (id == R.id.home_songs) {
-            fragment = AllSongsFragment.newInstance(false, Utils.HOME_SONGS);
-            getSupportActionBar().setTitle(screenNames[1]);
-        } else if (id == R.id.category) {
-            fragment = new CategoryFragment();
-            getSupportActionBar().setTitle(screenNames[2]);
-        } else if (id == R.id.favorite) {
-            Utils.clickedFavorite = true;
-            fragment = AllSongsFragment.newInstance(true);
-            getSupportActionBar().setTitle(screenNames[3]);
-        } else if (id == R.id.settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        } else {
-            return true;
-        }
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, fragment);
-        fragmentTransaction.commit();
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return false;
     }
 
     private void switchView() {

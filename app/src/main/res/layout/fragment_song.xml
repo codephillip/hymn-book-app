@@ -32,9 +32,10 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_semibold"
                 android:text="NGA NNUNGI"
-                android:textColor="@color/blue"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/blue"
                 app:layout_constraintBottom_toBottomOf="@id/backbutton"
                 app:layout_constraintStart_toEndOf="@id/backbutton"
                 app:layout_constraintTop_toTopOf="@id/backbutton" />
@@ -43,6 +44,7 @@
                 android:id="@+id/navigation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_semibold"
                 android:text="Hymns 3 . 5 verses"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat"
                 app:layout_constraintBottom_toBottomOf="@id/like"
@@ -54,6 +56,7 @@
                 android:id="@+id/song_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_semibold"
                 android:text="@string/original_songs"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat"
                 app:layout_constraintBottom_toBottomOf="@id/song_type_icon"
@@ -74,6 +77,7 @@
                 android:id="@+id/text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_semibold"
                 android:text="16px"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat"
                 app:layout_constraintBottom_toBottomOf="@id/text_size_icon"
@@ -123,6 +127,7 @@
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/dm_sans"
                 android:layout_height="wrap_content"
                 android:text="@string/sample_hymn" />
         </ScrollView>

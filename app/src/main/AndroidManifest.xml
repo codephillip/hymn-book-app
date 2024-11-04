@@ -12,7 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.codephillip.app.hymnbook.MainActivity"
+            android:name=".MainActivityBottom"
+            android:exported="false"
+            android:label="@string/title_activity_main_bottom"
+            android:theme="@style/AppThemeMaterial" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -57,7 +62,7 @@
             android:exported="false" />
 
         <activity
-            android:name="com.codephillip.app.hymnbook.LockActivity"
+            android:name=".LockActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,6 +70,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

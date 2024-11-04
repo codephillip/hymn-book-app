@@ -1,0 +1,108 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/margin_extra_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:elevation="3dp"
+        card_view:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/elevation_card_resting">
+
+                <View
+                    android:id="@+id/discount_view"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="@dimen/margin_large"
+                    android:background="@drawable/ic_circle"
+                    android:elevation="@dimen/elevation_card_resting"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/back_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/elevation_card_raised"
+                    android:src="@drawable/ic_star_black_36dp"
+                    card_view:layout_constraintBottom_toBottomOf="@id/discount_view"
+                    card_view:layout_constraintEnd_toEndOf="@id/discount_view"
+                    card_view:layout_constraintStart_toStartOf="@id/discount_view"
+                    card_view:layout_constraintTop_toTopOf="@id/discount_view" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="145dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/material3"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/elevation_fab_clicked"
+                    android:text="21"
+                    android:fontFamily="@font/dm_sans"
+                    android:textAppearance="@style/TextAppearance.Material3.DisplayLarge"
+                    android:textColor="@android:color/white"
+                    card_view:layout_constraintBottom_toBottomOf="@id/thumbnail"
+                    card_view:layout_constraintEnd_toEndOf="@id/thumbnail"
+                    card_view:layout_constraintStart_toStartOf="@id/thumbnail"
+                    card_view:layout_constraintTop_toTopOf="@id/thumbnail" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_layout"
+                android:layout_marginTop="@dimen/margin_8"
+                android:fontFamily="@font/raleway_semibold"
+                android:paddingLeft="@dimen/padding_large"
+                android:paddingRight="@dimen/padding_large"
+                android:text="@string/hymn_verse"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/product_name"
+                android:fontFamily="@font/raleway_semibold"
+                android:paddingLeft="@dimen/padding_large"
+                android:paddingRight="@dimen/padding_large"
+                android:paddingBottom="@dimen/padding_medium"
+                android:text="@string/sample_hymn_short" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
