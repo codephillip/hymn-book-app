@@ -80,19 +80,13 @@
             android:layout_height="match_parent"
             android:background="@drawable/input_text_background"
             android:hint="@string/enter_text"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:maxLines="1"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textCursorDrawable="@drawable/cursor_drawable" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <!--    <ImageView-->
-    <!--        android:layout_width="10dp"-->
-    <!--        android:layout_height="10dp"-->
-    <!--        android:src="@drawable/ic_star_black_36dp"-->
-    <!--        android:elevation="@dimen/elevation_fab_clicked"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@id/search_layout"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/search_layout"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/search_layout" />-->
 
 
     <View
