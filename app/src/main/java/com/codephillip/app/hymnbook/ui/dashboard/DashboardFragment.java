@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codephillip.app.hymnbook.AllSongsFragment;
 import com.codephillip.app.hymnbook.R;
+import com.codephillip.app.hymnbook.adapters.HymnsAdapter;
 import com.codephillip.app.hymnbook.adapters.SongGridAdapter;
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
 import com.codephillip.app.hymnbook.databinding.FragmentDashboardBinding;
@@ -82,11 +83,15 @@ public class DashboardFragment extends Fragment {
         cursor = queryHymnTable();
         showErrorMessage();
 
-        if (hasChangedView()) {
-            attachListAdapter(cursor);
-        } else {
-            attachGridAdapter();
-        }
+        //todo add list,grid,cards settings
+//        if (hasChangedView()) {
+//            attachListAdapter(cursor);
+//        } else {
+//            attachGridAdapter();
+//        }
+        binding.recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        HymnsAdapter hymnsAdapter = new HymnsAdapter(getActivity(), cursor);
+        binding.recycler.setAdapter(hymnsAdapter);
         return root;
     }
 

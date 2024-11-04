@@ -62,8 +62,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    binding.searchfield.setHint("");
-                    binding.searchLayout.setEndIconDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_cancel, null));
+                    focusOnInputField();
                 }
             }
         });
@@ -140,6 +139,8 @@ public class HomeFragment extends Fragment {
         if (imm != null) {
             imm.hideSoftInputFromWindow(binding.searchfield.getWindowToken(), 0);
         }
+        binding.recentRecycler.setVisibility(View.VISIBLE);
+        binding.recentlyHeader.setVisibility(View.VISIBLE);
     }
 
     private void focusOnInputField() {
@@ -151,6 +152,9 @@ public class HomeFragment extends Fragment {
         if (imm != null) {
             imm.showSoftInput(binding.searchfield, InputMethodManager.SHOW_IMPLICIT);
         }
+        //todo add this to settings
+        binding.recentRecycler.setVisibility(View.GONE);
+        binding.recentlyHeader.setVisibility(View.GONE);
     }
 
     private HymntableCursor queryHymnTable() {

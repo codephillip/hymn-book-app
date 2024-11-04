@@ -260,4 +260,6 @@ Lead me to the break of day.
     <string name="hymn_sample_number">Hymn 23 . Great is thy faithfulness</string>
     <string name="open_now">Open Now</string>
     <string name="hymn_day">Hymn of the Day</string>
+    <string name="show">Show</string>
+    <string name="hide">Hide</string>
 </resources>
