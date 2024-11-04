@@ -37,6 +37,16 @@
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_settings"
+        android:id="@+id/settings"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@id/hymn_day"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintTop_toTopOf="@id/hymn_day" />
+
     <TextView
         android:id="@+id/hymn_title"
         android:layout_width="wrap_content"
@@ -160,15 +170,5 @@
         app:layout_constraintEnd_toEndOf="@id/constraint_parent"
         app:layout_constraintStart_toStartOf="@id/constraint_parent"
         app:layout_constraintTop_toBottomOf="@+id/curated_view" />
-
-    <LinearLayout
-        android:id="@+id/dynamic_linear_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hymns_recycler" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.codephillip.app.hymnbook.R;
+import com.codephillip.app.hymnbook.SettingsActivity;
 import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.adapters.HymnsAdapter;
 import com.codephillip.app.hymnbook.adapters.RecentAdapter;
@@ -103,6 +104,8 @@ public class HomeFragment extends Fragment {
             }
         });
         setHymnOfTheDay();
+
+        binding.settings.setOnClickListener(view -> startActivity(new Intent(getActivity(), SettingsActivity.class)));
 
         return root;
     }
