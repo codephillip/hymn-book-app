@@ -1,10 +1,10 @@
 package com.codephillip.app.hymnbook.adapters;
 
-import static com.codephillip.app.hymnbook.utilities.Utils.category;
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.findLargestNumber;
 import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
+import static com.codephillip.app.hymnbook.utilities.Utils.songType;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -142,16 +142,13 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
         Log.d(TAG, "queryHymnTable: " + isFromCategoryFragment);
 
         if (showFavoriteScreen) {
-            selection.and();
-            return selection.like(true).query(activity.getContentResolver());
-        } else if (isFromCategoryFragment) {
-            selection.and();
-            Log.d(TAG, "queryHymnTable: category#");
-            return selection.category(category).query(activity.getContentResolver());
+            return selection.and().like(true).query(activity.getContentResolver());
         } else {
-            // todo add category from tab to fix filter
-            Log.d(TAG, "queryHymnTable: default#");
-            return selection.query(activity.getContentResolver());
+            if (songType.equals(Utils.HOME_SONGS)) {
+                return selection.and().categoryEndsWith("HS").query(activity.getContentResolver());
+            } else {
+                return selection.and().categoryEndsWith("ORIGINAL").query(activity.getContentResolver());
+            }
         }
     }
 

@@ -23,6 +23,7 @@ import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
 import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
 
 
+@Deprecated
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
     private static final String TAG = SongListAdapter.class.getSimpleName();
     private HymntableCursor dataCursor;
