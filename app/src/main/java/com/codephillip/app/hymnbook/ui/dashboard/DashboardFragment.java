@@ -78,7 +78,7 @@ public class DashboardFragment extends Fragment {
             isFromCategoryFragment = false;
         }
 
-//        recyclerView = binding.recycler;
+        recyclerView = binding.recycler;
         errorLinearLayout = binding.errorLayout;
         cursor = queryHymnTable();
         showErrorMessage();
@@ -89,9 +89,9 @@ public class DashboardFragment extends Fragment {
 //        } else {
 //            attachGridAdapter();
 //        }
-//        binding.recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
         HymnsAdapter hymnsAdapter = new HymnsAdapter(getActivity(), cursor);
-//        binding.recycler.setAdapter(hymnsAdapter);
+        binding.recycler.setAdapter(hymnsAdapter);
         return root;
     }
 
