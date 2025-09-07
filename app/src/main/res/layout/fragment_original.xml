@@ -148,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway_bold"
-        android:text="@string/home_songs"
+        android:text="@string/original_songs"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/hymns_view"

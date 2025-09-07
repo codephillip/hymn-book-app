@@ -250,6 +250,7 @@ Lead me to the break of day.
     <string name="favorite">Favorite</string>
     <string name="home_songs">Home</string>
     <string name="title_activity_main_bottom">MainActivityBottom</string>
+    <string name="title_original">Original</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Favourites</string>
     <string name="title_notifications">Notifications</string>

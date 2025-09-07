@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_original">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.codephillip.app.hymnbook.ui.home.HomeFragment"
+        android:id="@+id/navigation_original"
+        android:name="com.codephillip.app.hymnbook.ui.original.OriginalFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_original" />
 
     <fragment
         android:id="@+id/favourites_dashboard"
@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_favourites" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.codephillip.app.hymnbook.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/navigation_home"
+        android:name="com.codephillip.app.hymnbook.ui.home.HomeFragment"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

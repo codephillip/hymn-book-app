@@ -1,11 +1,13 @@
-package com.codephillip.app.hymnbook.ui.home;
+package com.codephillip.app.hymnbook.ui.original;
 
 import android.content.Context;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * https://gist.github.com/KaveriKR/04bfef5ffc9c00a8b6fca503da497322

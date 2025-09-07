@@ -1,4 +1,4 @@
-package com.codephillip.app.hymnbook.ui.home;
+package com.codephillip.app.hymnbook.ui.original;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.category;
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
@@ -26,7 +26,7 @@ import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SettingsActivity;
 import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.adapters.HymnsAdapter;
-import com.codephillip.app.hymnbook.databinding.FragmentHomeBinding;
+import com.codephillip.app.hymnbook.databinding.FragmentOriginalBinding;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
@@ -36,14 +36,14 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
 
-public class HomeFragment extends Fragment {
+public class OriginalFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentOriginalBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentOriginalBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 //        binding.recentRecycler.setLayoutManager(new CardLayoutManager(getContext(), 1,
@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment {
     }
 
     private HymntableCursor queryHymnTable() {
-        songType = Utils.HOME_SONGS;
+        songType = Utils.ORIGINAL_SONGS;
         if (songType.equals(Utils.HOME_SONGS)) {
             if (showFavoriteScreen) {
                 return new HymntableSelection().like(true).and().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
