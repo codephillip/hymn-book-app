@@ -1,7 +1,6 @@
 package com.codephillip.app.hymnbook.ui.dashboard;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.CATEGORY;
-import static com.codephillip.app.hymnbook.utilities.Utils.category;
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
@@ -18,32 +17,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.codephillip.app.hymnbook.AllSongsFragment;
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.adapters.HymnsAdapter;
 import com.codephillip.app.hymnbook.adapters.SongGridAdapter;
 import com.codephillip.app.hymnbook.adapters.SongListAdapter;
-import com.codephillip.app.hymnbook.databinding.FragmentDashboardBinding;
+import com.codephillip.app.hymnbook.databinding.FragmentFavouritesBinding;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
-public class DashboardFragment extends Fragment {
+public class FavouritesFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentFavouritesBinding binding;
 
-    private static final String TAG = DashboardFragment.class.getSimpleName();
+    private static final String TAG = FavouritesFragment.class.getSimpleName();
     private SongListAdapter listAdapter;
     private SongGridAdapter gridAdapter;
     private RecyclerView recyclerView;
@@ -51,7 +47,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentFavouritesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 

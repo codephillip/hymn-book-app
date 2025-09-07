@@ -251,7 +251,7 @@ Lead me to the break of day.
     <string name="home_songs">Home</string>
     <string name="title_activity_main_bottom">MainActivityBottom</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Favourites</string>
     <string name="title_notifications">Notifications</string>
     <string name="recent">Recently Viewed</string>
     <string name="hymn_verse">Hymn 3 . 6 Verses</string>
