@@ -144,7 +144,12 @@ public class SongFragment extends Fragment {
             titleView.setText(cursor.getTitle());
             contentView.setText(cursor.getContent());
             int verses = Utils.findLargestNumber(cursor.getContent());
-            navigationView.setText(String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses));
+            String navigationText;
+            if (verses > 0)
+                navigationText = String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses);
+            else
+                navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
+            navigationView.setText(navigationText);
             changeLikeImageButton(cursor.getLike());
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,6 +6,8 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 
+import java.util.Locale;
+
 /**
  * Created by codephillip on 31/03/17.
  */

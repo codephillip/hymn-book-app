@@ -98,7 +98,12 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
             holder.title.setText(dataCursor.getTitle());
             changeLikeImageButton(holder.like, dataCursor.getLike());
             int verses = findLargestNumber(dataCursor.getContent());
-            holder.numbVerses.setText(String.format(Locale.US, "Hymn %d . %d verses", dataCursor.getNumber(), verses));
+            String navigationText;
+            if (verses > 0)
+                navigationText = String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses);
+            else
+                navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
+            holder.numbVerses.setText(navigationText);
             holder.number.setText(String.valueOf(dataCursor.getNumber()));
 
             holder.cardView.setOnClickListener(view -> {
