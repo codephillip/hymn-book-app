@@ -131,7 +131,13 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
 
     private HymntableCursor queryHymnTable(String text) {
         HymntableSelection selection = new HymntableSelection();
-        selection.titleContains(text);
+        try {
+            selection.number(Integer.valueOf(text));
+        } catch (NumberFormatException e) {
+            Log.d(TAG, "Can't convert text to int");
+            selection.titleContains(text).or().contentContains(text);
+        }
+
 
         Log.d(TAG, "queryHymnTable: " + isFromCategoryFragment);
 
@@ -143,6 +149,7 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
             Log.d(TAG, "queryHymnTable: category#");
             return selection.category(category).query(activity.getContentResolver());
         } else {
+            // todo add category from tab to fix filter
             Log.d(TAG, "queryHymnTable: default#");
             return selection.query(activity.getContentResolver());
         }

@@ -113,6 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway_bold"
+        android:visibility="gone"
         android:text="@string/recent"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
@@ -124,6 +125,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recent_recycler"
         android:layout_width="0dp"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_8"

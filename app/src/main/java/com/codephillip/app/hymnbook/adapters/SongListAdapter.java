@@ -82,7 +82,13 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     private HymntableCursor queryHymnTable(String text) {
         HymntableSelection selection = new HymntableSelection();
+        try {
+            selection.number(Integer.valueOf(text));
+        } catch (NumberFormatException e) {
+            Log.d(TAG, "Can't convert text to int");
+        }
         selection.titleContains(text);
+        selection.contentContains(text);
 
         Log.d(TAG, "queryHymnTable: " + isFromCategoryFragment);
 
