@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
         int verses = findLargestNumber(cursor.getContent());
         String navigationText;
         if (verses > 0)
-            navigationText = String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses);
+            navigationText = String.format(Locale.US, "Hymn %d • %d verses", cursor.getNumber(), verses);
         else
             navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
         binding.hymnTitle.setText(navigationText);

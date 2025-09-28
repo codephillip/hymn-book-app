@@ -11,7 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.SuperscriptSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,7 +118,7 @@ public class OriginalFragment extends Fragment {
         int verses = findLargestNumber(cursor.getContent());
         String navigationText;
         if (verses > 0)
-            navigationText = String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses);
+            navigationText = String.format(Locale.US, "Hymn %d • %d verses", cursor.getNumber(), verses);
         else
             navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
         binding.hymnTitle.setText(navigationText);
