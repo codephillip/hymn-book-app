@@ -46,13 +46,8 @@ public class OriginalFragment extends Fragment {
         binding = FragmentOriginalBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        binding.recentRecycler.setLayoutManager(new CardLayoutManager(getContext(), 1,
-//                GridLayoutManager.HORIZONTAL, false, 8));
         binding.hymnsRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        // todo implement recent table
-//        HymntableCursor recentCursor = queryHymnTable();
-//        binding.recentRecycler.setAdapter(new RecentAdapter(getActivity(), recentCursor));
         cursor = queryHymnTable();
         HymnsAdapter hymnsAdapter = new HymnsAdapter(getActivity(), cursor);
         binding.hymnsRecycler.setAdapter(hymnsAdapter);
@@ -143,8 +138,10 @@ public class OriginalFragment extends Fragment {
         if (imm != null) {
             imm.hideSoftInputFromWindow(binding.searchfield.getWindowToken(), 0);
         }
-//        binding.recentRecycler.setVisibility(View.VISIBLE);
-//        binding.recentlyHeader.setVisibility(View.VISIBLE);
+        binding.hymnDay.setVisibility(View.VISIBLE);
+        binding.settings.setVisibility(View.VISIBLE);
+        binding.hymnTitle.setVisibility(View.VISIBLE);
+        binding.openNow.setVisibility(View.VISIBLE);
     }
 
     private void focusOnInputField() {
@@ -156,9 +153,10 @@ public class OriginalFragment extends Fragment {
         if (imm != null) {
             imm.showSoftInput(binding.searchfield, InputMethodManager.SHOW_IMPLICIT);
         }
-        //todo add this to settings
-//        binding.recentRecycler.setVisibility(View.GONE);
-//        binding.recentlyHeader.setVisibility(View.GONE);
+        binding.hymnDay.setVisibility(View.GONE);
+        binding.settings.setVisibility(View.GONE);
+        binding.hymnTitle.setVisibility(View.GONE);
+        binding.openNow.setVisibility(View.GONE);
     }
 
     private HymntableCursor queryHymnTable() {
