@@ -164,9 +164,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            bindPreferenceSummaryToValue(findPreference("font_list"));
-            //switch is not registered
-//            bindPreferenceSummaryToValue(findPreference("app_theme"));
         }
 
         @Override

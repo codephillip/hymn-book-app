@@ -1,15 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:defaultValue="@string/default_font"
-        android:entries="@array/pref_font_list_titles"
-        android:entryValues="@array/pref_font_list_values"
-        android:key="font_list"
-        android:summary="@string/font_desc"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        android:title="@string/change_font" />
-
     <SwitchPreference
         android:defaultValue="false"
         android:key="app_theme"
