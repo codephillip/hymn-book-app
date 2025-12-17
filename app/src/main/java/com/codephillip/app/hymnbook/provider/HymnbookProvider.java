@@ -7,7 +7,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.amulyakhare.textdrawable.BuildConfig;

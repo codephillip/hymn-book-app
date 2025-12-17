@@ -2,8 +2,6 @@ package com.codephillip.app.hymnbook.utilities;
 
 import android.graphics.Typeface;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 
 import java.util.Locale;
@@ -47,33 +45,6 @@ public class Utils {
     }
 
     private Utils() {
-    }
-
-    public static TextDrawable generateTextDrawable(int position, ColourQueue colourQueue) {
-        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        int color1 = generator.getColor(colourQueue.getCount());
-        TextDrawable drawable = new TextDrawable.Builder()
-                .setWidth(140)  // width in px
-                .setHeight(140) // height in px
-                .setColor(color1)
-                .setText(String.valueOf(position))
-                .setRadius(10)
-                .setShape(TextDrawable.SHAPE_ROUND)
-                .build();
-        return drawable;
-    }
-
-    public static TextDrawable generateTextDrawable(String text, ColourQueue colourQueue) {
-        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        int color1 = generator.getColor(colourQueue.getCount());
-        TextDrawable drawable = new TextDrawable.Builder()
-                .setWidth(140)  // width in px
-                .setHeight(140) // height in px
-                .setColor(color1)
-                .setText(text)
-                .setShape(TextDrawable.SHAPE_ROUND)
-                .build();
-        return drawable;
     }
 
     public static int findLargestNumber(String text) {

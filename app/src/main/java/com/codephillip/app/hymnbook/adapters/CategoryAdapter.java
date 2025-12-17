@@ -58,7 +58,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         try {
             String name = dataCursor.getName();
             holder.titleView.setText(name);
-            holder.numberView.setImageDrawable(Utils.generateTextDrawable(name.substring(0, 1), colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,3 +9,6 @@
 .externalNativeBuild
 .idea/
 .idea/caches/deviceStreaming.xml
+.idea/caches/deviceStreaming.xml
+.idea/misc.xml
+.idea/modules.xml

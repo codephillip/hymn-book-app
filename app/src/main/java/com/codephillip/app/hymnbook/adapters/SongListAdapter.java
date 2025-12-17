@@ -111,7 +111,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
         dataCursor.moveToPosition(holder.getAdapterPosition());
         try {
             holder.titleView.setText(dataCursor.getTitle());
-            holder.numberView.setImageDrawable(Utils.generateTextDrawable(dataCursor.getNumber(), colourQueue));
         } catch (Exception e) {
             e.printStackTrace();
         }

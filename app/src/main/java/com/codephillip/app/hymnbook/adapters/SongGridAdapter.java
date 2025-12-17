@@ -69,7 +69,6 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         cursor.moveToPosition(holder.getAdapterPosition());
-        holder.numberView.setImageDrawable(Utils.generateTextDrawable(cursor.getNumber(), colourQueue));
     }
 
     // total number of cells
