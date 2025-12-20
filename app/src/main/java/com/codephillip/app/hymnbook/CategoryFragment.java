@@ -31,7 +31,6 @@ public class CategoryFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_all_songs, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CategoryAdapter(getContext(), queryCategoryTable());
         recyclerView.setAdapter(adapter);

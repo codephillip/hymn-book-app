@@ -129,7 +129,6 @@ public class AllSongsFragment extends Fragment {
     }
 
     private void attachListAdapter(HymntableCursor cursor) {
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         listAdapter = new SongListAdapter(getContext(), cursor);
         recyclerView.setAdapter(listAdapter);
