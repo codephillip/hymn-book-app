@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/favourites_dashboard"
-        android:name="com.codephillip.app.hymnbook.ui.dashboard.FavouritesFragment"
+        android:name="com.codephillip.app.hymnbook.ui.favourites.FavouritesFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_favourites" />
 

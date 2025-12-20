@@ -1,4 +1,4 @@
-package com.codephillip.app.hymnbook.ui.dashboard;
+package com.codephillip.app.hymnbook.ui.favourites;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.CATEGORY;
 import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
