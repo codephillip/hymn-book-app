@@ -15,6 +15,7 @@ import com.codephillip.app.hymnbook.services.MyJson;
 import com.codephillip.app.hymnbook.utilities.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -56,6 +57,14 @@ public class MainActivityBottom extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_bottom);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        getOnBackPressedDispatcher().addCallback(this,
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        finishAffinity(); // exits the app
+                    }
+                });
     }
 
     private void activateFont() {

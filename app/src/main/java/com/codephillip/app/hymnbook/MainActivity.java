@@ -50,37 +50,10 @@ public class MainActivity extends BaseActivity
         Utils.getInstance();
         Log.d(TAG, "onCreate: " + hasChangedView());
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
         if (isFirstLaunch() || isSynchronized())
             connectToStorage();
 
-        activateFont();
-
-        //populate the first default fragment
-        Fragment fragment = AllSongsFragment.newInstance(false, Utils.ORIGINAL_SONGS);
-        getSupportActionBar().setTitle(screenNames[0]);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame, fragment);
-        fragmentTransaction.commit();
-
         startActivity(new Intent(this, MainActivityBottom.class));
-    }
-
-    private void activateFont() {
-        try {
-            Utils.typeface = Typeface.createFromAsset(getAssets(), "fonts/" + "Raleway-Bold.ttf");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Utils.typeface = Typeface.DEFAULT;
-        }
     }
 
     private void connectToStorage() {
