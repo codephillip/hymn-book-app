@@ -137,12 +137,14 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
     private HymntableCursor queryHymnTable(String text) {
         HymntableSelection selection = new HymntableSelection();
         if (text != null && !text.isEmpty()) {
+            selection.openParen();
             try {
                 selection.number(Integer.valueOf(text));
             } catch (NumberFormatException e) {
                 Log.d(TAG, "Can't convert text to int");
                 selection.titleContains(text).or().contentContains(text);
             }
+            selection.closeParen();
             selection.and();
         }
 
@@ -150,15 +152,15 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
         Log.d(TAG, "queryHymnTable: " + isFromCategoryFragment);
 
         if (showFavoriteScreen) {
-            return selection.like(true).query(activity.getContentResolver());
+            selection.like(true).and();
         } else if (isFromCategoryFragment) {
-            return selection.categoryContains(category).query(activity.getContentResolver());
+            selection.categoryContains(category).and();
+        }
+
+        if (songType.equals(Utils.HOME_SONGS)) {
+            return selection.categoryEndsWith("HS").orderByNumber().query(activity.getContentResolver());
         } else {
-            if (songType.equals(Utils.HOME_SONGS)) {
-                return selection.categoryEndsWith("HS").query(activity.getContentResolver());
-            } else {
-                return selection.categoryEndsWith("ORIGINAL").query(activity.getContentResolver());
-            }
+            return selection.categoryEndsWith("ORIGINAL").orderByNumber().query(activity.getContentResolver());
         }
     }
 
