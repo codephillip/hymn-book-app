@@ -39,6 +39,7 @@ import java.util.Random;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private HymnsAdapter hymnsAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
         binding.hymnsRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         cursor = queryHymnTable();
-        HymnsAdapter hymnsAdapter = new HymnsAdapter(getActivity(), cursor);
+        hymnsAdapter = new HymnsAdapter(getActivity(), cursor);
         binding.hymnsRecycler.setAdapter(hymnsAdapter);
 
         binding.searchfield.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -101,6 +102,14 @@ public class HomeFragment extends Fragment {
         binding.settings.setOnClickListener(view -> startActivity(new Intent(getActivity(), SettingsActivity.class)));
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (hymnsAdapter != null) {
+            hymnsAdapter.swapCursor(queryHymnTable());
+        }
     }
 
     private void setHymnOfTheDay() {
