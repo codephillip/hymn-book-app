@@ -7,7 +7,7 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 public class RecentAdapter extends HymnsAdapter {
 
     public RecentAdapter(FragmentActivity activity, HymntableCursor cursor) {
-        super(activity, cursor);
+        super(activity, cursor, true);
     }
 
     @Override

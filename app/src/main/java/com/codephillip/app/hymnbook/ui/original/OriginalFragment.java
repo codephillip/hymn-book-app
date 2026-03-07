@@ -57,7 +57,7 @@ public class OriginalFragment extends Fragment {
         binding.hymnsRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         cursor = queryHymnTable();
-        hymnsAdapter = new HymnsAdapter(getActivity(), cursor);
+        hymnsAdapter = new HymnsAdapter(getActivity(), cursor, false);
         binding.hymnsRecycler.setAdapter(hymnsAdapter);
 
         binding.searchfield.setOnFocusChangeListener(new View.OnFocusChangeListener() {

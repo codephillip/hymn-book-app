@@ -35,8 +35,8 @@
             android:id="@+id/hymn_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
             android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_8"
             android:fontFamily="@font/raleway_bold"
             android:text="@string/hymn_day"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
@@ -58,9 +58,9 @@
             android:id="@+id/hymn_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_8"
             android:layout_marginBottom="@dimen/margin_16"
-            android:layout_marginStart="@dimen/margin_large"
             android:fontFamily="@font/raleway_bold"
             android:text="@string/hymn_sample_number"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,8 +70,8 @@
             android:id="@+id/open_now"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_32"
             android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_32"
             android:fontFamily="@font/raleway_bold"
             android:text="@string/open_now"
             android:textColor="@color/blue"
@@ -100,8 +100,8 @@
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textCursorDrawable="@null"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@null" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,10 +120,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway_bold"
-        android:visibility="gone"
         android:text="@string/recent"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/collapsible_header" />
 
@@ -131,11 +131,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recent_recycler"
         android:layout_width="0dp"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_8"
         android:clipToPadding="false"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recently_header" />

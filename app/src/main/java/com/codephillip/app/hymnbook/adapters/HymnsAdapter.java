@@ -10,7 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view. View;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,18 +30,28 @@ import com.codephillip.app.hymnbook.utilities.Utils;
 import java.util.Locale;
 
 
-public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> {
+public class HymnsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = HymnsAdapter.class.getSimpleName();
+    public static final int TYPE_ITEM = 0;
+    public static final int TYPE_SEPARATOR = 1;
 
     private Activity activity;
     private HymntableCursor dataCursor;
     private String currentSearchText = "";
+    private boolean showHeaders;
+    
+    private int firstHeaderPosition = -1;
+    private int secondHeaderPosition = -1;
+    private String firstHeaderTitle = "";
+    private String secondHeaderTitle = "";
 
 
-    public HymnsAdapter(FragmentActivity activity, HymntableCursor cursor) {
+    public HymnsAdapter(FragmentActivity activity, HymntableCursor cursor, boolean showHeaders) {
         this.activity = activity;
         this.dataCursor = cursor;
+        this.showHeaders = showHeaders;
+        calculateHeaders();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,10 +73,31 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
         }
     }
 
+    public static class SeparatorViewHolder extends RecyclerView.ViewHolder {
+        public TextView title;
+
+        public SeparatorViewHolder(View v) {
+            super(v);
+            title = (TextView) v;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (showHeaders && (position == firstHeaderPosition || position == secondHeaderPosition)) {
+            return TYPE_SEPARATOR;
+        }
+        return TYPE_ITEM;
+    }
+
     @NonNull
     @Override
-    public HymnsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        return new HymnsAdapter.ViewHolder(LayoutInflater.from(parent.getContext())
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == TYPE_SEPARATOR) {
+            return new SeparatorViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.favourite_header_item, parent, false));
+        }
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.horizontal_card_item, parent, false));
     }
 
@@ -82,6 +113,7 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
         }
         HymntableCursor oldCursor = dataCursor;
         this.dataCursor = cursor;
+        calculateHeaders();
         if (cursor != null) {
             Utils.cursor = cursor;
             this.notifyDataSetChanged();
@@ -89,9 +121,59 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
         return oldCursor;
     }
 
+    private void calculateHeaders() {
+        firstHeaderPosition = -1;
+        secondHeaderPosition = -1;
+        firstHeaderTitle = "";
+        secondHeaderTitle = "";
+        
+        if (showHeaders && dataCursor != null && dataCursor.getCount() > 0 && dataCursor.moveToFirst()) {
+            firstHeaderPosition = 0;
+            firstHeaderTitle = getCategoryGroup(dataCursor.getCategory());
+            
+            String firstCategory = firstHeaderTitle;
+            int count = 0;
+            while (dataCursor.moveToNext()) {
+                count++;
+                String currentCategory = getCategoryGroup(dataCursor.getCategory());
+                if (!currentCategory.equals(firstCategory)) {
+                    secondHeaderPosition = 1 + count;
+                    secondHeaderTitle = currentCategory;
+                    break;
+                }
+            }
+        }
+        Log.d(TAG, "calculateHeaders: H1=" + firstHeaderPosition + ", H2=" + secondHeaderPosition);
+    }
+
+    private String getCategoryGroup(String category) {
+        if (category == null) return "";
+        if (category.endsWith("HS")) return "Home Songs";
+        if (category.endsWith("ORIGINAL")) return "Original Songs";
+        return category;
+    }
+
     @Override
-    public void onBindViewHolder(@NonNull HymnsAdapter.ViewHolder holder, int position) {
-        dataCursor.moveToPosition(holder.getAdapterPosition());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder rawHolder, int position) {
+        if (getItemViewType(position) == TYPE_SEPARATOR) {
+            SeparatorViewHolder holder = (SeparatorViewHolder) rawHolder;
+            if (position == firstHeaderPosition) {
+                holder.title.setText(firstHeaderTitle);
+            } else {
+                holder.title.setText(secondHeaderTitle);
+            }
+            return;
+        }
+
+        ViewHolder holder = (ViewHolder) rawHolder;
+        int cursorPosition = position;
+        if (secondHeaderPosition != -1 && position > secondHeaderPosition) {
+            cursorPosition = position - 2;
+        } else if (firstHeaderPosition != -1 && position > firstHeaderPosition) {
+            cursorPosition = position - 1;
+        }
+
+        dataCursor.moveToPosition(cursorPosition);
         try {
             holder.title.setText(dataCursor.getTitle());
             holder.isLiked = dataCursor.getLike();
@@ -105,9 +187,10 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
             holder.numbVerses.setText(navigationText);
             holder.number.setText(String.valueOf(dataCursor.getNumber()));
 
+            int finalCursorPosition = cursorPosition;
             holder.cardView.setOnClickListener(view -> {
                 Utils.getInstance();
-                Utils.position = holder.getAdapterPosition();
+                Utils.position = finalCursorPosition;
                 Utils.cursor = dataCursor;
                 activity.startActivity(new Intent(activity, SongActivity.class));
             });
@@ -159,13 +242,23 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
 
         if (songType.equals(Utils.HOME_SONGS)) {
             return selection.categoryEndsWith("HS").orderByNumber().query(activity.getContentResolver());
-        } else {
+        } else if (songType.equals(Utils.ORIGINAL_SONGS)) {
             return selection.categoryEndsWith("ORIGINAL").orderByNumber().query(activity.getContentResolver());
+        } else if (showFavoriteScreen) {
+            return selection.orderByCategory(true).orderByNumber().query(activity.getContentResolver());
+        } else {
+            return selection.orderByNumber().query(activity.getContentResolver());
         }
     }
 
     @Override
     public int getItemCount() {
-        return (dataCursor == null) ? 0 : dataCursor.getCount();
+        if (dataCursor == null) return 0;
+        int count = dataCursor.getCount();
+        if (showHeaders) {
+            if (firstHeaderPosition != -1) count++;
+            if (secondHeaderPosition != -1) count++;
+        }
+        return count;
     }
 }

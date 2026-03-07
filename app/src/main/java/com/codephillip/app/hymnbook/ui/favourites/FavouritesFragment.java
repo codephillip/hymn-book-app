@@ -85,8 +85,15 @@ public class FavouritesFragment extends Fragment {
 //        } else {
 //            attachGridAdapter();
 //        }
-        binding.recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        HymnsAdapter hymnsAdapter = new HymnsAdapter(getActivity(), cursor);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        HymnsAdapter hymnsAdapter = new HymnsAdapter(getActivity(), cursor, true);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return hymnsAdapter.getItemViewType(position) == HymnsAdapter.TYPE_SEPARATOR ? 2 : 1;
+            }
+        });
+        binding.recycler.setLayoutManager(layoutManager);
         binding.recycler.setAdapter(hymnsAdapter);
         return root;
     }
@@ -99,7 +106,7 @@ public class FavouritesFragment extends Fragment {
 
     private void showErrorMessage() {
         Log.d(TAG, "showErrorMessage: started");
-        if (!cursor.moveToFirst()) {
+        if (cursor == null || !cursor.moveToFirst()) {
             recyclerView.setVisibility(View.GONE);
             errorLinearLayout.setVisibility(View.VISIBLE);
         } else {
@@ -124,7 +131,7 @@ public class FavouritesFragment extends Fragment {
 
     private HymntableCursor queryHymnTable() {
         Log.d(TAG, "queryHymnTable: show " + showFavoriteScreen);
-        return new HymntableSelection().like(true).query(getContext().getContentResolver());
+        return new HymntableSelection().like(true).orderByCategory(true).orderByNumber().query(getContext().getContentResolver());
     }
 
 
