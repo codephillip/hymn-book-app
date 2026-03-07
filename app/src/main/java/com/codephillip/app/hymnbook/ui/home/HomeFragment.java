@@ -21,6 +21,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.ChangeBounds;
+import androidx.transition.Fade;
+import androidx.transition.TransitionManager;
+import androidx.transition.TransitionSet;
 
 import com.codephillip.app.hymnbook.R;
 import com.codephillip.app.hymnbook.SettingsActivity;
@@ -40,6 +46,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private HymnsAdapter hymnsAdapter;
+    private boolean isHeaderVisible = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +107,33 @@ public class HomeFragment extends Fragment {
         setHymnOfTheDay();
 
         binding.settings.setOnClickListener(view -> startActivity(new Intent(getActivity(), SettingsActivity.class)));
+
+        binding.hymnsRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int firstVisibleItemPosition = layoutManager != null ? layoutManager.findFirstVisibleItemPosition() : 0;
+
+                if (dy > 0 && isHeaderVisible) {
+                    isHeaderVisible = false;
+                    TransitionSet transitionSet = new TransitionSet()
+                            .addTransition(new Fade())
+                            .addTransition(new ChangeBounds())
+                            .setDuration(300);
+                    TransitionManager.beginDelayedTransition((ViewGroup) binding.getRoot(), transitionSet);
+                    binding.collapsibleHeader.setVisibility(View.GONE);
+                } else if (dy < 0 && firstVisibleItemPosition <= 8 && !isHeaderVisible) {
+                    isHeaderVisible = true;
+                    TransitionSet transitionSet = new TransitionSet()
+                            .addTransition(new Fade())
+                            .addTransition(new ChangeBounds())
+                            .setDuration(300);
+                    TransitionManager.beginDelayedTransition((ViewGroup) binding.getRoot(), transitionSet);
+                    binding.collapsibleHeader.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         return root;
     }

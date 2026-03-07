@@ -5,7 +5,7 @@
     android:id="@+id/constraint_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.original.OriginalFragment">
+    tools:context=".ui.home.HomeFragment">
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -25,87 +25,95 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_end="@dimen/margin_large" />
 
-
-    <TextView
-        android:id="@+id/hymn_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8"
-        android:fontFamily="@font/raleway_bold"
-        android:text="@string/hymn_day"
-        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_settings"
-        app:layout_constraintBottom_toBottomOf="@id/hymn_day"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintTop_toTopOf="@id/hymn_day" />
-
-    <TextView
-        android:id="@+id/hymn_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_8"
-        android:layout_marginBottom="@dimen/margin_16"
-        android:fontFamily="@font/raleway_bold"
-        android:text="@string/hymn_sample_number"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@id/hymn_day" />
-
-    <TextView
-        android:id="@+id/open_now"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_32"
-        android:fontFamily="@font/raleway_bold"
-        android:text="@string/open_now"
-        android:textColor="@color/blue"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toTopOf="@id/hymn_title" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/search_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/collapsible_header"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/margin_16"
-        android:layout_marginTop="@dimen/margin_16"
-        android:layout_marginEnd="@dimen/margin_16"
-        app:endIconDrawable="@drawable/ic_search"
-        app:endIconMode="custom"
-        app:hintEnabled="false"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/open_now">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchfield"
+        <TextView
+            android:id="@+id/hymn_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_large"
+            android:fontFamily="@font/raleway_bold"
+            android:text="@string/hymn_day"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_settings"
+            app:layout_constraintBottom_toBottomOf="@id/hymn_day"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/hymn_day" />
+
+        <TextView
+            android:id="@+id/hymn_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_16"
+            android:layout_marginStart="@dimen/margin_large"
+            android:fontFamily="@font/raleway_bold"
+            android:text="@string/hymn_sample_number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/hymn_day" />
+
+        <TextView
+            android:id="@+id/open_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_32"
+            android:layout_marginStart="@dimen/margin_large"
+            android:fontFamily="@font/raleway_bold"
+            android:text="@string/open_now"
+            android:textColor="@color/blue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/hymn_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/input_text_background"
-            android:hint="@string/enter_text"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@android:color/black" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_16"
+            app:endIconDrawable="@drawable/ic_search"
+            app:endIconMode="custom"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/open_now">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/searchfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_text_background"
+                android:hint="@string/enter_text"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textCursorDrawable="@null"
+                android:textColor="@android:color/black" />
 
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <View
-        android:id="@+id/recently_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_layout" />
+        <View
+            android:id="@+id/recently_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_16"
+            app:layout_constraintTop_toBottomOf="@id/search_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <TextView
         android:id="@+id/recently_header"
@@ -116,9 +124,8 @@
         android:text="@string/recent"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/recently_view"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toTopOf="@+id/recently_view" />
+        app:layout_constraintTop_toBottomOf="@id/collapsible_header" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -157,10 +164,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hymns_recycler"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_8"
         android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/constraint_parent"
         app:layout_constraintStart_toStartOf="@id/constraint_parent"
         app:layout_constraintTop_toBottomOf="@+id/hymns_header" />
