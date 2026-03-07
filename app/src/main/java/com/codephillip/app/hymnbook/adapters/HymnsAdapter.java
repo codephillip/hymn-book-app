@@ -49,6 +49,7 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
         public TextView title;
         public ImageView like;
         public TextView numbVerses;
+        public boolean isLiked;
 
 
         public ViewHolder(View v) {
@@ -96,13 +97,14 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
         dataCursor.moveToPosition(holder.getAdapterPosition());
         try {
             holder.title.setText(dataCursor.getTitle());
-            changeLikeImageButton(holder.like, dataCursor.getLike());
+            holder.isLiked = dataCursor.getLike();
+            changeLikeImageButton(holder.like, holder.isLiked);
             int verses = findLargestNumber(dataCursor.getContent());
             String navigationText;
             if (verses > 0)
-                navigationText = String.format(Locale.US, "Hymn %d • %d verses", cursor.getNumber(), verses);
+                navigationText = String.format(Locale.US, "Hymn %d • %d verses", dataCursor.getNumber(), verses);
             else
-                navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
+                navigationText = String.format(Locale.US, "Hymn %d", dataCursor.getNumber());
             holder.numbVerses.setText(navigationText);
             holder.number.setText(String.valueOf(dataCursor.getNumber()));
 
@@ -113,9 +115,9 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
             });
 
             holder.like.setOnClickListener(view -> {
-                cursor.moveToPosition(position);
-                changeLikeImageButton(holder.like, !cursor.getLike());
-                changeLikePreference(!cursor.getLike(), cursor.getTitle());
+                holder.isLiked = !holder.isLiked;
+                changeLikeImageButton(holder.like, holder.isLiked);
+                changeLikePreference(holder.isLiked, holder.title.getText().toString());
             });
         } catch (Exception e) {
             e.printStackTrace();

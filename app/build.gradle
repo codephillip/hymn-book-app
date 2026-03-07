@@ -8,11 +8,13 @@ android {
     defaultConfig {
         targetSdkVersion 34
         applicationId "com.codephillip.app.hymnbook"
-        minSdkVersion 29
-        versionCode 4
-        versionName "3.0.0"
+        minSdkVersion 27
+        versionCode 5
+        versionName "3.0.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
+
+        resValue "string", "build_version", "Version ${versionName}"
     }
     buildTypes {
         release {
