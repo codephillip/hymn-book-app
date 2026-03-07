@@ -143,6 +143,15 @@ public class SongFragment extends Fragment {
             contentView.setTextSize(getFontSize());
             titleView.setText(cursor.getTitle());
             contentView.setText(cursor.getContent());
+
+            if (cursor.getCategory() != null) {
+                if (cursor.getCategory().endsWith("HS")) {
+                    songTypeView.setText("Home");
+                } else if (cursor.getCategory().endsWith("ORIGINAL")) {
+                    songTypeView.setText("Original");
+                }
+            }
+
             int verses = Utils.findLargestNumber(cursor.getContent());
             String navigationText;
             if (verses > 0)
