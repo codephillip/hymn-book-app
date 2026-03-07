@@ -25,6 +25,7 @@ public class SongActivity extends BaseActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(Utils.position);
         Utils.getInstance();
     }
 
@@ -40,25 +41,13 @@ public class SongActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.d(TAG, "getItem: " + Utils.position + "#" + position);
-            try {
-                //move ViewPager to the item clicked on first_click
-                if (!Utils.isSongActivityActive) {
-                    mViewPager.setCurrentItem(Utils.position, true);
-                    Utils.isSongActivityActive = true;
-                    return SongFragment.newInstance(Utils.position);
-                }
-                //use default position after the first_click
-                return SongFragment.newInstance(position);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            throw new ArrayIndexOutOfBoundsException("Wrong array position");
+            Log.d(TAG, "getItem: " + position);
+            return SongFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            return cursor.getCount();
+            return cursor == null ? 0 : cursor.getCount();
         }
     }
 }

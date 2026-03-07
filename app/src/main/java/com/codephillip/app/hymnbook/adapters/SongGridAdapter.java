@@ -50,7 +50,6 @@ public class SongGridAdapter extends RecyclerView.Adapter<SongGridAdapter.ViewHo
                     //moves the ViewPager to the right position
                     if (Utils.clickedFavorite)
                         Utils.position++;
-                    Utils.isSongActivityActive = false;
                     context.startActivity(new Intent(context, SongActivity.class));
                 }
             });

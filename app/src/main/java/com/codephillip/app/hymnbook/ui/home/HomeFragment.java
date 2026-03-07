@@ -123,7 +123,6 @@ public class HomeFragment extends Fragment {
         binding.openNow.setOnClickListener(view -> {
             Utils.getInstance();
             Utils.position = randomNumber;
-            Utils.isSongActivityActive = false;
             startActivity(new Intent(getActivity(), SongActivity.class));
         });
 

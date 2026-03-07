@@ -121,7 +121,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 Log.d(TAG, "onClick: ");
                 Utils.getInstance();
                 Utils.position = holder.getAdapterPosition();
-                Utils.isSongActivityActive = false;
                 context.startActivity(new Intent(context, SongActivity.class));
             }
         });

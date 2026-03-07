@@ -95,7 +95,7 @@ Lead me to the break of day.
     <string name="font_desc">Change the text font</string>
     <string name="summary">Update hymns in your database</string>
     <string name="sync">Sync data</string>
-    <string name="build_version">Version 2.0.0</string>
+    <!-- build_version is now generated automatically from build.gradle -->
     <string name="lock_desc">Locks the app</string>
     <string name="lock_app">Set lock</string>
     <string name="password">Password</string>

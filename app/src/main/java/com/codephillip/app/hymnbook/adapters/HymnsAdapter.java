@@ -10,7 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
+import android.view. View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -109,7 +109,6 @@ public class HymnsAdapter extends RecyclerView.Adapter<HymnsAdapter.ViewHolder> 
             holder.cardView.setOnClickListener(view -> {
                 Utils.getInstance();
                 Utils.position = holder.getAdapterPosition();
-                Utils.isSongActivityActive = false;
                 activity.startActivity(new Intent(activity, SongActivity.class));
             });
 
