@@ -59,24 +59,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_8"
             android:layout_marginBottom="@dimen/margin_16"
             android:fontFamily="@font/raleway_bold"
             android:text="@string/hymn_sample_number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/hymn_day" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/open_now"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
-            android:layout_marginTop="@dimen/margin_32"
+            android:layout_marginTop="@dimen/margin_medium"
             android:fontFamily="@font/raleway_bold"
+            android:includeFontPadding="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
             android:text="@string/open_now"
             android:textColor="@color/blue"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/hymn_title" />
+            app:layout_constraintTop_toBottomOf="@id/hymn_title" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_layout"
