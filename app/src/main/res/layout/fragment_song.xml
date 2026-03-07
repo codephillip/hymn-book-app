@@ -3,19 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="6">
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="0dp"
         app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_20">
 
             <ImageView
@@ -30,24 +29,28 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/raleway_semibold"
                 android:text="NGA NNUNGI"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/blue"
                 app:layout_constraintBottom_toBottomOf="@id/backbutton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/backbutton"
                 app:layout_constraintTop_toTopOf="@id/backbutton" />
 
             <TextView
                 android:id="@+id/navigation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_semibold"
                 android:text="Hymns 3 . 5 verses"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat"
                 app:layout_constraintBottom_toBottomOf="@id/like"
+                app:layout_constraintEnd_toStartOf="@id/song_type"
                 app:layout_constraintStart_toStartOf="@id/backbutton"
                 app:layout_constraintTop_toTopOf="@id/like" />
 
@@ -112,7 +115,7 @@
         android:id="@+id/bottom_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <ScrollView
@@ -128,6 +131,7 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:fontFamily="@font/dm_sans"
+                android:textColor="@android:color/black"
                 android:layout_height="wrap_content"
                 android:text="@string/sample_hymn" />
         </ScrollView>
