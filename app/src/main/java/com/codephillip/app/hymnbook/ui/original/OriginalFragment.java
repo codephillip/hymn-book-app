@@ -123,7 +123,7 @@ public class OriginalFragment extends Fragment {
                             .setDuration(300);
                     TransitionManager.beginDelayedTransition((ViewGroup) binding.getRoot(), transitionSet);
                     binding.collapsibleHeader.setVisibility(View.GONE);
-                } else if (dy < 0 && firstVisibleItemPosition <= 8 && !isHeaderVisible) {
+                } else if (dy < 0 && firstVisibleItemPosition <= 4 && !isHeaderVisible) {
                     isHeaderVisible = true;
                     TransitionSet transitionSet = new TransitionSet()
                             .addTransition(new Fade())
