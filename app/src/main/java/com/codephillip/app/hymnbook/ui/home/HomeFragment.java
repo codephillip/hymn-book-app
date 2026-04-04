@@ -214,11 +214,9 @@ public class HomeFragment extends Fragment {
         pickCursor.moveToPosition(randomPosition);
 
         int verses = findLargestNumber(pickCursor.getContent());
-        String navigationText;
-        if (verses > 0)
-            navigationText = String.format(Locale.US, "Hymn %d • %d verses", pickCursor.getNumber(), verses);
-        else
-            navigationText = String.format(Locale.US, "Hymn %d", pickCursor.getNumber());
+        String navigationText = verses > 0
+                ? String.format(Locale.US, "Hymn %d • %s", pickCursor.getNumber(), pickCursor.getTitle())
+                : String.format(Locale.US, "Hymn %d", pickCursor.getNumber());
         binding.hymnTitle.setText(navigationText);
 
         final long selectedId = pickCursor.getId();

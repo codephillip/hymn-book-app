@@ -7,20 +7,24 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.utilities.Utils;
-
-import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 
 public class SongActivity extends BaseActivity {
 
     private static final String TAG = SongActivity.class.getSimpleName();
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    public HymntableCursor songCursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
+
+        // Capture the cursor at the moment of creation to prevent IllegalStateException
+        // if Utils.cursor is changed globally later.
+        songCursor = Utils.cursor;
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -47,7 +51,7 @@ public class SongActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return cursor == null ? 0 : cursor.getCount();
+            return songCursor == null ? 0 : songCursor.getCount();
         }
     }
 }

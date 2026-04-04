@@ -1,7 +1,6 @@
 package com.codephillip.app.hymnbook;
 
 import static com.codephillip.app.hymnbook.utilities.Utils.category;
-import static com.codephillip.app.hymnbook.utilities.Utils.cursor;
 import static com.codephillip.app.hymnbook.utilities.Utils.isFromCategoryFragment;
 import static com.codephillip.app.hymnbook.utilities.Utils.showFavoriteScreen;
 import static com.codephillip.app.hymnbook.utilities.Utils.songType;
@@ -46,6 +45,7 @@ public class SongFragment extends Fragment {
     private ImageView backButton;
     private View bottomContent;
     private int position;
+    private HymntableCursor cursor;
 
     public SongFragment() {
     }
@@ -76,13 +76,25 @@ public class SongFragment extends Fragment {
 
         Utils.getInstance();
         position = getArguments().getInt(SONG_NUMBER);
-        cursor.moveToPosition(position);
-        attachDataToViews(cursor);
+        
+        if (getActivity() instanceof SongActivity) {
+            cursor = ((SongActivity) getActivity()).songCursor;
+        } else {
+            cursor = Utils.cursor;
+        }
+
+        if (cursor != null) {
+            cursor.moveToPosition(position);
+            attachDataToViews(cursor);
+        }
 
         likeButton.setOnClickListener(view -> {
-            cursor.moveToPosition(position);
-            changeLikeImageButton(!cursor.getLike());
-            changeLikePreference(!cursor.getLike(), cursor.getTitle());
+            if (cursor != null) {
+                cursor.moveToPosition(position);
+                boolean newLikeStatus = !cursor.getLike();
+                changeLikeImageButton(newLikeStatus);
+                updateLikeInDb(newLikeStatus, cursor.getTitle());
+            }
         });
 
         songTypeView.setOnClickListener(v -> showTypeDialog());
@@ -119,8 +131,10 @@ public class SongFragment extends Fragment {
         contentView.setTextSize(getFontSize());
         applyTheme(getSavedTheme());
         
-        cursor.moveToPosition(position);
-        incrementOpenCount(cursor);
+        if (cursor != null) {
+            cursor.moveToPosition(position);
+            incrementOpenCount(cursor);
+        }
     }
 
     private void showTypeDialog() {
@@ -131,6 +145,9 @@ public class SongFragment extends Fragment {
             String choice = options[which];
             songTypeView.setText(choice);
             Utils.songType = choice.equals("Original") ? Utils.ORIGINAL_SONGS : Utils.HOME_SONGS;
+            // Note: Changing song type here might be problematic if it changes the list,
+            // but we'll keep the current fragment viewing the same item if possible.
+            // For now, we update the local cursor view but this doesn't change the Pager.
             int lastPosition = cursor.getPosition();
             HymntableCursor tempCursor = queryHymnTable();
             tempCursor.moveToPosition(lastPosition > 0 ? lastPosition - 1 : lastPosition);
@@ -250,7 +267,7 @@ public class SongFragment extends Fragment {
 
             int verses = Utils.findLargestNumber(cursor.getContent());
             String navigationText = verses > 0 
-                ? String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses)
+                ? String.format(Locale.US, "Hymn %d • %d verses", cursor.getNumber(), verses)
                 : String.format(Locale.US, "Hymn %d", cursor.getNumber());
             navigationView.setText(navigationText);
             changeLikeImageButton(cursor.getLike());
@@ -264,11 +281,12 @@ public class SongFragment extends Fragment {
         likeButton.setImageDrawable(getResources().getDrawable(image));
     }
 
-    private void changeLikePreference(boolean liked, String title) {
+    private void updateLikeInDb(boolean liked, String title) {
         HymntableContentValues values = new HymntableContentValues();
         values.putLike(liked);
         values.update(getContext().getContentResolver(), new HymntableSelection().titleLike(title));
-        cursor = queryHymnTable();
+        // We no longer update the global Utils.cursor here to avoid ViewPager crash.
+        // The UI is already updated via changeLikeImageButton.
     }
 
     private HymntableCursor queryHymnTable() {

@@ -216,7 +216,7 @@ public class OriginalFragment extends Fragment {
         int verses = findLargestNumber(pickCursor.getContent());
         String navigationText;
         if (verses > 0)
-            navigationText = String.format(Locale.US, "Hymn %d • %d verses", pickCursor.getNumber(), verses);
+            navigationText = String.format(Locale.US, "Hymn %d • %s", pickCursor.getNumber(), pickCursor.getTitle());
         else
             navigationText = String.format(Locale.US, "Hymn %d", pickCursor.getNumber());
         binding.hymnTitle.setText(navigationText);
