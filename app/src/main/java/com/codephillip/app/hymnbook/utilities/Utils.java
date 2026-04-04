@@ -1,10 +1,17 @@
 package com.codephillip.app.hymnbook.utilities;
 
+import android.content.Context;
 import android.graphics.Typeface;
 
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by codephillip on 31/03/17.
@@ -63,5 +70,81 @@ public class Utils {
             }
         }
         return max;
+    }
+
+    public enum Season {
+        ADVENT, CHRISTMAS, LENT, EASTER, PENTECOST, ORDINARY_TIME
+    }
+
+    public static Season getCurrentSeason() {
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        if (month == Calendar.DECEMBER) {
+            return day <= 24 ? Season.ADVENT : Season.CHRISTMAS;
+        } else if (month == Calendar.JANUARY && day <= 6) {
+            return Season.CHRISTMAS;
+        } else if (month == Calendar.MARCH || month == Calendar.APRIL) {
+            // Simulating Lent/Easter approximation
+            return (month == Calendar.MARCH && day < 20) ? Season.LENT : Season.EASTER;
+        } else if (month == Calendar.MAY || month == Calendar.JUNE) {
+            return Season.PENTECOST;
+        } else {
+            return Season.ORDINARY_TIME;
+        }
+    }
+
+    public static List<String> getCategoriesForSeason(Season season, Map<Season, List<String>> customMapping) {
+        if (customMapping != null && customMapping.containsKey(season)) {
+            return customMapping.get(season);
+        }
+
+        List<String> categories = new ArrayList<>();
+        switch (season) {
+            case ADVENT:
+                categories.add("MAYINGIRA");
+                break;
+            case CHRISTMAS:
+                categories.add("MAZAALIBWA");
+                break;
+            case LENT:
+                categories.add("KUBONABONA");
+                break;
+            case EASTER:
+                categories.add("MAZUUKIRA");
+                categories.add("MAZUKIRA");
+                break;
+            case PENTECOST:
+                categories.add("MWOYO MUTUUKIRIVU");
+                categories.add("MWOYO MUTUKIRIVU");
+                break;
+            case ORDINARY_TIME:
+            default:
+                categories.add("KUSINZA");
+                categories.add("MUGAATI OGW");
+                categories.add("KWAGALA");
+                break;
+        }
+        return categories;
+    }
+
+    public static Map<Season, List<String>> getDefaultSeasonMapping() {
+        Map<Season, List<String>> mapping = new HashMap<>();
+        for (Season season : Season.values()) {
+            mapping.put(season, getCategoriesForSeason(season, null));
+        }
+        return mapping;
+    }
+
+    public static HymntableCursor getSeasonalHymnCursor(Context context, Map<Season, List<String>> customMapping, String categorySuffix) {
+        Season season = getCurrentSeason();
+        List<String> categories = getCategoriesForSeason(season, customMapping);
+        HymntableSelection selection = new HymntableSelection();
+        String[] cats = categories.toArray(new String[0]);
+        if (categorySuffix != null && !categorySuffix.isEmpty()) {
+            return selection.categoryContains(cats).and().categoryEndsWith(categorySuffix).query(context.getContentResolver());
+        }
+        return selection.categoryContains(cats).query(context.getContentResolver());
     }
 }

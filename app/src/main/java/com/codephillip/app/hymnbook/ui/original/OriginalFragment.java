@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ import java.util.Random;
 
 public class OriginalFragment extends Fragment {
 
+    private static final String TAG = "OriginalFragment";
     private FragmentOriginalBinding binding;
     private HymnsAdapter hymnsAdapter;
     private boolean isHeaderVisible = true;
@@ -154,7 +156,7 @@ public class OriginalFragment extends Fragment {
             do {
                 String name = categoryCursor.getName();
                 if (name != null) {
-                    name = name.replace("- ORIGINAL", "").replace("- ORIGINAL", "").trim();
+                    name = name.replace("- ORIGINAL", "").trim();
                 }
                 categories.add(name);
             } while (categoryCursor.moveToNext());
@@ -193,28 +195,56 @@ public class OriginalFragment extends Fragment {
     }
 
     private void setHymnOfTheDay() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        // Implementation of Seasonal Hymn of the Day, strictly Original Songs
+        HymntableCursor pickCursor = Utils.getSeasonalHymnCursor(getContext(), null, "ORIGINAL");
+        if (pickCursor == null || pickCursor.getCount() == 0) {
+            Log.d(TAG, "setHymnOfTheDay: Seasonal cursor empty, falling back to all Original Songs");
+            pickCursor = new HymntableSelection().categoryEndsWith("ORIGINAL").query(getContext().getContentResolver());
+        }
+
+        if (pickCursor == null || pickCursor.getCount() == 0) return;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
         String dateString = sdf.format(Calendar.getInstance().getTime());
 
         long seed = Long.parseLong(dateString);
         Random random = new Random(seed);
 
-        int randomNumber = random.nextInt(cursor.getCount()) + 1;
-        cursor.moveToPosition(randomNumber);
-        int verses = findLargestNumber(cursor.getContent());
+        int randomPosition = random.nextInt(pickCursor.getCount());
+        pickCursor.moveToPosition(randomPosition);
+        
+        int verses = findLargestNumber(pickCursor.getContent());
         String navigationText;
         if (verses > 0)
-            navigationText = String.format(Locale.US, "Hymn %d • %d verses", cursor.getNumber(), verses);
+            navigationText = String.format(Locale.US, "Hymn %d • %d verses", pickCursor.getNumber(), verses);
         else
-            navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
+            navigationText = String.format(Locale.US, "Hymn %d", pickCursor.getNumber());
         binding.hymnTitle.setText(navigationText);
 
+        final long selectedId = pickCursor.getId();
+
         binding.openNow.setOnClickListener(view -> {
+            // Ensure the cursor used in SongActivity is all Original Songs
+            HymntableCursor allOriginalSongs = new HymntableSelection().categoryEndsWith("ORIGINAL").query(getContext().getContentResolver());
+            int mainPosition = 0;
+            if (allOriginalSongs.moveToFirst()) {
+                do {
+                    if (allOriginalSongs.getId() == selectedId) {
+                        mainPosition = allOriginalSongs.getPosition();
+                        break;
+                    }
+                } while (allOriginalSongs.moveToNext());
+            }
             Utils.getInstance();
-            Utils.position = randomNumber;
+            Utils.cursor = allOriginalSongs;
+            Utils.position = mainPosition;
             startActivity(new Intent(getActivity(), SongActivity.class));
         });
 
+        // Close seasonal cursor if it's separate from the main one
+        if (pickCursor != cursor) {
+            pickCursor.close();
+        }
     }
 
     private void unfocusInputField() {

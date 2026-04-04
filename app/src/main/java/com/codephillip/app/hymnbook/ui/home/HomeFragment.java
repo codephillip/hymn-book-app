@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ import java.util.Random;
 
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
     private FragmentHomeBinding binding;
     private HymnsAdapter hymnsAdapter;
     private boolean isHeaderVisible = true;
@@ -149,7 +151,7 @@ public class HomeFragment extends Fragment {
     private void setupCategoryDropdown() {
         CategorytableCursor categoryCursor = new CategorytableSelection().nameEndsWith("- HS").query(getContext().getContentResolver());
         List<String> categories = new ArrayList<>();
-        categories.add(getString(R.string.all_categories));
+        categories.add(getString(R.string.title_home).toUpperCase());
         if (categoryCursor.moveToFirst()) {
             do {
                 String name = categoryCursor.getName();
@@ -169,7 +171,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedCategory = (String) parent.getItemAtPosition(position);
-                if (selectedCategory.equals(getString(R.string.all_categories))) {
+                if (selectedCategory.equals(getString(R.string.title_home).toUpperCase())) {
                     isFromCategoryFragment = false;
                 } else {
                     isFromCategoryFragment = true;
@@ -193,28 +195,56 @@ public class HomeFragment extends Fragment {
     }
 
     private void setHymnOfTheDay() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        // Implementation of Seasonal Hymn of the Day, strictly Home Songs (HS)
+        HymntableCursor pickCursor = Utils.getSeasonalHymnCursor(getContext(), null, "HS");
+        if (pickCursor == null || pickCursor.getCount() == 0) {
+            Log.d(TAG, "setHymnOfTheDay: Seasonal cursor empty, falling back to all Home Songs");
+            pickCursor = new HymntableSelection().categoryEndsWith("HS").query(getContext().getContentResolver());
+        }
+
+        if (pickCursor == null || pickCursor.getCount() == 0) return;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
         String dateString = sdf.format(Calendar.getInstance().getTime());
 
         long seed = Long.parseLong(dateString);
         Random random = new Random(seed);
 
-        int randomNumber = random.nextInt(cursor.getCount()) + 1;
-        cursor.moveToPosition(randomNumber);
-        int verses = findLargestNumber(cursor.getContent());
+        int randomPosition = random.nextInt(pickCursor.getCount());
+        pickCursor.moveToPosition(randomPosition);
+
+        int verses = findLargestNumber(pickCursor.getContent());
         String navigationText;
         if (verses > 0)
-            navigationText = String.format(Locale.US, "Hymn %d • %d verses", cursor.getNumber(), verses);
+            navigationText = String.format(Locale.US, "Hymn %d • %d verses", pickCursor.getNumber(), verses);
         else
-            navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
+            navigationText = String.format(Locale.US, "Hymn %d", pickCursor.getNumber());
         binding.hymnTitle.setText(navigationText);
 
+        final long selectedId = pickCursor.getId();
+
         binding.openNow.setOnClickListener(view -> {
+            // Ensure the cursor used in SongActivity is all Home Songs
+            HymntableCursor allHomeSongs = new HymntableSelection().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
+            int mainPosition = 0;
+            if (allHomeSongs.moveToFirst()) {
+                do {
+                    if (allHomeSongs.getId() == selectedId) {
+                        mainPosition = allHomeSongs.getPosition();
+                        break;
+                    }
+                } while (allHomeSongs.moveToNext());
+            }
             Utils.getInstance();
-            Utils.position = randomNumber;
+            Utils.cursor = allHomeSongs;
+            Utils.position = mainPosition;
             startActivity(new Intent(getActivity(), SongActivity.class));
         });
 
+        // Close seasonal cursor if it's separate from the main one
+        if (pickCursor != cursor) {
+            pickCursor.close();
+        }
     }
 
     private void unfocusInputField() {

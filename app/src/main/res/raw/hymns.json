@@ -1962,22 +1962,22 @@
     },
     {
       "id": 200,
-      "title": "TUSANYUKE TUYIMBE ALLELLUIA (MAZUKIRA)",
+      "title": "TUSANYUKE TUYIMBE ALLELLUIA (MAZUUKIRA)",
       "content": "1. Tusanyuke, tuyimbe......Alleluia\nYezu Kabaka yazukira.......Alleluia\nNakakasa ensi yonna........Alleluia\nNti ye nyini bulamu........Alleluia\n\n2. Yajja okutumanyisa......Alleluia\nBwe beyisa mu Ggulu........Alleluia\nTubiteeke mu nkola.........Alleluia\nAtutwale mu Ggulu..........Alleluia\n\n3. Kyokka ensi yabigaana...Alleluia\nYakubwa, yanyomebwa........Alleluia\nNebamukomerera.............Alleluia\nNaafa era naazikibwa.......Alleluia\n\n4. Yawaayo obulamu bwe.....Alleluia\nTufune ebigambo bye........Alleluia\nN’olwekyo tubikwate... ....Alleluia\nTwanukule omukwano.........Alleluia",
       "number": 61,
       "category": {
         "id": 9,
-        "name": "EZO MAZUKIRA - HS"
+        "name": "EZA MAZUUKIRA - HS"
       }
     },
     {
-      "id": 201,
+      "id": 211,
       "title": "YEZU KABAKA YA TUNUNULA",
-      "content": "1. Tuyimuse amaloboozi\r\nNga twaniriza Kabaka\r\nEyava mu ntaana\r\nNaswaaza abalabe\r\nYeddiza obulamu\r\nKuba ye Katonda\r\n\r\nChorus: Hossana Allelluia Yezu Kabaka\r\n\r\n2. Maria Magadalena\r\nNabakazi abalala\r\nBaakera ku ntaana\r\nNebasanga njerere\r\nMalaika n’abagamba\r\nYezu Kabaka azukidde\r\n\r\nChorus: Hossana Allelluia Yezu Kabaka\r\n\r\n3. Yezu Kabaka yalabika\r\nMagadalena n’amusinza\r\nNajjula essanyu\r\nOkulaba Omukama\r\nKabaka n’amutuma\r\nEri abatume be.\r\n\r\nChorus: Hossana Allelluia Yezu Kabaka\r\n\r\n4. Tusanyuke tujaguze\r\nKabaka ya tununula\r\nYeewayo ku lwaffe\r\nMu bulumi obungi ennyo\r\nFfe tufune ebigambo\r\nTuwone omuliro.\r\n\r\nChorus: Hossana Allelluia Yezu Kabaka",
+      "content": "1. Tuyimuse amaloboozi\n    Nga twaniriza Kabaka\n    Eyava mu ntaana\n    Naswaaza abalabe\n    Yeddiza obulamu\n    Kuba ye Katonda\n\nChorus: Hossana Allelluia Yezu Kabaka\n\n2. Maria Magadalena\n    Nabakazi abalala\n    Baakera ku ntaana\n    Nebasanga njerere\n    Malaika n’abagamba\n    Yezu Kabaka azukidde\n\n3. Yezu Kabaka yalabika\n    Magadalena n’amusinza \n    Najjula essanyu\n    Okulaba Omukama\n    Kabaka n’amutuma\n    Eri abatume be.\n\n4. Tusanyuke tujaguze\n    Kabaka ya tununula\n    Yeewayo ku lwaffe\n    Mu bulumi obungi ennyo\n    Ffe tufune ebigambo\n    Tuwone omuliro.\n\nChorus: Hossana Allelluia Yezu Kabaka x2\n",
       "number": 62,
       "category": {
         "id": 9,
-        "name": "EZO MAZUKIRA - HS"
+        "name": "EZA MAZUUKIRA - HS"
       }
     },
     {
@@ -1987,7 +1987,7 @@
       "number": 63,
       "category": {
         "id": 9,
-        "name": "EZO MAZUKIRA - HS"
+        "name": "EZA MAZUUKIRA - HS"
       }
     },
     {
@@ -2068,16 +2068,6 @@
       "category": {
         "id": 1,
         "name": "EZAMAYINGIRA - HS"
-      }
-    },
-    {
-      "id": 211,
-      "title": "YEZU KABAKA YA TUNUNULA",
-      "content": "1. Tuyimuse amaloboozi\n    Nga twaniriza Kabaka\n    Eyava mu ntaana\n    Naswaaza abalabe\n    Yeddiza obulamu\n    Kuba ye Katonda\n\nChorus: Hossana Allelluia Yezu Kabaka\n\n2. Maria Magadalena\n    Nabakazi abalala\n    Baakera ku ntaana\n    Nebasanga njerere\n    Malaika n’abagamba\n    Yezu Kabaka azukidde\n\n3. Yezu Kabaka yalabika\n    Magadalena n’amusinza \n    Najjula essanyu\n    Okulaba Omukama\n    Kabaka n’amutuma\n    Eri abatume be.\n\n4. Tusanyuke tujaguze\n    Kabaka ya tununula\n    Yeewayo ku lwaffe\n    Mu bulumi obungi ennyo\n    Ffe tufune ebigambo\n    Tuwone omuliro.\n\nChorus: Hossana Allelluia Yezu Kabaka x2\n",
-      "number": 62,
-      "category": {
-        "id": 9,
-        "name": "EZA MAZUUKIRA - HS"
       }
     },
     {
