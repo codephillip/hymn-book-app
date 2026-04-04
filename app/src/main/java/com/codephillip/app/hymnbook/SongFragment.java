@@ -125,6 +125,8 @@ public class SongFragment extends Fragment {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_text_size, null);
         SeekBar seekBar = dialogView.findViewById(R.id.font_seekbar);
         TextView currentSizeLabel = dialogView.findViewById(R.id.current_size_label);
+        TextView decreaseFont = dialogView.findViewById(R.id.decrease_font);
+        TextView increaseFont = dialogView.findViewById(R.id.increase_font);
         View themeWhite = dialogView.findViewById(R.id.theme_white);
         View themeSepia = dialogView.findViewById(R.id.theme_sepia);
         View themeDark = dialogView.findViewById(R.id.theme_dark);
@@ -147,6 +149,20 @@ public class SongFragment extends Fragment {
             public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        decreaseFont.setOnClickListener(v -> {
+            int currentProgress = seekBar.getProgress();
+            if (currentProgress > 0) {
+                seekBar.setProgress(currentProgress - 1);
+            }
+        });
+
+        increaseFont.setOnClickListener(v -> {
+            int currentProgress = seekBar.getProgress();
+            if (currentProgress < seekBar.getMax()) {
+                seekBar.setProgress(currentProgress + 1);
+            }
         });
 
         themeWhite.setOnClickListener(v -> {
