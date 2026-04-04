@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
@@ -33,12 +35,16 @@ import com.codephillip.app.hymnbook.SettingsActivity;
 import com.codephillip.app.hymnbook.SongActivity;
 import com.codephillip.app.hymnbook.adapters.HymnsAdapter;
 import com.codephillip.app.hymnbook.databinding.FragmentOriginalBinding;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableCursor;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableSelection;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableCursor;
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -59,6 +65,8 @@ public class OriginalFragment extends Fragment {
         cursor = queryHymnTable();
         hymnsAdapter = new HymnsAdapter(getActivity(), cursor, false);
         binding.hymnsRecycler.setAdapter(hymnsAdapter);
+
+        setupCategoryDropdown();
 
         binding.searchfield.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -138,6 +146,40 @@ public class OriginalFragment extends Fragment {
         return root;
     }
 
+    private void setupCategoryDropdown() {
+        CategorytableCursor categoryCursor = new CategorytableSelection().nameEndsWith("- ORIGINAL").query(getContext().getContentResolver());
+        List<String> categories = new ArrayList<>();
+        categories.add("All Categories");
+        if (categoryCursor.moveToFirst()) {
+            do {
+                categories.add(categoryCursor.getName());
+            } while (categoryCursor.moveToNext());
+        }
+        categoryCursor.close();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.category_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.categorySpinner.setAdapter(adapter);
+
+        binding.categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                if (selectedCategory.equals("All Categories")) {
+                    isFromCategoryFragment = false;
+                } else {
+                    isFromCategoryFragment = true;
+                    category = selectedCategory;
+                }
+                hymnsAdapter.swapCursor(queryHymnTable());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -184,6 +226,7 @@ public class OriginalFragment extends Fragment {
         binding.settings.setVisibility(View.VISIBLE);
         binding.hymnTitle.setVisibility(View.VISIBLE);
         binding.openNow.setVisibility(View.VISIBLE);
+        binding.categorySpinner.setVisibility(View.VISIBLE);
     }
 
     private void focusOnInputField() {
@@ -199,6 +242,7 @@ public class OriginalFragment extends Fragment {
         binding.settings.setVisibility(View.GONE);
         binding.hymnTitle.setVisibility(View.GONE);
         binding.openNow.setVisibility(View.GONE);
+        binding.categorySpinner.setVisibility(View.GONE);
     }
 
     private HymntableCursor queryHymnTable() {

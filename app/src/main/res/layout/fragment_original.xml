@@ -114,12 +114,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginEnd="@dimen/margin_16"
+            app:layout_constraintTop_toBottomOf="@+id/search_layout" />
+
         <View
             android:id="@+id/recently_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/margin_16"
-            app:layout_constraintTop_toBottomOf="@id/search_layout" />
+            app:layout_constraintTop_toBottomOf="@id/category_spinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,18 +167,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recent_recycler" />
 
-    <TextView
-        android:id="@+id/hymns_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/raleway_bold"
-        android:text="@string/original_songs"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/hymns_view"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
-        app:layout_constraintTop_toTopOf="@+id/hymns_view" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hymns_recycler"
         android:layout_width="0dp"
@@ -180,6 +177,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/constraint_parent"
         app:layout_constraintStart_toStartOf="@id/constraint_parent"
-        app:layout_constraintTop_toBottomOf="@+id/hymns_header" />
+        app:layout_constraintTop_toBottomOf="@+id/hymns_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
