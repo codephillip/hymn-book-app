@@ -164,7 +164,7 @@ public class HomeFragment extends Fragment {
         categoryCursor.close();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.category_spinner_item, categories);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.category_spinner_item);
         binding.categorySpinner.setAdapter(adapter);
 
         binding.categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -3,6 +3,7 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/raleway_bold"
+    android:fontFamily="@font/raleway_medium"
+    android:padding="@dimen/margin_medium"
     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
     android:textColor="@android:color/black" />
