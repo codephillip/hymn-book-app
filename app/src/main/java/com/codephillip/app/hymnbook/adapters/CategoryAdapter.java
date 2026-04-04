@@ -57,6 +57,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         dataCursor.moveToPosition(position);
         try {
             String name = dataCursor.getName();
+            if (name != null) {
+                name = name.replace("- HS", "").replace("- ORIGINAL", "").trim();
+            }
             holder.titleView.setText(name);
         } catch (Exception e) {
             e.printStackTrace();
