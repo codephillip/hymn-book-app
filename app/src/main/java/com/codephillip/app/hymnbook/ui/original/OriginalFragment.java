@@ -149,10 +149,14 @@ public class OriginalFragment extends Fragment {
     private void setupCategoryDropdown() {
         CategorytableCursor categoryCursor = new CategorytableSelection().nameEndsWith("- ORIGINAL").query(getContext().getContentResolver());
         List<String> categories = new ArrayList<>();
-        categories.add("All Categories");
+        categories.add(getString(R.string.all_categories));
         if (categoryCursor.moveToFirst()) {
             do {
-                categories.add(categoryCursor.getName());
+                String name = categoryCursor.getName();
+                if (name != null) {
+                    name = name.replace("- ORIGINAL", "").replace("- ORIGINAL", "").trim();
+                }
+                categories.add(name);
             } while (categoryCursor.moveToNext());
         }
         categoryCursor.close();
@@ -165,7 +169,7 @@ public class OriginalFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedCategory = (String) parent.getItemAtPosition(position);
-                if (selectedCategory.equals("All Categories")) {
+                if (selectedCategory.equals(getString(R.string.all_categories))) {
                     isFromCategoryFragment = false;
                 } else {
                     isFromCategoryFragment = true;

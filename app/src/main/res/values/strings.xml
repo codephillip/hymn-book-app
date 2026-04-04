@@ -117,4 +117,5 @@ Lead me to the break of day.
     <string name="hymn_day">Hymn of the Day</string>
     <string name="show">Show</string>
     <string name="hide">Hide</string>
+    <string name="all_categories">ALL SONGS</string>
 </resources>
