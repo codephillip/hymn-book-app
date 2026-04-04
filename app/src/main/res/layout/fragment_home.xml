@@ -105,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_text_background"
+                android:fontFamily="@font/raleway_medium"
                 android:hint="@string/enter_text"
                 android:imeOptions="actionDone"
                 android:inputType="text"

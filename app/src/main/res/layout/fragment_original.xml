@@ -107,6 +107,7 @@
                 android:background="@drawable/input_text_background"
                 android:hint="@string/enter_text"
                 android:imeOptions="actionDone"
+                android:fontFamily="@font/raleway_medium"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@android:color/black"

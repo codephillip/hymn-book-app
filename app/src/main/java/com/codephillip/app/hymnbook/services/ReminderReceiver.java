@@ -86,14 +86,23 @@ public class ReminderReceiver extends BroadcastReceiver {
 
     public static void scheduleDailyReminder(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String time = prefs.getString("notification_time", "08:00");
-        String[] timeParts = time.split(":");
-        int hour = Integer.parseInt(timeParts[0]);
-        int minute = Integer.parseInt(timeParts[1]);
+        boolean isEnabled = prefs.getBoolean("enable_notifications", true);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if (!isEnabled) {
+            if (alarmManager != null) {
+                alarmManager.cancel(pendingIntent);
+            }
+            return;
+        }
+
+        String time = prefs.getString("notification_time", "08:00");
+        String[] timeParts = time.split(":");
+        int hour = Integer.parseInt(timeParts[0]);
+        int minute = Integer.parseInt(timeParts[1]);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());

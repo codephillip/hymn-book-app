@@ -14,6 +14,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import androidx.core.app.NavUtils;
 import androidx.appcompat.app.ActionBar;
 import android.util.Log;
@@ -58,13 +59,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 ? listPreference.getEntries()[index]
                                 : null);
 
+            } else if (preference instanceof SwitchPreference) {
+                // For switch preferences, no summary update needed usually if it's static
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
 
-            if (preference.getKey().equals("notification_time")) {
+            if (preference.getKey().equals("notification_time") || preference.getKey().equals("enable_notifications")) {
                 ReminderReceiver.scheduleDailyReminder(preference.getContext());
             }
 
@@ -96,10 +99,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Trigger the listener immediately with the preference's
         // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+        if (preference instanceof SwitchPreference) {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getBoolean(preference.getKey(), true));
+        } else {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getString(preference.getKey(), ""));
+        }
     }
 
     @Override
@@ -170,6 +180,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
+            bindPreferenceSummaryToValue(findPreference("enable_notifications"));
             bindPreferenceSummaryToValue(findPreference("notification_time"));
         }
 

@@ -148,4 +148,5 @@ Lead me to the break of day.
         <item>21:00</item>
         <item>22:00</item>
     </string-array>
+    <string name="pref_title_enable_notifications">Enable Hymn of the Day</string>
 </resources>

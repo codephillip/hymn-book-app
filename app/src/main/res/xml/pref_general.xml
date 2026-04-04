@@ -12,8 +12,14 @@
         android:summary="@string/lock_desc"
         android:title="@string/lock_app" />
 
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="enable_notifications"
+        android:title="@string/pref_title_enable_notifications" />
+
     <ListPreference
         android:defaultValue="08:00"
+        android:dependency="enable_notifications"
         android:entries="@array/pref_notification_time_titles"
         android:entryValues="@array/pref_notification_time_values"
         android:key="notification_time"
