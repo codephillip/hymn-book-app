@@ -120,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
             android:layout_marginEnd="@dimen/margin_16"
             app:layout_constraintTop_toBottomOf="@+id/search_layout" />
 
@@ -171,7 +171,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_8"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/constraint_parent"
