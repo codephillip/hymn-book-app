@@ -11,4 +11,5 @@
     <color name="dark_grey">#606060</color>
     <color name="grey_input">#FBFBFB</color>
     <color name="grey_input_border">#E3E3E3</color>
+    <color name="black">#000000</color>
 </resources>

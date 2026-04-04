@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/raleway_bold"
+        android:text="Text size"
+        android:textSize="18sp"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A"
+            android:textSize="14sp"
+            android:textColor="@color/dark_grey"
+            android:fontFamily="@font/raleway_semibold"/>
+
+        <SeekBar
+            android:id="@+id/font_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="10"
+            android:splitTrack="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/raleway_semibold"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/current_size_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/raleway_semibold"
+        android:text="17px"
+        android:textColor="@color/blue"
+        android:textSize="14sp"
+        android:layout_marginBottom="24dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE"
+        android:layout_marginBottom="24dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <View
+            android:id="@+id/theme_white"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_circle"
+            android:backgroundTint="@android:color/white"
+            android:elevation="2dp"/>
+
+        <View
+            android:id="@+id/theme_sepia"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_circle"
+            android:backgroundTint="@color/cream"
+            android:elevation="2dp"/>
+
+        <View
+            android:id="@+id/theme_dark"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_circle"
+            android:backgroundTint="#222222"
+            android:elevation="2dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

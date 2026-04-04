@@ -15,6 +15,10 @@ public class Utils {
     public static final String FIRST_LAUNCH = "first_launch";
     private static final String TAG = Utils.class.getSimpleName();
     public static final String FONT_SIZE = "font_size";
+    public static final String THEME_KEY = "theme_key";
+    public static final String THEME_WHITE = "white";
+    public static final String THEME_SEPIA = "sepia";
+    public static final String THEME_DARK = "dark";
     public static final String HAS_LOCKED = "lock";
     public static final String CHANGE_VIEW = "change_view";
     public static final String IS_FAVORITE = "is_favorite";

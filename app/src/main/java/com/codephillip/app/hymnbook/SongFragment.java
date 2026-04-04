@@ -8,17 +8,20 @@ import static com.codephillip.app.hymnbook.utilities.Utils.songType;
 import static com.codephillip.app.hymnbook.utilities.Utils.typeface;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
@@ -27,10 +30,6 @@ import com.codephillip.app.hymnbook.provider.hymntable.HymntableSelection;
 import com.codephillip.app.hymnbook.utilities.Utils;
 
 import java.util.Locale;
-
-/**
- * Created by codephillip on 31/03/17.
- */
 
 public class SongFragment extends Fragment {
 
@@ -45,6 +44,7 @@ public class SongFragment extends Fragment {
     private ImageView songTypeIcon;
     private ImageView textSizeIcon;
     private ImageView backButton;
+    private View bottomContent;
     private int position;
 
     public SongFragment() {
@@ -63,8 +63,6 @@ public class SongFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_song, container, false);
 
-        Log.d(TAG, "STARTED FRAGMENT");
-
         titleView = rootView.findViewById(R.id.title);
         contentView = rootView.findViewById(R.id.content);
         navigationView = rootView.findViewById(R.id.navigation);
@@ -74,6 +72,7 @@ public class SongFragment extends Fragment {
         songTypeIcon = rootView.findViewById(R.id.song_type_icon);
         textSizeIcon = rootView.findViewById(R.id.text_size_icon);
         backButton = rootView.findViewById(R.id.backbutton);
+        bottomContent = rootView.findViewById(R.id.bottom_content);
 
         Utils.getInstance();
         position = getArguments().getInt(SONG_NUMBER);
@@ -92,6 +91,9 @@ public class SongFragment extends Fragment {
         textSizeIcon.setOnClickListener(v -> showSizeDialog());
 
         backButton.setOnClickListener(v -> getActivity().onBackPressed());
+        
+        applyTheme(getSavedTheme());
+        
         return rootView;
     }
 
@@ -100,6 +102,7 @@ public class SongFragment extends Fragment {
         super.onResume();
         textSizeView.setText(String.format(Locale.US, "%.0fpx", getFontSize()));
         contentView.setTextSize(getFontSize());
+        applyTheme(getSavedTheme());
     }
 
     private void showTypeDialog() {
@@ -119,16 +122,75 @@ public class SongFragment extends Fragment {
     }
 
     private void showSizeDialog() {
-        final String[] options = {"16px", "17px", "18px", "19px", "20px"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Font size");
-        builder.setItems(options, (dialog, which) -> {
-            final float fontsize = Float.parseFloat(options[which].replace("px", ""));
-            saveFontSize(fontsize);
-            contentView.setTextSize(fontsize);
-            textSizeView.setText(String.format(Locale.US, "%.0fpx", fontsize));
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_text_size, null);
+        SeekBar seekBar = dialogView.findViewById(R.id.font_seekbar);
+        TextView currentSizeLabel = dialogView.findViewById(R.id.current_size_label);
+        View themeWhite = dialogView.findViewById(R.id.theme_white);
+        View themeSepia = dialogView.findViewById(R.id.theme_sepia);
+        View themeDark = dialogView.findViewById(R.id.theme_dark);
+
+        float currentSize = getFontSize();
+        // Base size 16, range 0-10
+        seekBar.setProgress((int) (currentSize - 16));
+        currentSizeLabel.setText(String.format(Locale.US, "%.0fpx", currentSize));
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float newSize = 16 + progress;
+                saveFontSize(newSize);
+                contentView.setTextSize(newSize);
+                textSizeView.setText(String.format(Locale.US, "%.0fpx", newSize));
+                currentSizeLabel.setText(String.format(Locale.US, "%.0fpx", newSize));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-        builder.create().show();
+
+        themeWhite.setOnClickListener(v -> {
+            saveTheme(Utils.THEME_WHITE);
+            applyTheme(Utils.THEME_WHITE);
+        });
+
+        themeSepia.setOnClickListener(v -> {
+            saveTheme(Utils.THEME_SEPIA);
+            applyTheme(Utils.THEME_SEPIA);
+        });
+
+        themeDark.setOnClickListener(v -> {
+            saveTheme(Utils.THEME_DARK);
+            applyTheme(Utils.THEME_DARK);
+        });
+
+        new AlertDialog.Builder(getContext())
+                .setView(dialogView)
+                .create()
+                .show();
+    }
+
+    private void applyTheme(String theme) {
+        if (theme.equals(Utils.THEME_DARK)) {
+            bottomContent.setBackgroundColor(Color.parseColor("#121212"));
+            contentView.setTextColor(Color.parseColor("#E0E0E0"));
+        } else if (theme.equals(Utils.THEME_SEPIA)) {
+            bottomContent.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cream));
+            contentView.setTextColor(Color.parseColor("#5B4636"));
+        } else {
+            bottomContent.setBackgroundColor(Color.WHITE);
+            contentView.setTextColor(Color.BLACK);
+        }
+    }
+
+    private void saveTheme(String theme) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefs.edit().putString(Utils.THEME_KEY, theme).apply();
+    }
+
+    private String getSavedTheme() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        return prefs.getString(Utils.THEME_KEY, Utils.THEME_WHITE);
     }
 
     private void attachDataToViews(HymntableCursor cursor) {
@@ -153,11 +215,9 @@ public class SongFragment extends Fragment {
             }
 
             int verses = Utils.findLargestNumber(cursor.getContent());
-            String navigationText;
-            if (verses > 0)
-                navigationText = String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses);
-            else
-                navigationText = String.format(Locale.US, "Hymn %d", cursor.getNumber());
+            String navigationText = verses > 0 
+                ? String.format(Locale.US, "Hymn %d . %d verses", cursor.getNumber(), verses)
+                : String.format(Locale.US, "Hymn %d", cursor.getNumber());
             navigationView.setText(navigationText);
             changeLikeImageButton(cursor.getLike());
         } catch (Exception e) {
@@ -171,7 +231,6 @@ public class SongFragment extends Fragment {
     }
 
     private void changeLikePreference(boolean liked, String title) {
-        Log.d(TAG, "changeLikePreference: " + liked);
         HymntableContentValues values = new HymntableContentValues();
         values.putLike(liked);
         values.update(getContext().getContentResolver(), new HymntableSelection().titleLike(title));
@@ -179,7 +238,6 @@ public class SongFragment extends Fragment {
     }
 
     private HymntableCursor queryHymnTable() {
-        Log.d(TAG, "queryHymnTable: show " + showFavoriteScreen);
         if (songType.equals(Utils.HOME_SONGS)) {
             if (showFavoriteScreen) {
                 return new HymntableSelection().like(true).and().categoryEndsWith("HS").orderByNumber().query(getContext().getContentResolver());
@@ -209,15 +267,11 @@ public class SongFragment extends Fragment {
 
     private void saveFontSize(float fontSize) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putFloat(Utils.FONT_SIZE, fontSize);
-        editor.apply();
+        prefs.edit().putFloat(Utils.FONT_SIZE, fontSize).apply();
     }
 
     private float getFontSize() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        //default size 42.0f
         return prefs.getFloat(Utils.FONT_SIZE, 17.0f);
     }
-
 }
