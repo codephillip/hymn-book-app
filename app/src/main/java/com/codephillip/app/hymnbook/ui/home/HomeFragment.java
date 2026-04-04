@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupCategoryDropdown() {
-        CategorytableCursor categoryCursor = new CategorytableSelection().query(getContext().getContentResolver());
+        CategorytableCursor categoryCursor = new CategorytableSelection().nameEndsWith("- HS").query(getContext().getContentResolver());
         List<String> categories = new ArrayList<>();
         categories.add("All Categories");
         if (categoryCursor.moveToFirst()) {
