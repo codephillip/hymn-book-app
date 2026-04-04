@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,7 @@ public class HymnsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public TextView title;
         public ImageView like;
         public TextView numbVerses;
+        public LinearLayout dotsContainer;
         public boolean isLiked;
 
 
@@ -70,6 +72,7 @@ public class HymnsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             like = v.findViewById(R.id.like);
             numbVerses = v.findViewById(R.id.numb_verses);
             cardView = v.findViewById(R.id.card_view);
+            dotsContainer = v.findViewById(R.id.dots_container);
         }
     }
 
@@ -187,6 +190,8 @@ public class HymnsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder.numbVerses.setText(navigationText);
             holder.number.setText(String.valueOf(dataCursor.getNumber()));
 
+            updateDots(holder.dotsContainer, dataCursor.getOpenCount());
+
             int finalCursorPosition = cursorPosition;
             holder.cardView.setOnClickListener(view -> {
                 Utils.getInstance();
@@ -202,6 +207,27 @@ public class HymnsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void updateDots(LinearLayout container, Integer count) {
+        container.removeAllViews();
+        if (count == null || count <= 0) return;
+        
+        int dotSize = (int) (6 * activity.getResources().getDisplayMetrics().density);
+        int margin = (int) (2 * activity.getResources().getDisplayMetrics().density);
+        int maxDots = 5;
+        int dotsToShow = Math.min(count, maxDots);
+
+        for (int i = 0; i < dotsToShow; i++) {
+            View dot = new View(activity);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dotSize, dotSize);
+            params.setMargins(0, 0, margin, 0);
+            dot.setLayoutParams(params);
+            dot.setBackgroundResource(R.drawable.ic_circle);
+            // Optional: color them based on how many there are or just blue
+            dot.setBackgroundTintList(activity.getResources().getColorStateList(R.color.blue));
+            container.addView(dot);
         }
     }
 

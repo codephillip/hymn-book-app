@@ -252,4 +252,44 @@ public class HymntableSelection extends AbstractSelection<HymntableSelection> {
         orderBy(HymntableColumns.LIKE, false);
         return this;
     }
+
+    public HymntableSelection openCount(Integer... value) {
+        addEquals(HymntableColumns.OPEN_COUNT, value);
+        return this;
+    }
+
+    public HymntableSelection openCountNot(Integer... value) {
+        addNotEquals(HymntableColumns.OPEN_COUNT, value);
+        return this;
+    }
+
+    public HymntableSelection openCountGt(int value) {
+        addGreaterThan(HymntableColumns.OPEN_COUNT, value);
+        return this;
+    }
+
+    public HymntableSelection openCountGtEq(int value) {
+        addGreaterThanOrEquals(HymntableColumns.OPEN_COUNT, value);
+        return this;
+    }
+
+    public HymntableSelection openCountLt(int value) {
+        addLessThan(HymntableColumns.OPEN_COUNT, value);
+        return this;
+    }
+
+    public HymntableSelection openCountLtEq(int value) {
+        addLessThanOrEquals(HymntableColumns.OPEN_COUNT, value);
+        return this;
+    }
+
+    public HymntableSelection orderByOpenCount(boolean desc) {
+        orderBy(HymntableColumns.OPEN_COUNT, desc);
+        return this;
+    }
+
+    public HymntableSelection orderByOpenCount() {
+        orderBy(HymntableColumns.OPEN_COUNT, false);
+        return this;
+    }
 }

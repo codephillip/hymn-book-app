@@ -73,4 +73,14 @@ public class HymntableCursor extends AbstractCursor implements HymntableModel {
         Boolean res = getBooleanOrNull(HymntableColumns.LIKE);
         return res;
     }
+
+    /**
+     * Get the {@code open_count} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    public Integer getOpenCount() {
+        Integer res = getIntegerOrNull(HymntableColumns.OPEN_COUNT);
+        return res;
+    }
 }

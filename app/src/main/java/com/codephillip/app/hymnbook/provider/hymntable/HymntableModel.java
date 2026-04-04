@@ -44,4 +44,11 @@ public interface HymntableModel extends BaseModel {
      */
     @Nullable
     Boolean getLike();
+
+    /**
+     * Get the {@code open_count} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    Integer getOpenCount();
 }

@@ -29,6 +29,8 @@ public class HymntableColumns implements BaseColumns {
 
     public static final String LIKE = "like";
 
+    public static final String OPEN_COUNT = "open_count";
+
 
     public static final String DEFAULT_ORDER = TABLE_NAME + "." +_ID;
 
@@ -39,7 +41,8 @@ public class HymntableColumns implements BaseColumns {
             CONTENT,
             NUMBER,
             CATEGORY,
-            LIKE
+            LIKE,
+            OPEN_COUNT
     };
     // @formatter:on
 
@@ -51,6 +54,7 @@ public class HymntableColumns implements BaseColumns {
             if (c.equals(NUMBER) || c.contains("." + NUMBER)) return true;
             if (c.equals(CATEGORY) || c.contains("." + CATEGORY)) return true;
             if (c.equals(LIKE) || c.contains("." + LIKE)) return true;
+            if (c.equals(OPEN_COUNT) || c.contains("." + OPEN_COUNT)) return true;
         }
         return false;
     }

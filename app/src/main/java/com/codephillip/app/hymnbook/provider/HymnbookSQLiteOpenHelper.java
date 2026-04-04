@@ -16,7 +16,7 @@ public class HymnbookSQLiteOpenHelper extends SQLiteOpenHelper {
     private static final String TAG = HymnbookSQLiteOpenHelper.class.getSimpleName();
 
     public static final String DATABASE_FILE_NAME = "hymnbook.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static HymnbookSQLiteOpenHelper sInstance;
     private final Context mContext;
     private final HymnbookSQLiteOpenHelperCallbacks mOpenHelperCallbacks;
@@ -36,7 +36,8 @@ public class HymnbookSQLiteOpenHelper extends SQLiteOpenHelper {
             + HymntableColumns.CONTENT + " TEXT, "
             + HymntableColumns.NUMBER + " INTEGER, "
             + HymntableColumns.CATEGORY + " TEXT, "
-            + HymntableColumns.LIKE + " INTEGER "
+            + HymntableColumns.LIKE + " INTEGER, "
+            + HymntableColumns.OPEN_COUNT + " INTEGER DEFAULT 0 "
             + " );";
 
     // @formatter:on
@@ -106,5 +107,8 @@ public class HymnbookSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         mOpenHelperCallbacks.onUpgrade(mContext, db, oldVersion, newVersion);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + HymntableColumns.TABLE_NAME + " ADD COLUMN " + HymntableColumns.OPEN_COUNT + " INTEGER DEFAULT 0");
+        }
     }
 }

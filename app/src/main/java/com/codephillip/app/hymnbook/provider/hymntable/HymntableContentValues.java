@@ -86,4 +86,14 @@ public class HymntableContentValues extends AbstractContentValues {
         mContentValues.putNull(HymntableColumns.LIKE);
         return this;
     }
+
+    public HymntableContentValues putOpenCount(@Nullable Integer value) {
+        mContentValues.put(HymntableColumns.OPEN_COUNT, value);
+        return this;
+    }
+
+    public HymntableContentValues putOpenCountNull() {
+        mContentValues.putNull(HymntableColumns.OPEN_COUNT);
+        return this;
+    }
 }
