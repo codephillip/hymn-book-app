@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
@@ -156,18 +157,26 @@ public class HomeFragment extends Fragment {
         }
         categoryCursor.close();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, categories);
-        binding.categoryDropdown.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.category_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.categorySpinner.setAdapter(adapter);
 
-        binding.categoryDropdown.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedCategory = (String) parent.getItemAtPosition(position);
-            if (selectedCategory.equals("All Categories")) {
-                isFromCategoryFragment = false;
-            } else {
-                isFromCategoryFragment = true;
-                category = selectedCategory;
+        binding.categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCategory = (String) parent.getItemAtPosition(position);
+                if (selectedCategory.equals("All Categories")) {
+                    isFromCategoryFragment = false;
+                } else {
+                    isFromCategoryFragment = true;
+                    category = selectedCategory;
+                }
+                hymnsAdapter.swapCursor(queryHymnTable());
             }
-            hymnsAdapter.swapCursor(queryHymnTable());
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -217,7 +226,7 @@ public class HomeFragment extends Fragment {
         binding.settings.setVisibility(View.VISIBLE);
         binding.hymnTitle.setVisibility(View.VISIBLE);
         binding.openNow.setVisibility(View.VISIBLE);
-        binding.categoryLayout.setVisibility(View.VISIBLE);
+        binding.categorySpinner.setVisibility(View.VISIBLE);
     }
 
     private void focusOnInputField() {
@@ -233,7 +242,7 @@ public class HomeFragment extends Fragment {
         binding.settings.setVisibility(View.GONE);
         binding.hymnTitle.setVisibility(View.GONE);
         binding.openNow.setVisibility(View.GONE);
-        binding.categoryLayout.setVisibility(View.GONE);
+        binding.categorySpinner.setVisibility(View.GONE);
     }
 
     private HymntableCursor queryHymnTable() {
