@@ -1,28 +1,34 @@
 package com.codephillip.app.hymnbook;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
-import com.codephillip.app.hymnbook.provider.categorytable.CategorytableContentValues;
-import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
-import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
-import com.codephillip.app.hymnbook.services.MyJson;
-import com.codephillip.app.hymnbook.utilities.Utils;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.codephillip.app.hymnbook.databinding.ActivityMainBottomBinding;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableColumns;
+import com.codephillip.app.hymnbook.provider.categorytable.CategorytableContentValues;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableColumns;
+import com.codephillip.app.hymnbook.provider.hymntable.HymntableContentValues;
+import com.codephillip.app.hymnbook.services.MyJson;
+import com.codephillip.app.hymnbook.services.ReminderReceiver;
+import com.codephillip.app.hymnbook.utilities.Utils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +41,15 @@ public class MainActivityBottom extends AppCompatActivity {
 
     private ActivityMainBottomBinding binding;
     private static final String TAG = MainActivityBottom.class.getSimpleName();
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    ReminderReceiver.scheduleDailyReminder(this);
+                } else {
+                    Toast.makeText(this, "Notification permission denied. Reminders will not be shown.", Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +73,8 @@ public class MainActivityBottom extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main_bottom);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        askNotificationPermission();
+
         getOnBackPressedDispatcher().addCallback(this,
                 new OnBackPressedCallback(true) {
                     @Override
@@ -65,6 +82,19 @@ public class MainActivityBottom extends AppCompatActivity {
                         finishAffinity(); // exits the app
                     }
                 });
+    }
+
+    private void askNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                ReminderReceiver.scheduleDailyReminder(this);
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        } else {
+            ReminderReceiver.scheduleDailyReminder(this);
+        }
     }
 
     private void activateFont() {

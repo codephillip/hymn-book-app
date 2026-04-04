@@ -78,7 +78,6 @@ public class SongFragment extends Fragment {
         position = getArguments().getInt(SONG_NUMBER);
         cursor.moveToPosition(position);
         attachDataToViews(cursor);
-        incrementOpenCount(cursor);
 
         likeButton.setOnClickListener(view -> {
             cursor.moveToPosition(position);
@@ -101,8 +100,15 @@ public class SongFragment extends Fragment {
     private void incrementOpenCount(HymntableCursor cursor) {
         if (cursor == null) return;
         int currentCount = cursor.getOpenCount() != null ? cursor.getOpenCount() : 0;
+        int newCount = currentCount + 1;
+        
         HymntableContentValues values = new HymntableContentValues();
-        values.putOpenCount(currentCount + 1);
+        values.putOpenCount(newCount);
+        
+        if (newCount >= 15 && !cursor.getLike()) {
+            values.putLike(true);
+        }
+        
         values.update(getContext().getContentResolver(), new HymntableSelection().id(cursor.getId()));
     }
 
@@ -112,6 +118,9 @@ public class SongFragment extends Fragment {
         textSizeView.setText(String.format(Locale.US, "%.0fpx", getFontSize()));
         contentView.setTextSize(getFontSize());
         applyTheme(getSavedTheme());
+        
+        cursor.moveToPosition(position);
+        incrementOpenCount(cursor);
     }
 
     private void showTypeDialog() {

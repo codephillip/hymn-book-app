@@ -82,6 +82,16 @@
                     card_view:layout_constraintEnd_toEndOf="@id/thumbnail"
                     card_view:layout_constraintStart_toStartOf="@id/thumbnail"
                     card_view:layout_constraintTop_toTopOf="@id/thumbnail" />
+
+                <LinearLayout
+                    android:id="@+id/dots_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
+                    card_view:layout_constraintEnd_toEndOf="@+id/number"
+                    card_view:layout_constraintStart_toStartOf="@+id/number"
+                    card_view:layout_constraintTop_toBottomOf="@+id/number" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -103,20 +113,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/numb_verses"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:fontFamily="@font/raleway_semibold"
                 android:paddingLeft="@dimen/padding_large"
                 android:paddingRight="@dimen/padding_large"
                 android:text="@string/sample_hymn_short" />
-
-            <LinearLayout
-                android:id="@+id/dots_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/title"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="@dimen/margin_medium"
-                android:orientation="horizontal" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

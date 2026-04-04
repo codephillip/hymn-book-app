@@ -12,4 +12,25 @@
     <color name="grey_input">#FBFBFB</color>
     <color name="grey_input_border">#E3E3E3</color>
     <color name="black">#000000</color>
+
+    <!-- Blue Level 1 (Lightest to Light) - Gradient ending at #2E62A6 -->
+    <color name="blue_l1_1">#EAF0F7</color>
+    <color name="blue_l1_2">#DDE6F1</color>
+    <color name="blue_l1_3">#CFDCEB</color>
+    <color name="blue_l1_4">#C2D2E6</color>
+    <color name="blue_l1_5">#B4C8E0</color>
+
+    <!-- Blue Level 2 (Medium to Medium-Dark) -->
+    <color name="blue_l2_1">#A7BEDA</color>
+    <color name="blue_l2_2">#99B4D4</color>
+    <color name="blue_l2_3">#8CA9CE</color>
+    <color name="blue_l2_4">#7E9FC9</color>
+    <color name="blue_l2_5">#7195C3</color>
+
+    <!-- Blue Level 3 (Dark to Darkest - Max #2E62A6) -->
+    <color name="blue_l3_1">#648BBD</color>
+    <color name="blue_l3_2">#5681B7</color>
+    <color name="blue_l3_3">#4977B1</color>
+    <color name="blue_l3_4">#3B6CAC</color>
+    <color name="blue_l3_5">#2E62A6</color>
 </resources>

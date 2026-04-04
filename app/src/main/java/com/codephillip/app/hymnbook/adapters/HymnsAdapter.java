@@ -212,23 +212,42 @@ public class HymnsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private void updateDots(LinearLayout container, Integer count) {
         container.removeAllViews();
-        if (count == null || count <= 0) return;
-        
+        // Don't display dots if count is 0, null, or reaches maximum (15)
+        if (count == null || count <= 0 || count >= 15) return;
+
+        int dotsToShow = ((count - 1) % 5) + 1;
+        int colorResId = getDotColor(count);
+
         int dotSize = (int) (6 * activity.getResources().getDisplayMetrics().density);
         int margin = (int) (2 * activity.getResources().getDisplayMetrics().density);
-        int maxDots = 5;
-        int dotsToShow = Math.min(count, maxDots);
 
         for (int i = 0; i < dotsToShow; i++) {
             View dot = new View(activity);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dotSize, dotSize);
-            params.setMargins(0, 0, margin, 0);
+            params.setMargins(margin, 0, margin, 0);
             dot.setLayoutParams(params);
             dot.setBackgroundResource(R.drawable.ic_circle);
-            // Optional: color them based on how many there are or just blue
-            dot.setBackgroundTintList(activity.getResources().getColorStateList(R.color.blue));
+            dot.setBackgroundTintList(activity.getResources().getColorStateList(colorResId));
             container.addView(dot);
         }
+    }
+
+    private int getDotColor(int count) {
+        if (count <= 1) return R.color.blue_l1_1;
+        if (count == 2) return R.color.blue_l1_2;
+        if (count == 3) return R.color.blue_l1_3;
+        if (count == 4) return R.color.blue_l1_4;
+        if (count == 5) return R.color.blue_l1_5;
+        if (count == 6) return R.color.blue_l2_1;
+        if (count == 7) return R.color.blue_l2_2;
+        if (count == 8) return R.color.blue_l2_3;
+        if (count == 9) return R.color.blue_l2_4;
+        if (count == 10) return R.color.blue_l2_5;
+        if (count == 11) return R.color.blue_l3_1;
+        if (count == 12) return R.color.blue_l3_2;
+        if (count == 13) return R.color.blue_l3_3;
+        if (count == 14) return R.color.blue_l3_4;
+        return R.color.blue_l3_5;
     }
 
     private void changeLikeImageButton(@NonNull ImageView like, Boolean value) {
