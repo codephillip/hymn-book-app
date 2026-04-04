@@ -130,7 +130,7 @@ public class SongFragment extends Fragment {
         View themeDark = dialogView.findViewById(R.id.theme_dark);
 
         float currentSize = getFontSize();
-        // Base size 16, range 0-10
+        // Base size 16, range 0-6 (16px to 22px)
         seekBar.setProgress((int) (currentSize - 16));
         currentSizeLabel.setText(String.format(Locale.US, "%.0fpx", currentSize));
 

@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:max="10"
+            android:max="6"
             android:splitTrack="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
