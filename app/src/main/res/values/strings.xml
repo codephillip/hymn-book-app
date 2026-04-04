@@ -118,4 +118,34 @@ Lead me to the break of day.
     <string name="show">Show</string>
     <string name="hide">Hide</string>
     <string name="all_categories">ALL SONGS</string>
+
+    <string name="pref_title_notification_time">Hymn of the day time</string>
+    <string-array name="pref_notification_time_titles">
+        <item>05:00 AM</item>
+        <item>06:00 AM</item>
+        <item>07:00 AM</item>
+        <item>08:00 AM</item>
+        <item>09:00 AM</item>
+        <item>10:00 AM</item>
+        <item>05:00 PM</item>
+        <item>06:00 PM</item>
+        <item>07:00 PM</item>
+        <item>08:00 PM</item>
+        <item>09:00 PM</item>
+        <item>10:00 PM</item>
+    </string-array>
+    <string-array name="pref_notification_time_values">
+        <item>05:00</item>
+        <item>06:00</item>
+        <item>07:00</item>
+        <item>08:00</item>
+        <item>09:00</item>
+        <item>10:00</item>
+        <item>17:00</item>
+        <item>18:00</item>
+        <item>19:00</item>
+        <item>20:00</item>
+        <item>21:00</item>
+        <item>22:00</item>
+    </string-array>
 </resources>

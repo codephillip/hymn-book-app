@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.codephillip.app.hymnbook.services.ReminderReceiver;
 import com.codephillip.app.hymnbook.services.ServerService;
 
 import java.util.List;
@@ -62,6 +63,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
+
+            if (preference.getKey().equals("notification_time")) {
+                ReminderReceiver.scheduleDailyReminder(preference.getContext());
+            }
+
             return true;
         }
     };
@@ -164,6 +170,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
+            bindPreferenceSummaryToValue(findPreference("notification_time"));
         }
 
         @Override
