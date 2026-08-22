@@ -67,8 +67,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 preference.setSummary(stringValue);
             }
 
-            if (preference.getKey().equals("notification_time") || preference.getKey().equals("enable_notifications")) {
-                ReminderReceiver.scheduleDailyReminder(preference.getContext());
+            // This listener runs before the new value is persisted, so the reminder has to be
+            // rescheduled with the incoming value rather than the one still in SharedPreferences.
+            String key = preference.getKey();
+            if (ReminderReceiver.PREF_ENABLE_NOTIFICATIONS.equals(key)) {
+                ReminderReceiver.scheduleDailyReminder(preference.getContext(),
+                        Boolean.parseBoolean(stringValue),
+                        PreferenceManager.getDefaultSharedPreferences(preference.getContext())
+                                .getString(ReminderReceiver.PREF_NOTIFICATION_TIME, "08:00"));
+            } else if (ReminderReceiver.PREF_NOTIFICATION_TIME.equals(key)) {
+                ReminderReceiver.scheduleDailyReminder(preference.getContext(),
+                        PreferenceManager.getDefaultSharedPreferences(preference.getContext())
+                                .getBoolean(ReminderReceiver.PREF_ENABLE_NOTIFICATIONS, true),
+                        stringValue);
             }
 
             return true;
@@ -180,8 +191,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
-            bindPreferenceSummaryToValue(findPreference("enable_notifications"));
-            bindPreferenceSummaryToValue(findPreference("notification_time"));
+            bindPreferenceSummaryToValue(findPreference(ReminderReceiver.PREF_ENABLE_NOTIFICATIONS));
+            bindPreferenceSummaryToValue(findPreference(ReminderReceiver.PREF_NOTIFICATION_TIME));
         }
 
         @Override

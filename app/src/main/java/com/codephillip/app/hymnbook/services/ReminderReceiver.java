@@ -26,6 +26,9 @@ public class ReminderReceiver extends BroadcastReceiver {
 
     private static final String CHANNEL_ID = "hymn_reminder_channel";
     private static final int NOTIFICATION_ID = 101;
+    public static final String PREF_ENABLE_NOTIFICATIONS = "enable_notifications";
+    public static final String PREF_NOTIFICATION_TIME = "notification_time";
+    private static final String DEFAULT_NOTIFICATION_TIME = "08:00";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -39,6 +42,11 @@ public class ReminderReceiver extends BroadcastReceiver {
     }
 
     private void showNotification(Context context) {
+        if (!isEnabled(context)) {
+            // The user turned reminders off; drop any alarm that slipped through.
+            return;
+        }
+
         HymntableCursor cursor = Utils.getSeasonalHymnCursor(context, null, "ORIGINAL");
 
         if (cursor != null && cursor.getCount() > 0) {
@@ -84,36 +92,39 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
+    private static boolean isEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREF_ENABLE_NOTIFICATIONS, true);
+    }
+
     public static void scheduleDailyReminder(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean isEnabled = prefs.getBoolean("enable_notifications", true);
+        scheduleDailyReminder(context,
+                prefs.getBoolean(PREF_ENABLE_NOTIFICATIONS, true),
+                prefs.getString(PREF_NOTIFICATION_TIME, DEFAULT_NOTIFICATION_TIME));
+    }
 
+    /**
+     * Schedules (or cancels) the daily reminder using the values passed in rather than the stored
+     * ones. The preference framework notifies listeners <em>before</em> the new value is persisted,
+     * so callers reacting to a preference change must pass the new value explicitly.
+     */
+    public static void scheduleDailyReminder(Context context, boolean isEnabled, String time) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, ReminderReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-
-        if (!isEnabled) {
-            if (alarmManager != null) {
-                alarmManager.cancel(pendingIntent);
-            }
+        if (alarmManager == null) {
             return;
         }
 
-        String time = prefs.getString("notification_time", "08:00");
-        String[] timeParts = time.split(":");
-        int hour = Integer.parseInt(timeParts[0]);
-        int minute = Integer.parseInt(timeParts[1]);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, 0);
-
-        // If time has passed, schedule for tomorrow
-        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        if (!isEnabled) {
+            cancelDailyReminder(context, alarmManager);
+            return;
         }
+
+        Intent intent = new Intent(context, ReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Calendar calendar = alarmTime(time);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (alarmManager.canScheduleExactAlarms()) {
@@ -126,5 +137,46 @@ public class ReminderReceiver extends BroadcastReceiver {
         } else {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
+    }
+
+    private static void cancelDailyReminder(Context context, AlarmManager alarmManager) {
+        Intent intent = new Intent(context, ReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_NO_CREATE);
+
+        if (pendingIntent != null) {
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.cancel(NOTIFICATION_ID);
+        }
+    }
+
+    private static Calendar alarmTime(String time) {
+        int hour = 8;
+        int minute = 0;
+        try {
+            String[] timeParts = time.split(":");
+            hour = Integer.parseInt(timeParts[0]);
+            minute = Integer.parseInt(timeParts[1]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        // If time has passed, schedule for tomorrow
+        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return calendar;
     }
 }
