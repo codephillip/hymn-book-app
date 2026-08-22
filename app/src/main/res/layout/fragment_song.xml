@@ -34,7 +34,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/raleway_semibold"
-                android:text="NGA NNUNGI"
+                android:text="12. NGA NNUNGI"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/blue"
                 app:layout_constraintBottom_toBottomOf="@id/backbutton"

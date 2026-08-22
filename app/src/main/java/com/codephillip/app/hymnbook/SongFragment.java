@@ -254,7 +254,7 @@ public class SongFragment extends Fragment {
             Typeface contentTypeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/DMSans.ttf");
             contentView.setTypeface(contentTypeface);
             contentView.setTextSize(getFontSize());
-            titleView.setText(cursor.getTitle());
+            titleView.setText(String.format(Locale.US, "%d. %s", cursor.getNumber(), cursor.getTitle()));
             contentView.setText(cursor.getContent());
 
             if (cursor.getCategory() != null) {
