@@ -9,8 +9,8 @@ android {
         targetSdkVersion 34
         applicationId "com.codephillip.app.hymnbook"
         minSdkVersion 27
-        versionCode 10
-        versionName "3.3.2"
+        versionCode 12
+        versionName "3.3.4"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         vectorDrawables.useSupportLibrary = true
 
